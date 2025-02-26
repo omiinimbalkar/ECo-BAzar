@@ -1,0 +1,41 @@
+1 why npm is always used ?
+
+=> NPM (Node Package Manager) is always used in Node.js and JavaScript projects because it helps manage dependencies, scripts, and packages efficiently. Here’s why it's essential:
+1. Package Management 📦,2. Dependency Management,3. Running Scripts,4. Version Control,5. Global vs. Local Packages
+
+<!-- 2 npm and npx is differnet -->
+
+=> What is npm? 📦
+NPM (Node Package Manager) is used to:
+✅ Install packages (locally or globally).
+✅ Manage dependencies in pgfhhgfhfghackage.json.
+✅ Run scripts from package.json.
+
+NPX (Node Package eXecute) is used to:
+✅ Run packages without installing them globally.
+✅ Execute CLI tools directly.
+✅ Avoid polluting your system with unnecessary global installs.
+3. Key Differences Between npm and npx
+Feature	                            npm	                     npx
+
+Installs Packages?	             ✅ Yes	                 ❌ No (executes without installing)
+Runs Installed Packages?	     ✅ Yes (with npm run)	 ✅ Yes (directly)
+Global Installation Required?	 ✅ Sometimes	         ❌ No
+Useful for?	                     Managing dependencies	   Running one-time commands & avoiding global installs
+
+
+<!-- 3 Is npm and npx a command or a library? -->
+
+=>  Both npm and npx are commands that come with Node.js, but they are also tools (programs) that help manage and execute JavaScript packages.
+$-$
+
+# node 
+
+
+@-@
+
+# React 
+
+What is State in React?
+In React, state is an object that stores data that can change over time and cause the component to re-render when updated. It allows components to be dynamic and interactive.
+

@@ -1,0 +1,1140 @@
+day 1>
+first day 15/2/25
+
+-> we create react and node js folder 
+-> we go with install process of react by folowing command
+"npx create-react-app ."
+<!-- node folder -->
+-> next go to node folder and write followig cmd to intialize package.json file
+"npm init"
+create inside that a file with name index.js
+
+->> ro check the index.js inside part is running or not simple go terminal
+"node index.js"
+
+to get direct run without and node index.js writing simply go to package.json file make change inside script pacakgename 
+"start": "node index.js"
+
+<--node js file includes mostly ann apis to fetch data etc-->
+
+to run on server we take express to use  ,,, so go to express site 
+its an node.js backend 
+[text](https://expressjs.com/en/starter/installing.html)
+
+after that go to getttin started
+
+
+<!-- <<terminal work>> -->
+npm install express #1
+
+<!-- <after that to create a serve we need to write something like this> -->
+const express = require('express')
+const app = express()
+const port = 3000
+
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})
+
+//write or paste inside index.js file
+after that run on terminal
+"npm start"
+
+<!-- " go to chrome or edge to check write a localhost:3000 " -->
+
+do some changes in code
+const express = require('express')
+const app = express()
+const port = 3000
+
+app.get('/ap', (req, res) => {
+  res.send('Hello World! vfhbfh')
+})
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})
+
+And run again the server
+
+in node  
+npm start //runn by node script 
+
+<!-- Go to react-app folder -->
+in react npm start
+//run by react script
+
+get known about all files and folder
+
+
+16/02/25
+
+<!-- Time Of OLx video after 17.05 of long video of sahif-->
+
+<! some error came in betwween running phase of react app -->
+so i simple process follow to delete all project and reinstall all by 
+ npx create-react-app . same!!
+
+
+ -> simple devloper says what is componenets so  which use again and again or reuseable...
+
+
+ -> create a folder of name component , inside that 
+
+ 1.Header.jsx
+ 2.Header.css
+
+ ---and import thmr inside app.js
+
+ and app.js wala part call in in index.js file
+<!-- eg:- onst root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+ --> after import a header file and use inside function, need to write code inside header.jsx otherwise blank o/p
+
+now for styling we go chrome or edge to search "box shadow example"
+
+--) go to header and do change to inside header div give classname and change eg following
+<!-- eg: <div className="header">
+            <h1>Sell & Purchase ONLINE.... in your city</h1>
+        </div>
+
+ --> now create a file with name 
+ 2.Header.css
+--} import thrm into header.jsx
+<!-- eg: import './Header.css' -->
+
+
+so some changes in header.csss file like add color,height add side design by coping the code for link which we 
+
+add span tag at header inside second div with classname='mt-3'
+so ass simple some change in css of header
+<!-- eg:
+.header{
+    height: 50px;
+    /* height of text */
+
+    color: blueviolet;
+    /* color of text */
+
+    /* box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px; */
+
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+    /* for side design */
+}
+.mt-3{ 
+    /* span walaa part  */
+    display: inline-block;
+    margin-top: 10px;
+}
+
+--> next steps is create home page file inside componet folder to create
+1.Home.jsx 
+so simple import and us eprocess as same oh!!
+28.40
+
+--> serach for react router dom for ig header "its is used for mutlipage we use router"
+not get the proper code for that so!!
+
+17/02/25
+simple what happen we just copy same url as youtube to get the same code 
+[text](https://reactrouter.com/6.28.0/start/overview)
+
+okh next go with video at 00.02
+<!-- // const root = ReactDOM.createRoot(document.getElementById('root'));
+// root.render(
+//   <React.StrictMode>
+//     <App />
+//   </React.StrictMode>
+// );
+
+// above part is replaced by below code --> this code which remove fr index.js
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+
+so as simple some change done in index.js file and its hits different
+ERROR in ./src/index.js 8:0-84
+Module not found: Error: Can't resolve 'react-router-dom' in 'C:\Users\Om\OneDrive\Desktop\React\react-appp\src'
+
+webpack compiled with 1 error and 1 warning
+
+following above error is showing to fix terminal need to install react router,we need for raect
+3 1 : 2 4 #1
+<!-- npm i react-router-dom --> this command for installation of router-dom
+
+
+<!-- after running -->
+what actually happen its create a about page like when we click on about us its return about us page simple!!!
+
+<!-- some error is not slove yrth at midninght so lets sleep for noowwwww -->
+
+after fixing error by npm audit fix --force
+we go wth run code flow?
+
+so simple import home components in index.js file and go on!!
+and so simple coode of folloowing given!
+example:-
+import Home from "./components/Home";  // Import the Home component
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: (<Home />),
+  },
+  {
+    path: "about",
+    element: <div>About</div>,
+  },
+]);
+<!-- 
+so as ouput webapage if we use /about -> so about page will be show !
+and if normal '/' used so home page shows as output
+ok simple!! -->
+
+17-02-25
+
+so our header components is not showing so just import in home components  and use before h1 tag inside the div.....
+
+simple one use same folder './Header'
+if outside the folder '../Header'
+
+<!-- sooo simple get header as above of the home tag -->
+we need login in page in header...
+so in folder of componenets in Header we create a link tag for login and import its 
+eg:--
+import { Link } from "react-router-dom";
+<!-- on top we import like bove -->
+ <Link to="login"> LOGIN</Link>
+ <!-- after header div Link -->
+
+ ===> o/p get login link in header simple !!
+
+ simple create a new file with the name login 
+
+ now do changes as give path in index.js file of login and import it..
+ and add"/" in header file where we link login page otherwise its render login login again again !!
+
+
+ next 1 8 0 2 2 5
+
+ <!-- for login and signup we create an api  -->
+ go to login file..
+ create simple button and two input tag one link tag for login
+ create simple button and two input tag one link tag for singup
+
+ register the signup in index.js same as login and home..
+
+ as output  i face anerror soo as soon i try to clear that {} okk!!
+
+ now go to header file crete link before login page to home..
+ go index.js and do change "/ after this add home..
+
+ <!-- SHORT KEY TO   drag select all drag tags and alt+ uparrow or down arrow -->
+
+ #1 otiy
+
+ #2 Commencer with node js foler index.js file run on port!!!
+
+ so next tagrt login key and signup key!!
+
+ before that we want a database so we use mongo!!
+<!-- database use for save our data in database -->
+2 way to use install on local otherwise go with url 
+<!-- just small url change whn use in code!1 that we see further -->
+as go for installtion we need 718 mb...
+and url just singup and started 
+following steps...
+<!-- 
+Use MongoDB with a URL (MongoDB Atlas - Cloud Database)
+If you want to use MongoDB without installing locally, you can use MongoDB Atlas (a cloud-based database).
+
+Steps to Use MongoDB Atlas
+Go to MongoDB Atlas and sign up.
+Create a New Cluster (Choose Free Tier).
+Create a Database & User (Set username & password).
+Get Connection String
+Go to Clusters → Connect → Choose "Connect your application".
+Copy the connection URL, which looks like:
+sh
+Copy
+Edit
+mongodb+srv://<username>:<password>@cluster0.mongodb.net/<dbname>?retryWrites=true&w=majority
+Connect from a Node.js App
+Install MongoDB package in your project:
+sh
+Copy
+Edit
+npm install mongoose
+Use this in your code:
+js
+Copy
+Edit
+const mongoose = require('mongoose');
+
+mongoose.connect('mongodb+srv://<username>:<password>@cluster0.mongodb.net/<dbname>?retryWrites=true&w=majority', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+}).then(() => console.log('MongoDB Connected'))
+.catch(err => console.log(err)); -->
+[text](https://cloud.mongodb.com/v2/67b4da205dcb437f7a5562ec#/setup/personalization)
+<!-- complete the setup oo MongoDB On Url siteeeeeee-->
+
+now go to index.js file!!
+<!-- 
+// we get data frm frontend so we give name as signup
+app.post('/signup', (req, res) => {
+  const username  = req.body.username;
+  const password = req.body.password; 
+
+}) -->
+simply the post method takes two thinks
+1 url , 2 method(req and response)
+
+so above code work to get usename and paswword and save in database 
+
+<!-- to connect databse we use mongoDB -->
+go url side
+[text](https://mongoosejs.com/)
+T = 3.00
+<!-- 
+// we get data frm frontend so we give name as signup
+// for testing purpose we change in post int get and some username randomly and password randomly
+app.get ('/signup', (req, res) => {
+// app.post('/signup', (req, res) => {
+  const username  = req.body.username;
+  const password = req.body.password; 
+  // const user = new Users({ username: username, password: password }); // to connect with database and for that we need to import moogness we use pacaKGE OF MOONGOOSE FOR WEBSITEE
+
+  const user = new Users({ username: 'ommom', password: 'pass' });
+  user.save().then(() => console.log('User created'));
+
+}) -->
+
+its simople a libary to connect data with databse 
+
+steps: copy first 2 lines and paste it after first lines!!
+2: const Users = mongoose.model('Users', { username: String, password: String });
+<!-- change as copy after this const Cat = mongoose.model('Cat', { name: String }); -->
+
+3 cpy second last line
+<!-- const kitty = new Cat({ name: 'Zildjian' }); changes this into...! -->
+
+const user = new Users({ username: username, password: password });
+this cahnge by cpy above code and pastre afer body code!
+
+simply auto complete come automaticallly so no worries!!!
+\for testing on browserrr
+
+// for testing purpose we change in post int get and some username randomly and password randomly
+
+
+
+after that change locathost to 4000 beacuse 300 used for react
+
+t = 8 3 0
+<!-- 
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://127.0.0.1:27017/test',(err) => {
+  if(!err) {
+    console.log('connected to mongodb');
+  } else {
+    console.log('error in connection', err);
+  }
+}); --> this code commonly used for each api so its define after import and the connect method takes two this a url and api
+
+/-/ for now we are writing code one file only so its not valid or not okh so just further we move so wdivivde into diff diff file each code ookh!!
+
+ <!-- npm i nodemon   // used need if we run server again and again so save and run automicall node okh -->
+
+ some changes in package.json to npm erun dev wala funda
+ "start": "node index.js",
+    <!-- "dev": "nodemon index.js" -->
+
+so as we bac with 21225
+
+now mongodb setup and singup with continue with googlr and simply steps need to follow
+1.mongo cloud (try free)/(create a cluster)
+2.some finsh and save method
+3.network access
+4.go to quick start.(copy username and password) [url connection bas]-finish and close
+5.click on connect in  quick start in (click on connect to your application and copy url)
+<!-- mongodb+srv://omn2068:<db_password>@cluster0.vr8ns.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0 --> we get this url..
+
+so ccontinue with video...
+
+as we change in url to render dataa in mogodb databse 
+<!-- mongoose.connect('mongodb://mongodb+srv://omn2068:vIjvtcrKCuG2wX0J@cluster0.vr8ns.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',(err) => { -->
+
+ater all setup
+run it once.......
+so error to solve this we need to remove if condition after url and its lok ike after changes isss..
+<!-- mongoose.connect('mongodb://mongodb+srv://omn2068:vIjvtcrKCuG2wX0J@cluster0.vr8ns.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0') -->
+
+next try again to run the file 
+<!-- npm run dev -->
+
+so commment some req for userandpass..
+bass kam pachis errror faced to typical password 
+<!-- solution just terminate acluster free wala and again create it  -->
+
+so after that we are gettting the o/p
+
+simple to check our code data is stor in database of mongo or no not go to cluster and in abovee option slect colllection see
+
+simply waht i did to solve the dtaabse stored problem just type eror in chatgpt and just run the serve and change the ci=ode with chatgpt code and after that we are succesfully created our databae /Lets see with old code 
+<!-- go to o/p page and after 4000/signup to msg render in terminal okh... --> so its working 
+
+<!-- 
+// const express = require('express');
+// const mongoose = require('mongoose');
+
+// const app = express();
+// const port = 4000;
+
+// // Middleware to parse JSON
+// app.use(express.json());
+
+// // Connect to MongoDB with error handling
+// mongoose.connect('mongodb+srv://omssn21:om212006@cluster0.vr8ns.mongodb.net/myDatabase?retryWrites=true&w=majority&appName=Cluster0')
+//   .then(() => console.log('MongoDB connected!'))
+//   .catch(err => console.error('MongoDB connection error:', err));
+
+// // Define User Model
+// const Users = mongoose.model('Users', { username: String, password: String });
+
+// // Root route
+// app.get('/', (req, res) => {
+//   res.send('Hello World!');
+// });
+
+// // Signup route (test mode)
+// app.get('/signup', async (req, res) => {
+//   try {
+//     const user = new Users({ username: 'ommom', password: 'pass' });
+//     await user.save();
+//     console.log('User created');
+//     res.send('User created successfully!');
+//   } catch (error) {
+//     console.error('Error creating user:', error);
+//     res.status(500).send('Internal Server Error');
+//   }
+// });
+
+// // Start the server
+// app.listen(port, () => {
+//   console.log(`Example app listening on port ${port}`);
+// }); -->
+
+
+<!-- {"_id":{"$oid":"67b8c9f13232e3bfa9bc3e4d"},"username":"ommom","password":"pass","__v":{"$numberInt":"0"}} - this output we getttt.. in mongodb cloud -->
+
+
+as w known we don't to do hardcode so we need to take data from user so some changes in node ffolder inside index.js file
+
+<!-- // so simple react folder is for frontend and for backennd node folder -->
+
+
+<!-- cltr + shift + p = color change   -->
+
+
+<!-- As  22--2--25 -->
+
+go to node file and index.js change the console wala part after the username and password
+like
+<!-- 
+ const user = new Users({ username: 'ommom', password: 'pass' });
+  user.save()
+  .then(() => {
+    res.send({message : 'User created'})
+  })
+  .catch(() => {
+  res.send({message: 'Error'});  
+  });
+})   -->
+
+$ so after that sone error i face d a error which i try to solved wit ai
+set mongodb url and copy paste in notepad..
+
+$after  that again we start the server to check the usr is created or not now the msg will show on server
+
+$ go and check mongo to ur user data is created...(colloection>cluster)
+ok don>>>
+
+% now i thinkk i run it multiple time so ist swill save again agin yes because it was a get api
+
+changes get with post api now the signup page after 4000 port not run.....done........
+
+so post api call in frontend ..
+
+post key and get key api for differnt use get to user created oon node nly and post fro take input from frontend
+
+@-@
+
+# REact page 
+
+come to signup pagge in frontend main partt
+
+so simple what we want to get when we click on signup in fronted thee datr need to be stored in backend so for the we neeed to change in signup code file  by creating a set so simple ...
+
+so for save in state we wnt to create state..
+
+waht is state ?
+% state variable local if variable if changs its update but normal variable change not state upadte 
+
+<changes in fieleee>
+  % const [username, setUsername] = useState("haaaaaa //so its will show as output a hhaah on place on usrname w give as null"); // we are creating a state
+
+
+<input type="text" value={username} 
+      onChange={(e) => {
+        console.log(e.target.value)  // we are getting the value from the input field
+      }}/>
+for check by inspect we get console what happeing..
+
+so simpply at  27:00 what we did we change it in code by creating const for pass,username using state 
+and add after value and onchange 
+example:
+  % const [username, setUsername] = useState(""); // we are creating a state
+  % const [password, setPassword] = useState(""); // we are creating a state   
+  % console.log({username , password});  // we are printing the username & password
+  %  <input type="text" value={username} 
+  %     onChange={(e) => 
+  %     setUsername(e.target.value)
+  %     }/>
+  %     <br />
+  %     PASSWORD
+  %     <input type="password" value={password} 
+  %     onChange={(e) =>
+  %     setPassword(e.target.value)
+  %     }
+
+
+% after fina all changes we will paste a code 
+
+import Header from './Header';
+import { Link } from "react-router-dom";
+import { useState } from "react";
+function Signup() {
+
+  const [username, setUsername] = useState(""); // we are creating a state
+  const [password, setPassword] = useState(""); // we are creating a state   
+  console.log({username , password});  // we are printing the username & password
+
+  return (
+    <div>
+      <Header />
+      <h1>SignUp</h1>
+      <br />
+      USERNAME
+      <input type="text" value={username} 
+      onChange={(e) => 
+      setUsername(e.target.value)
+      }/>
+      <br />
+      PASSWORD
+      <input type="password" value={password} 
+      onChange={(e) =>
+      setPassword(e.target.value)
+      }
+      />
+      <br />
+      <button>SignUP</button>
+      <Link to ='/login'><button>Login</button></Link>
+    </div>
+  );
+}   
+export default Signup;    
+
+
+so simply we go from now , when we click on signup it need to go data in backend ... for that we need to coonect with api
+
+for connetion go to react folder by cd command and insatll 
+
+npm i axios:- uses is simple
+% % Axios is a popular library for making HTTP requests in JavaScript applications, including React. Here’s why it’s useful:
+% 1. Easy to Use,2. Automatic JSON Handling,3. Supports Request & Response Interceptors,4. Error Handling,5. Supports Canceling Requests,6. Automatic Timeout Handling,7. Supports File Uploads
+% When to Use Axios?
+% ✅ When working with APIs that return JSON data
+% ✅ When you need advanced error handling
+% ✅ When sending authentication tokens
+% ✅ When handling file uploads
+% ✅ When making requests from Node.js
+
+
+after getting info from online 
+
+30.3
+
+we need to work on code in signup page of react 
+inn signup button add onclick=({handleApi}) , and import axios 
+create const after the const password and console part cut and paste inside const handleapi..
+
+here we stop .... 30.43 v
+
+01:36....am
+
+% 230225
+
+11.44 PM 
+as per the book we go in singupp page in frontend
+% const handleApi = () => {
+%     console.log({username , password});// we are printing the username & password
+%     const URL = "http://localhost:3001/signup";
+%     const data = {username,password};
+%     axios.post(URL,data)
+%     .then((res) => {
+%       console.log(res);
+%     })
+%     .catch((err) => {
+%       console.log(err);
+%     });
+  % }
+
+  this changes we made ... froo connect with backend..
+
+  % so as we done we run react to enter and usrname and password on frontend page so after click the usename and password is saved  but error showss.. in inscept console (both frontend and backend are running on differnrt hostt)
+
+  for connect in one we use cors package..
+  % search npm cors
+
+  after installation we go index.js file
+
+
+@-@
+
+# Node js
+indexjs
+1- as the website code copy paste 
+
+2- after all changes i paste here..
+
+% const express = require('express')
+% const cors = require('cors')
+% const app = express()
+
+
+% app.use(cors())
+
+% const port = 4000
+
+% so after each time run it sface erro crashed wala
+
+so after that we go to check  in mongdb our data is store or not so let's cehck it out..
+
+for ruuunig on console only we do changes in 
+we write code for req sned after signup and return in terminal only..
+
+after clicking on button signup w get on terminal data 
+
+% app.post ('/signup', (req, res) => {
+%   console.log(req.body);
+%   return;
+run it simpply but undefined data because after click 
+not come inside body to pass inside body we use package body-parser
+
+1. install in node folder
+
+or simply scroll down and we can use json code to from simply for futher images its not work..
+
+so all type api request acceppt then cors
+and all type of data accept then pass error
+
+% simply cahnges in code..
+
+% so now we can click on frontend sihgnup button then it show data in terminal api return data in terminal by installing cors and boy-parse
+Example app listening on port 4000
+{ username: 'suniye1@gmail.com', password: '12345678@' }
+
+
+% const bodyParser = require('body-parser')
+% const app = express()
+% app.use(bodyParser.json())
+% app.use(bodyParser.urlencoded({ extended: false }))
+% app.use(cors())
+
+2- % so normally we again make changes in code like remove return and uncomment the request wal part and rmove the pass data with request name (index.js)
+ return;
+  const user = new Users({ username: 'twetytwo25', password: 'pass' });
+
+
+% simply waht is its like simple api fro now beacuse in futher we need to create like if user is signup then they cannont signup again
+
+
+3- run and check its going t data in dtabase (mongodb)
+yaaa we are getting ittt...
+
+
+@-@
+
+# REact page 
+
+go to signup page and do chnge in code..
+
+%  .then((res) => {
+%       console.log(res.data);
+%       if(res.data.message === 'User created'){
+%         alert('User created');
+%       }
+%     })
+%     .catch((err) => {
+%       console.log(err);
+%       alert('SERVer ERR')
+%     });
+%   }
+
+///after this change if user created then alert msg come and data will store in backend////
+
+................
+% so now its time to go on login page.././././
+................
+
+@-@
+
+# Node js
+indexjs
+
+1- copy signup api code and paste it again afterrr the signup api code ends
+2- do ittttt
+
+% // we get data frm frontend so we give name as login
+
+% app.post ('/login', (req, res) => {
+%   console.log(req.body);
+%   const username  = req.body.username;
+%   const password = req.body.password; 
+
+%   user.findOne({username: username})  
+
+%   .then(() => {
+%     res.send({message : 'Find User'})
+%   })
+%   .catch(() => {
+%   res.send({message: 'Server Error'});  
+%   });
+% })  
+
+
+@-@
+
+# REact page
+
+1.LoginPage.jsx
+
+2.changs
+
+% import Header from './Header';
+% import { Link } from "react-router-dom";
+% import { useState } from "react";
+% import axios from "axios";
+
+% function Login() {
+
+%   const [username, setUsername] = useState(""); // we are creating a state
+%   const [password, setPassword] = useState(""); // we are creating a state
+
+%   const handleApi = () => {
+%     console.log({username , password});// we are printing the username & password
+%     const URL = "http://localhost:4000/login";
+%     const data = {username,password};
+%     axios.post(URL,data)
+%     .then((res) => {
+%       console.log(res.data);
+%       if(res.data.message === 'User created'){
+%         alert('User created');
+%       }
+%     })
+%     .catch((err) => {
+%       console.log(err);
+%       alert('SERVer ERR')
+%     });
+%   }
+
+
+%   return (
+%     <div>
+%       <Header />
+%       <h1>Login</h1>
+%       <br />
+%       USERNAME
+%       <input type="text" value={username}
+%       onChange={(e) =>{
+%         setUsername(e.target.value)
+%       }}
+%       />
+%       <br />
+%       PASSWORD
+%       <input type="password" value={password}
+%       onChange={(e) => {
+%         setPassword(e.target.value)
+%       }}
+%       />
+%       <br />
+%       <button onClick={handleApi}>LOGIN</button>
+%       <Link to ='/signup'><button>SIGNUP</button></Link>
+%     </div>
+%   );
+% }   
+% export default Login;    
+
+
+
+@-@
+
+# Node js
+indexjs
+
+changes in code 
+.then((result) => {
+    console.log(result  ,"userData");
+    res.send({message : 'Find User'})
+  })
+
+
+after chanhes we dont get result bouut data we get....
+ 
+55.00 v
+240225-01.06
+
+
+after  🌅☕🌞
+
+so started with an error in connecton with api and some code changes in index.js after that weith the help of ai we solve an run succesfullly working login and signup button
+
+% index.js 
+
+Users.findOne({username: username})
+
+
+output
+% { username: 'omn@gmail.com', password: '1234554321@' }
+% {
+%   _id: new ObjectId('67bb732576f94ffd80a10421'),
+%   username: 'omn@gmail.com',
+%   password: '1234554321@',
+%   __v: 0
+% } userData
+
+.........
+
+% cahnges for usser not found with if condition in code in index.js
+
+in login in inside login in index.js
+
+.then((result) => {
+    console.log(result  ,"userData");
+    if(!result){
+      res.send({message : 'User not found'})
+    }
+
+
+-----------Now go and check for user NOt found and other msg in alter--------------
+..............🏃‍♂️
+
+% // simply some sorted out things and run well //
+
+% so if user exists then we give a tokennn for that we neeed to install package 
+
+% wha it is ? its is simple give a number to that user
+search 🔍 : - jsonwebtoken
+[text]🔗(https://www.npmjs.com/package/jsonwebtoken)
+
+insatll..... in node folder 
+
+@-@
+
+# Node js
+index.js
+
+% changes in code by website
+jwt.sign({
+  data: 'foobar'
+}, 'secret', { expiresIn: 60 * 60 });
+
+
+% index.js
+
+const jwt = require('jsonwebtoken');
+
+
+@-@
+
+# REact page
+
+/*
+then((res) => {
+      console.log(res.data);
+      if(res.data.message === 'User created'){
+        if(res.data.token){ 
+          localStorage.setItem('token', res.data.token);
+          alert('Login Successful');
+        }
+        alert('User created');
+      }
+*/
+
+% changes in code.... in login.jsx
+
+
+% 🧠💥 two type of api secure and unsecure
+
+now what is after login go to home page............
+
+
+% home.jsx
+
+home page for a signup & login page.... different
+abd the admin wala manus to accept changes and all..
+
+so in login.jsx ki add after token navigate()
+and initlize
+
+navigate() is type of react-dom
+so go and do changesss  😆   🏃‍♂️
+in login.jsx
+
+import Header from './Header';
+import { Link ,//-useNavigate } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
+
+function Login() {
+ //-const navigate = useNavigate();
+  const [username, setUsername] = useState(""); // we are creating a state
+  const [password, setPassword] = useState(""); // we are creating a state
+
+  const handleApi = () => {
+    console.log({username , password});// we are printing the username & password
+    const URL = "http://localhost:4000/login";
+    const data = {username,password};
+    axios.post(URL,data)
+    .then((res) => {
+      console.log(res.data);
+      if(res.data.message){
+        alert(res.data.message);
+        if(res.data.token){
+          localStorage.setItem('token',res.data.token);
+          //-navigate('/');
+        }
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      alert('SERVer ERR')
+    });
+  }
+
+
+  return (
+    <div>
+      <Header />
+      <h1>Login</h1>
+      <br />
+      USERNAME
+      <input type="text" value={username}
+      onChange={(e) =>{
+        setUsername(e.target.value)
+      }}
+      />
+      <br />
+      PASSWORD
+      <input type="password" value={password}
+      onChange={(e) => {
+        setPassword(e.target.value)
+      }}
+      />
+      <br />
+      <button onClick={handleApi}>LOGIN</button>
+      <Link to ='/signup'><button>SIGNUP</button></Link>
+    </div>
+  );
+}   
+export default Login;    
+all changesss
+
+
+
+//- is define as cahnge part in whole code
+
+
+now question is how we get known ki logined user or not so with the help of token we decide what doo  
+to shown in header 
+
+% header.jsx
+import React from "react";
+import './Header.css'
+//import { Link , useNavigate } from "react-router-dom";
+function Header () {
+  
+ // const navigate = useNavigate();
+
+ // const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
+  }
+  return (
+    <div>
+        <div className="header">
+            <Link to="/home">HOME</Link>
+
+            <span className="mt-3">Sell & Purchase ONLINE.... in your city</span>
+
+            //{!localStorage.getItem('token') ?
+            <Link to ='/login'> LOGIN </Link>:
+            <button onClick={handleLogout}> LOGOUT </button> }
+        </div>
+    </div>
+  );
+};
+
+export default Header;
+
+
+changes in code of header...
+
+the stop 17:57,240225
+1:16:00 🛑⏸️ 
+
+
+
+% 2602225
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+["😂", "❤️", "🤣", "👍", "😭", "🙏", "😍", "🥰", "😊", "🤔", 
+ "💕", "😘", "😅", "🤗", "🤩", "💖", "💯", "🎉", "🥺", "🤷‍♂️"]
