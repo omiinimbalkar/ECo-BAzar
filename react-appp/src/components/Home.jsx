@@ -1,9 +1,19 @@
+import { useEffect } from 'react';
 import Header from './Header';
+import { useNavigate , Link} from 'react-router-dom';
 function Home() {
+
+  const navigate = useNavigate()
+  useEffect(() => {
+    if(!localStorage.getItem('token')){
+      navigate('/login')
+    }
+  })
+
   return (
     <div>
       <Header />
-      <h1>Home</h1>
+      <Link to="/add-product"> ADD PRODUCT </Link>
     </div>
   );
 }   

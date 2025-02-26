@@ -1005,66 +1005,272 @@ the stop 17:57,240225
 1:16:00 🛑⏸️ 
 
 
+@-@
 
+# REact page
+ 
 % 2602225
+as we back wit pushing code and slove and lost of error okh from this we create new folder for push into reppoo afte 2 hrs we back to try complet 30 mn
+
+so we waant to change in home page 
+
+% import { useEffect } from 'react';
+% import Header from './Header';
+% //import { useNavigate } from 'react-router-dom';
+% function Home() {
+
+%   //const navigate = useNavigate()
+%   /Z*useEffect(() => {
+%     if(!localStorage.getItem('token')){
+%       navigate('/login')
+%     }
+%   *//})
+
+%   return (
+%     <div>
+%       <Header />
+%       <h1>Home</h1>
+%     </div>
+%   );
+% }   
+% export default Home;    
+
+//:- changes part....
+so simply without login the cannot shows an home page..
+
+finally try to run its working now!!
+
+so 2 ghosti zlattt
+
+next ghost seller ko login and prduct fetch and data store (product) in database
+
+% -----go to homepage.jsx to changes
+
+% <Link to="/add-product"> ADD PRODUCT </Link>
+After this change output we get error because we dont create any kind of link so now?
+
+so in import after use navigate add a link 
+% import { useNavigate , Link} from 'react-router-dom';
+1 so above this will return a link for add product in webapge
+
+2 now create component for that..
+AddProduct.jsx
+
+3 copy home page code and paste because simply some smae think that soo
+
+4.code changes
+% import { useEffect } from 'react';
+% import Header from './Header';
+% import { useNavigate } from 'react-router-dom';
+% function AddProduct() {
+
+%   const navigate = useNavigate()
+%   useEffect(() => {
+%     if(!localStorage.getItem('token')){
+%       navigate('/login')
+%     }
+%   })
+
+%   return (
+%     <div>
+%       <Header />
+%       product page
+%     </div>
+%   );
+% }   
+% export default AddProduct;    
+
+5.link in index.js in react-app
+{
+    path: "/add-product",  
+    element: (<AddProduct/>),  
+  },
+
+  and now yu can see product page by clicking 
 
 
+6 css is not looking like good so simply what to do 
+use bootstrap....
+go on site
+
+% npm i bootstrap@5.3.3  ---- install on terminal
+
+[text]🔗(https://getbootstrap.com/)
+
+simply copy the link and in react-app in public folder go and paste in index.html
+
+% <title>React App</title>
+%     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+%   </head>
+
+okhhhhh 🚀🎨
+
+now we can use claases of bootstarp
+
+7 go to bootstarp site and serach for from control
+[text]🔗(https://getbootstrap.com/docs/5.3/forms/form-control/)
+
+so we just copy classnaem for useing themin our code
+% class="form-control" // we use className = 'form-control' in addproduct.jsx >input
+now css look haahahah💻✨
+
+8 changee in add product only/code changes
+
+.... final changesd in code 💻 ......
+import { useEffect, useState } from 'react';
+import Header from './Header';
+import { useNavigate, Link } from 'react-router-dom';
+function AddProduct() {
+
+    const navigate = useNavigate()
+    const [pname , setpname] = useState('')
+    const [pdesc , setpdesc] = useState('')
+    const [price , setprize] = useState('')
+    const [category , setcategory] = useState('')
+    
+    useEffect(() => {
+        if (!localStorage.getItem('token')) {
+            navigate('/login')
+        }
+    })
+
+    return (
+        <div>
+            <Header />
+            <div className='p-3'>
+
+                <h2>ADD PRODUCT HERE :</h2>
+                <label> Product Name</label>
+                <input className="form-control" type="text" />
+                <label> Product Description </label>
+                <input className="form-control" type="text" />
+                <label> Product Prize </label>
+                <input className="form-control" type="text" />
+                <label> Product Category </label>
+                <input className="form-control" type="text" />
+                <select className="form-control">
+                    <option> Book</option>
+                    <option> Newspaper </option>
+                    <option> Bottle </option>
+                    <option> Bucket</option>
+                    <option> Clothes </option>
+                </select>
+                <button className="btn btn-primary mt-3"> Sumbit </button>
+            </div>
+        </div>
+    );
+}
+export default AddProduct;    
 
 
+so waht is happeing simply we need use a boootstrap for classname purpose to css yaa yaa🔍🐞
+in mid of code we use states so go on....🧑‍💻
+
+//as simple we can give stat aby kind of name ..
+
+//after create state from each label we go with link part above code is pasted till state ..
+
+simpply image fuction now we added like input and label wla part fro image and sa,e copde...
+
+ <input className="form-control" type="file" onChange={(e) => {setpimg(e.target.value)}}/>
+
+ small chnage for checking is on change after we print console like this
+%  console.log(e.target.files)
+<input className="form-control" type="file" onChange={(e) => {setpimg(e.target.files[0])}}/>
+change babyy............👶
+
+after cool changes we just do ki just all part of what handle api pass inside that by nae fromData
+
+.code
+ 
+    % const handleApi =() => {
+
+    %     const fromData = new FormData();
+    %     fromData.append('pname',pname)
+    %     fromData.append('pdesc',pdesc)
+    %     fromData.append('price',price)
+    %     fromData.append('category',category)
+    %     fromData.append('pimg',pimg)
 
 
+    % }
 
 
+import axios 
 
+after that we fix erroo with captilot and  just go on with flow and ow e check fronrtend is working
 
+.code
+% import { useEffect, useState } from 'react';
+% import Header from './Header';
+% import { useNavigate, Link } from 'react-router-dom';
+% import axios from 'axios';
+% function AddProduct() {
 
+%     const navigate = useNavigate();
+%     const [pname , setpname] = useState('');
+%     const [pdesc , setpdesc] = useState('');
+%     const [price , setprize] = useState('');
+%     const [category , setcategory] = useState('');
+%     const [pimg , setpimg] = useState('');
 
+%     useEffect(() => {
+%         if (!localStorage.getItem('token')) {
+%             navigate('/login')
+%         }
+%     })
+    
+%     const handleApi =() => {
 
+%         const fromData = new FormData();
+%         fromData.append('pname',pname)
+%         fromData.append('pdesc',pdesc)
+%         fromData.append('price',price)
+%         fromData.append('category',category)
+%         fromData.append('pimg',pimg)
+        
+%         const url = ''
+%         axios.post(URL,fromData)
+%         .then((res) => {
+%           console.log(res)
+%         })
+%         .catch((err) =>{
+%             console.log(err)
+%         })
 
+%     }
+%     return (
+%         <div>
+%             <Header />
+%             <div className='p-3'>
 
+%                 <h2>ADD PRODUCT HERE :</h2>
+%                 <label> Product Name</label>
+%                 <input className="form-control" type="text"  value={pname} onChange={(e) => {setpname(e.target.value)}}/>
+%                 <label> Product Description </label>
+%                 <input className="form-control" type="text"  value={pdesc} onChange={(e) => {setpdesc(e.target.value)}}/>
+%                 <label> Product Prize </label>
+%                 <input className="form-control" type="text"  value={price} onChange={(e) => {setprize(e.target.value)}}/>
+%                 <label> Product Category </label>
+%                 <input className="form-control" type="text"  value={category} onChange={(e) => {setcategory(e.target.value)}}/>
+%                 <select className="form-control"value={category} onChange={(e) => {setcategory(e.target.value)}}>
+%                     <option> Book</option>
+%                     <option> Newspaper </option>
+%                     <option> Bottle </option>
+%                     <option> Bucket</option>
+%                     <option> Clothes </option>
+%                 </select>
+%                 <label> Product Image </label>
+%                 <input className="form-control" type="file" onChange={(e) => {setpimg(e.target.files[0])}}/>
+%                 <button onClick={handleApi} className="btn btn-primary mt-3"> Sumbit </button>
+%             </div>
+%         </div>
+%     );
+% }
+% export default AddProduct;    
+okh for tody see yoju tommroew
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+% v=28:51 /kh t=18;16
 
 
 
