@@ -1272,65 +1272,235 @@ okh for tody see yoju tommroew
 
 % v=28:51 /kh t=18;16
 
+we back now ..
+for react npm start
+for node npm run dev
+
+@-@
+
+# Node js
+
+go to index.js for addurl of add product..
+
+after that same changes
+% app.post('/add-product', (req, res) => {
+%     console.log("Product Data:", req.body);
+%     console.log("Uploaded File:", req.file);
+
+%     // Ensure response is sent
+%     res.json({ message: "Product added successfully!", data: req.body, file: req.file });
+% });
+
+now go back in add product and give url like send request on localhost 4000
+
+
+image data pass the we use multer
+so install npm multer:- npm install multer
+
+% copy paste const multer = require('multer'); //in index.js
+% const multer = require('multer');
+% const storage = multer.diskStorage({
+%   destination: function (req, file, cb) {
+%     cb(null, 'uploads')
+%   },
+%   filename: function (req, file, cb) {
+%     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+%     cb(null, file.fieldname + '-' + uniqueSuffix)
+%   }
+% })
+
+% const upload = multer({ storage: storage })
+
+
+copy paste siimple propsse and create a uploads folder in inside node folder
+
+copy paste : upload.single('uploaded_file')
+paste after adddproduct url in index.js
+
+
+now lets see the file which we upload on frontend run part will display and save in uploads folder ok..... so click on react-app o/p sumbit button......
+
+after solving error the finally our 1 error solve and file get uploaded..
+
+v= 38.13... t=1:35
+
+[Object: null prototype] {
+  pname: 'bottle',
+  pdesc: 'used bottle we can reuse themm',
+  price: '10 per kg',
+  category: 'Bottle'
+}
+{
+  fieldname: 'pimg',
+  originalname: 'bottle.jpg',
+  encoding: '7bit',
+  mimetype: 'image/jpeg',
+  destination: 'uploads',
+  filename: 'pimg-1740769272320-247812759.jpg',
+  path: 'uploads\\pimg-1740769272320-247812759.jpg',
+  size: 17519
+}
+
+
+% this type of data we get in output to after upload so we dne with this so go with v..
+
+so image come in api but not in dtabase so for that go in database
+we 
+index.js changes in console log of aap.post of add product
+is after .file//.path
+
+
+%creating databse for add product to store that data like store copy paste code of like we made or user same and same changes
+
+.code
+% const Products = mongoose.model('Products', { pname: String, pdesc:String, price:String, category:String, pimg:String});
+
+% app.post('/add-product',upload.single('pimg'),(req,res)=>{
+%     console.log(req.body)
+%     console.log(req.file.path)
+%     const pname  = req.body.pname;
+%     const pdesc  = req.body.pdesc;
+%     const price  = req.body.price;
+%     const category  = req.body.category;
+%     const pimg  = req.file.path;
+
+%     const product = new Products({ pname, pdesc, price, category, pimg});
+%     product.save()
+%     .then(() => {
+%       res.send({message : 'Product is Saved'})
+%     })
+%     .catch(() => {
+%     res.send({message: 'Server Error'});  
+%     });
+
+% })
+
+indexjs changes after data store in dtabase..
+% this for after postt the dtaa get data in frontend
+
+app.get('/det-products',(req,res)=>{
+  Products.find()//findall
+  .then((result)=>{
+    console.log(result, "product data")
+    res.send({message:"succesfully saved.."})
+  })
+  .catch((err)=>{
+    res.send({message:"server err"})
+  })
+})
+
+% add after app.post()
+ann go and check it on local:4000/get-products
+% so as msg we get a sucessfully saved
+
+so anoher chnages in smae code in res.send after sucessfulyy saved add one line ,products:result
+.code chnagee in line
+    res.send({message:"succesfully saved.." //, products : result})
+
+
+output....
+{"message":"succesfully saved..","products":[{"_id":"67c217bf065de8f7be516bb1","pname":"Used newspaper","pdesc":"reusable for any work like what you want","price":"15.rs  per kg ","category":"Newspaper","pimg":"uploads\\pimg-1740773311207-283373932.jpg","__v":0}]}
+
+-------------------------------------------------
+
+% so now we work on like after user add product or login onther user then th eproduct need to show on home pagefor unlog person can also seee
+
+for futher user admin seller role...🤷‍♂️
+
+
+@-@
+
+# REact page
+
+home.jsx
+
+use effect with empty array
+
+
+ useEffect(() => {
+    const url = 'http://localhost:4000/get-products';
+    axios.get(url)
+    .then((res)=>{
+      console.log(res)
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
+  })
+
+  % automatically show in webpageterminal.. api data
+
+%   //creating stae for products
+%   const[products,setproducts] =useState([]);
+
+%  useEffect(() => {
+%     const url = 'http://localhost:4000/get-products';
+%     axios.get(url)
+%     .then((res)=>{
+%       console.log(res)
+%       if(res.data.products)
+%       {
+%         setproducts(res.data.products);
+%       }
+%     })
+%     .catch((err)=>{
+%       console.log(err)
+%       alert("server error")
+%     })
+%   })
+
+simple changes to run and save data and showm on fntend every product..
+
+in...
+Home.jsx..
+
+      <h2> My Product </h2>
+
+      {products && products.length > 0 && 
+      products.map((item,index) => (
+        <div className="card m-3">
+          <img src = {item.pimg} />
+          <p className='p-2'>{ item.pname } | { item.category } </p>
+          <p className='p-2' text-text-sucess>{ item.pdesc }</p>
+          <p className='p-2' text-text-sucess>{ item.price }</p>
+        </div>
+      ))}
+
+
+some changes simpply we dooo and image task is on the way so solve that lets see
+
+so fro checking copy image url for terminal/console from wbapg but nothing get happen so for solution we go on chatgpt and copy some type of to get 
 
 
 
 
+@-@
+
+# Node js
+index.js
+
+const path = require('path');
+% add this on top
+app.use('/uploads',express.static(path.join(__dirname, 'uploads')))
+% addd this in middle. 
+this is for to showm image in frottend and used as a small idea
+
+% now go on frotend and just copy url and / at end add in frotend i home.jsx
 
 
 
+@-@
+
+# REact page
+homepage.jsx
 
 
+          <img src = { 'http://localhost:4000/ ' + item.pimg} />
+%  ERROR IS SIMPLE A SPACE AFTER / SO BE CAREFULL NEXT TIME..
 
+%  SO IN OUTPUT WE GET PRODUCT IMG , PRICE ,DESCRIPATION ETC....
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+2/03/25
 
 
 

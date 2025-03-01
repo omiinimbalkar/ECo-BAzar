@@ -20,14 +20,14 @@ function AddProduct() {
     const handleApi =() => {
 
         const fromData = new FormData();
-        fromData.append('pname',pname)
+        fromData.append('pname',pname) 
         fromData.append('pdesc',pdesc)
         fromData.append('price',price)
         fromData.append('category',category)
         fromData.append('pimg',pimg)
         
-        const url = ''
-        axios.post(URL,fromData)
+        const url = 'http://localhost:4000/add-product';
+        axios.post(url,fromData)
         .then((res) => {
           console.log(res)
         })
