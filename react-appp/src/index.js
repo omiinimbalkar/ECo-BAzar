@@ -17,7 +17,7 @@ import AddProduct from './components/AddProduct';
 const router = createBrowserRouter([
 
   {
-    path: "/home",
+    path: "/",
     element: (<Home />),
   },
   {
