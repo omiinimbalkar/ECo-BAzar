@@ -1,9 +1,9 @@
 import React from "react";
 import './Header.css'
-import { Link , useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // import { Link } from "react-router-dom";
-function Header () {
-  
+function Header(props) {
+
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -11,16 +11,25 @@ function Header () {
     navigate('/login');
   }
   return (
-    <div>
-        <div className="header">
-            <Link to="/home">HOME</Link>
+    <div className="header-container d-flex justify-content-between">
+      <div className="header">
+        <Link to="/home">HOME</Link>
 
-            <span className="mt-3">Sell & Purchase ONLINE.... in your city</span>
+        {/* code line for search barrrr */}
+        <input className="search"
+          type="text"
+          value={props && props.search}
+          onChange={(e) => props.handlesearch && props.handlesearch(e.target.value)}
+        />
+        <button className="search-btn" onClick={() => props.handleClick && props.handleClick()}>SEARCH</button>
 
-            {!localStorage.getItem('token') ?
-            <Link to ='/login'> LOGIN </Link>:
-            <button onClick={handleLogout}> LOGOUT </button> }
-        </div>
+
+      </div>
+      <div>
+        {!localStorage.getItem('token') ?
+          <Link to='/login'> LOGIN </Link> :
+          <button className="logout-btn" onClick={handleLogout}> LOGOUT </button>}
+      </div>
     </div>
   );
 };

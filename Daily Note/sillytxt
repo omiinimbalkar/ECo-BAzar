@@ -39,6 +39,14 @@ $-$
 What is State in React?
 In React, state is an object that stores data that can change over time and cause the component to re-render when updated. It allows components to be dynamic and interactive.
 
+why props used?
+In React, props (short for properties) are used to pass data from one component to another (usually from a parent to a child component).
+✅ Reusable Components – Pass different data to make components reusable.
+✅ Dynamic Content – Display different content in the same component.
+✅ Parent-Child Communication – Send data from a parent component to a child.
+
+
+
 
 <!-- code import and use keywords or package..... -->
 onchange:- user interaction
@@ -47,3 +55,5 @@ useeffect to connect with token
 value: - to connect with states
 navigate;- to preticular page
 axios : Axios is a popular JavaScript library used for making HTTP requests in web applications. It works with both browser and Node.js environments.
+
+

@@ -15,7 +15,7 @@ function AddProduct() {
         if (!localStorage.getItem('token')) {
             navigate('/login')
         }
-    })
+    }, []);
 
     const handleApi = () => {
 

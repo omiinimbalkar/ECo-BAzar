@@ -1576,6 +1576,179 @@ copy a line navigate wali for login.jsx and come in add product.jsx file and aft
 
 now we can render on home page after changes or add product 
 
+3-3-25
+% fronrtend
+% Header.jsx...............
+
+code line..
+% creating serach bar.............
+<_-------------------------------------------_>
+%  {/* code line for search barrrr */}
+%             <input className="search" type="text" />
+%             <button className="search-btn">SEARCH</button>
+
+
+% header.css for search bar and search button 
+<---------------------------------------------->
+% .search{
+%     margin-left: 20px;
+%     outline: none;
+%     padding-left: 10px;
+%     width: 200px;
+%     height: 35px;
+%     border: 2px solid #002f34;
+%     border-radius: 5px 0px 0px 5px;
+% }
+% .search-btn{
+%     height: 35px;
+%     background: #002f34;
+%     color: #fff;
+%     border-radius: 0px 5px 5px 0px;
+%     outline: none; /*like this none for remove default funda on outline */
+%     border: none;  
+% }
+
+👍👍👍👍
+
+next we need to workon serach like we search for anything na so we need to ridrect orget that product..
+
+s we used props in header 
+code.
+% header.jsx
+%  <input className="search" 
+%             type="text"
+%             value={props && props.search}
+%             onChange={(e) => props.handlesearch && props.handlesearch(e.target.value)}
+            
+%             />
+to check the value in output search bar will shows or pass in home page header as same or not 
+% home.jsx
+
+      % <Header search={'omom'} />
+% so as this is same beause of props so now handle search get reamining 
+
+i use din home and handle in header
+  % homee.jsx
+
+  % const [search, setsearch] = useState('hhh');
+
+  %  const handlesearch = (value) => {
+  %   setsearch(value);
+  % }
+
+      % <Header search={search} handlesearch={handlesearch} />
+
+% header.jsx ............. button
+        % <button className="search-btn" onClick={() => props.handleClick && props.handleClick()}>SEARCH</button>
+
+
+% home.jsx
+% const handleClick = () => {
+%     console.log('clcik');
+%   }
+      % <Header search={search} handlesearch={handlesearch} handleClick={handleClick} />
+
+% so now talk about product so get by api from that simple api url change or directly on ibnside const.
+
+24.09 t = 1.56
+% home.jsx
+
+  % const handleClick = () => {
+  %   console.log('producttt', products);
+  %   let filteredProducts = products.filter((item) => {
+  %     if (item.pname.includes(search) || item.pdesc.includes(search)|| item.category.includes(search)) {
+  %       return item;
+  %     }
+  %   })
+  %   setproducts(filteredProducts)
+  % }
+
+
+% this above code change in includes and filer wala part for  chaeck product is present or not and then serach 
+👍👍👍👍👍👍
+
+
+so now if write on search bar in lower cas that condition what to do?
+% so change in code add after the pname or any aother a toLowerCase()
+
+% item.pname.toLowerCase().includes(search) || item.pdesc.includes(search)|| item.category.includes(search)) 
+
+% so we done with search part..........😭😭😭😭
+
+% so now just removethe sell and purchanse text fro header🤷‍♂️
+
+<---------------------------------------------------------->
+⚒️⚒️⚒️⚒️
+% now search bar and button and logout to align at place of that like center and left side for that
+so we divide into divvvv
+% so in header.jsx
+% changes in header fro fix it by adding headr cntainer in namde of first div in heder.jsx
+% <div className="header-container d-flex justify-content-between"> ..htme/react part
+% .header-container{
+%     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+%     padding: 10px 20px;
+
+% }........................css part
+
+🔧🔧
+
+now botton syle for logout as lik search button...🎨
+give class name to logout button and same css copy paste fpor logout as search
+
+
+🔑 creating unique key for child
+% so go in home.jsx and chaneg in dicv by creating a key inside of that....after return beacuse its not rendering after changeing the word in search barr
+
+% creating category section by using inide compoents we crearte category sectionnnn 🛠️
+copy heder code and paset in categoriess
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+// import { Link } from "react-router-dom";
+function Categories(props) {
+
+
+  return (
+    <div className="cat-container d-flex justify-content-between">
+      <div>A</div>
+      <div>B</div>
+    </div>
+  );
+}
+export default Categories;
+% after changes this code and more change in code i will paste after words
+call caotegorie components in home.jsx 
+so after that change classnmae and just we can right in header.css to the code od css of coategories
+
+% stop for toda v=44.00 and t = 03.04🛑
+commit the codee..🖋️
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1592,4 +1765,8 @@ now we can render on home page after changes or add product
 
 
 ["😂", "❤️", "🤣", "👍", "😭", "🙏", "😍", "🥰", "😊", "🤔", 
- "💕", "😘", "😅", "🤗", "🤩", "💖", "💯", "🎉", "🥺", "🤷‍♂️"]
+ "💕", "😘", "😅", "🤗", "🤩", "💖", "💯", "🎉", "🥺", "🤷‍♂️" 
+ 💻 🚀 🐛 🔧 📝 📦 ⚙️ 💾 🖥️ 📡 🔍 📜 ⏳ 🔥 🚦 🔑 🛠️ 📊 
+ 🔄 💣 ✅ ❌ 🎨 ⚡ 🏗️ 🌐 🏆 🛑 🤖 📡🔄 🏁 🏅 🖊️ 🔗  🛜 
+ 🎯 🎛️ 🧩 🔃 🏷️ 💡  🖥️ 🎭 📌 🧑‍💻 🛠️ 🌀 🔐 🏎️ 📁 🧪 🕵️‍♂️🌟 
+ 📜 🏗️ 🖱️ 🗂️ 🚀 🎛️ 🖋️ 📶 ⚒️ 🏴‍☠️ 🔍 🧬 🎚️ 🖧 💾 🗃️ ⚖️ 🕰️ ]
