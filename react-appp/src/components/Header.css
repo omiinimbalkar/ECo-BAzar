@@ -12,6 +12,10 @@
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
     padding: 10px 20px;
 }
+.cat-container{
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+    padding: 10px 20px;
+}
 .mt-3{
     /* span walaa part  */
     display: inline-block;
@@ -42,4 +46,9 @@
     outline: none; /*like this none for remove default funda on outline */
     border: none;  
     padding: 1px 16px;
+}
+.category{
+    color: rgba(0, 47, 12, 1);
+    padding: 7px;
+    cursor: pointer;
 }

@@ -1722,17 +1722,128 @@ so after that change classnmae and just we can right in header.css to the code o
 % stop for toda v=44.00 and t = 03.04🛑
 commit the codee..🖋️
 
+3325
+% run backend first and go for frontend the..
+% open mongodb and connect api and go on...
+
+% simply to get product we need towrite in backend a /get-product okh.......
+
+call catgory in home
+<Categories />
+so we dont need to register in router because we are not using in router so no required..
 
 
+% so where does the cateogries come from so for that
+save it array by creating a file...
+
+% so simple writing code we need categories soo we goo to check how many categories in the ist..
+////categories.js file
+
+% let Categories = [  'Book' , 'Newspaper' , 'Bottle' , 'Bucket' , 'Clothes' , 'Sale', 'Old  Fans' ]
+
+% export default Categories;
+
+so simppe this code i right in this we can get by api or store in database 
+so used this categories in where in Categories.jsx file🎭
+
+% before that rename the js file with CategoriesList.js
+import categories from "./CategoriesList.js";
+function Categories(props) {
 
 
+  return (
+    <div className="cat-container d-flex justify-content-between">
+      <div>A</div>
+      <div>
+        { categories && categories.length > 0 &&
+        categories.map((item, index) => {
+           return (
+             <span> kkk</span>
+           );
+        })}
+      </div>
+    </div>
+  );
+}
+export default Categories;
+% change in code so span one part return kk for product is many that time its givee..
+
+.code line 
+                % <span className="category"> {item} </span>
+changes to get item which i pass in array...
+
+now go in header.css to styling of categories🎨
 
 
+% header.css changes..🎨
+.category{
+    color: rgba(0, 47, 12, 1);
+    padding: 7px;
+    cursor: pointer;
+}
+
+% now change in classnmae of Categories.jsx 
+  return (
+    <div className="cat-container">
+      <div>
+        <span className="p-3"> All Categories </span>
+        {categories && categories.length > 0 &&
+          categories.map((item, index) => {
+            return (
+              <span key={index} className="category"> {item} </span>
+            );
+          })}
+      </div>
+    </div>
+  );
+}
+
+% now header.css changes in code copy header-conatiner and paste and cange in cat-ontiner 🎨
+.cat-container{
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+    padding: 10px 20px;
+}
+
+% 🔧🔧🔧🔧🔧🔧🔧🔧🔧🔧🔧🔧🔧
+now work on whenb we click on any categories it will shows that only shoo no go on ...🛠️
+
+% go to categories.jsx
+
+   <span onClick={() => props.handleCategory && props.handleCategory(item)} key={index} className="category"> {item} </span>
+
+   after that where we used categorie sgo on that folder and change itt..
+  %  go to home.jsx
+
+ const handleCategory = (value) =>{
+  console.log(value,"v")
+ }
+    <Categories handleCategory ={handleCategory} />
+
+%  we getting after click the console but not the apge of that categories so gon categories.jsx to check in span..
+
+so we used filter single filter😭
+% so for that we go on home.jsx step 1
+% now copy filtered data which we created for search step 2
+% and paste in home.jsx after that product caotegory 
+% some changes we required filter so used one only..
+
+ const handleCategory = (value) => {
+    console.log(value, "v")
+    let filteredProducts = products.filter((item) => {
+      if (item.category.toLowerCase() == (search.toLowerCase())) {
+        return item;
+      }
+    })
+    setproducts(filteredProducts)
+  } 
 
 
+🔥🔥🔥🔥🔥🔥🔥🔥 so go and check 
 
+% no ficx eeror come not showig on console to solve we required
+% the both on search and  categories
 
-
+so mind blowing erroe which is like when you cloick on categories in first like eg book u render to that paricular ystem but after you u try to go agiin on same categories its not showing.. so slution following code...😭😭😭😭😭
 
 
 

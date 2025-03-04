@@ -3,13 +3,14 @@ import Header from './Header';
 import Categories from './Categories';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+
 function Home() {
 
   const navigate = useNavigate()
 
   //creating stae for products
   const [products, setproducts] = useState([]);
-  const [search, setsearch] = useState([]);
+  const [search, setsearch] = useState("");
 
   // for not acces home page without login thi useeffrct is used..
   // useEffect(() => {
@@ -19,8 +20,9 @@ function Home() {
   // }, [])
   useEffect(() => {
     const url = "http://localhost:4000/get-products";
-    axios.get(url)
-      .then((res) => {
+    axios
+       .get(url)
+       .then((res) => {
         if (res.data.products) {
           setproducts(res.data.products);
         }
@@ -35,16 +37,31 @@ function Home() {
   }
   const handleClick = () => {
     let filteredProducts = products.filter((item) => {
-      if (item.pname.toLowerCase().includes(search) || item.pdesc.toLowerCase().includes(search) || item.category.toLowerCase().includes(search)) {
+      console.log(item)
+      if (item.pname.toLowerCase().includes(search.toLowerCase()) ||
+        item.pdesc.toLowerCase().includes(search.toLowerCase()) ||
+        item.category.toLowerCase().includes(search.toLowerCase())) {
         return item;
       }
     })
     setproducts(filteredProducts)
   }
+  
+  const handleCategory = (value) => {
+    console.log(value, "v")
+    let filteredProducts = products.filter((item) => {
+      if (item.category.toLowerCase() == (search.toLowerCase())) {
+        return item;
+      }
+    })
+    setproducts(filteredProducts)
+  } 
+
+
   return (
     <div>
       <Header search={search} handlesearch={handlesearch} handleClick={handleClick} />
-      <Categories />
+      <Categories handleCategory={handleCategory} />
       {localStorage.getItem('token') && <Link to="/add-product"> ADD PRODUCT </Link>}
 
       <div className='d-flex justify-content-center flex-wrap'>
