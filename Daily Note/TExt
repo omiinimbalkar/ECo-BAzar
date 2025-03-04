@@ -1845,34 +1845,154 @@ so we used filter single filter😭
 
 so mind blowing erroe which is like when you cloick on categories in first like eg book u render to that paricular ystem but after you u try to go agiin on same categories its not showing.. so slution following code...😭😭😭😭😭
 
+4;3;25 t = 23;57
+the raeson: 
+ki for before changing for one products thats why its not switiching so solutio i simple below code:
 
 
+.code 
+import { useEffect, useState } from 'react';
+import Header from './Header';
+import Categories from './Categories';
+import { useNavigate, Link } from 'react-router-dom';
+import axios from 'axios';
+
+function Home() {
+
+  const navigate = useNavigate()
+
+  //creating stae for products
+  const [products, setproducts] = useState([]);
+  const [cproducts, setcproducts] = useState([]);
+  const [search, setsearch] = useState("");
+
+  // for not acces home page without login thi useeffrct is used..
+  // useEffect(() => {
+  //   if (!localStorage.getItem('token')) {
+  //     navigate('/login')
+  //   }
+  // }, [])
+  useEffect(() => {
+    const url = "http://localhost:4000/get-products";
+    axios
+      .get(url)
+      .then((res) => {
+        if (res.data.products) {
+          setproducts(res.data.products);
+        }
+      })
+      .catch((err) => {
+        alert("server error")
+      });
+  }, []);
+
+  const handlesearch = (value) => {
+    setsearch(value);
+  }
+  const handleClick = () => {
+    let filteredProducts = products.filter((item) => {
+      console.log(item)
+      if (item.pname.toLowerCase().includes(search.toLowerCase()) ||
+        item.pdesc.toLowerCase().includes(search.toLowerCase()) ||
+        item.category.toLowerCase().includes(search.toLowerCase())) {
+        return item;
+      }
+    })
+    setproducts(filteredProducts)
+  }
+
+  const handleCategory = (value) => {
+    let filteredProducts = products.filter((item,index) => {
+      if (item.category == value ) {
+        return item;
+      }
+    })
+    setcproducts(filteredProducts)
+  }
 
 
+  return (
+    <div>
+      <Header search={search} handlesearch={handlesearch} handleClick={handleClick} />
+      <Categories handleCategory={handleCategory} />
+      {localStorage.getItem('token') && <Link to="/add-product"> ADD PRODUCT </Link>}
+
+      <h5>SEARCH PRODUCTS : </h5>
+
+      <div className='d-flex justify-content-center flex-wrap'>
+        {cproducts && products.length > 0 &&
+          cproducts.map((item, index) => {
+            return (
+              <div key={item._id} className="card m-3" >
+                <img width="500px" height="200px" src={'http://localhost:4000/' + item.pimg} />
+                <p className='m-2 '>{item.pname} | {item.category} </p>
+                <p className="m-2 text-danger">{item.price}</p>
+                <p className="m-2 text-success">{item.pdesc}</p>
+              </div>
+            )
+          })}
+      </div>
+        <h5>ALL RESULTS : </h5>
+
+        <div className='d-flex justify-content-center flex-wrap'>
+          {products && products.length > 0 &&
+            products.map((item, index) => {
+              return (
+                <div key={item._id} className="card m-3" >
+                  <img width="500px" height="200px" src={'http://localhost:4000/' + item.pimg} />
+                  <p className='m-2 '>{item.pname} | {item.category} </p>
+                  <p className="m-2 text-danger">{item.price}</p>
+                  <p className="m-2 text-success">{item.pdesc}</p>
+                </div>
+              )
+            })}
+        </div>
+    </div>
+  );
+}
+export default Home;    
+
+chnage in handle category and add copy paste the ustatste of product and cprodct and then changes in div whole copy pate again and searched and all result divide simple....😂😂😂😂😂
+
+but we solved categories errro but not serach so for that.... after one typng second time arraty get empty to solved them below changes in code..
+% this data can fetch by writing line of code or just fetch code from backend........
+
+% hnadle clicked :     setproducts(filteredProducts) #before
+%     setcproducts(filteredProducts) #after
+
+% removed the console.log..........
+from all filessss
+
+now 2 worked is done now work on third likeee..
+1. search wala
+2.categorie 
+
+3like in next seesion 
+
+before that we work on backend to fetch data from to categories
+if products are les then they need ftech from frotend if its more than it need to be fetch frm backrend....
+
+% nexst process on icon 
+search on online : react icons
+
+------------terminal-------------
+install:-npm install react-icons //inside react floder
+2. go documentataion page : link🔗 :[text](https://react-icons.github.io/react-icons/)
+3.search for heart on linkdocumentation
+4.copy and go to home.jsx
+now where we ant to shownon product 
+in  code import it and used it so simple i gie code line:
+used in first div before img tag... 
 
 
+errar faced so solevd itt...
+import { FaHeart} from 'react-icons/fa';
+                  <FaHeart className='icons'/>//inside both serached all result div bedore imae tahg..
 
 
+% go to App.css
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+🚀 : so server and applicatiin want to restarat because whenever you ad sometghong or package so it need to 
 
 
 ["😂", "❤️", "🤣", "👍", "😭", "🙏", "😍", "🥰", "😊", "🤔", 

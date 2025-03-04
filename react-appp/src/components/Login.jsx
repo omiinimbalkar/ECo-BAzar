@@ -14,7 +14,6 @@ function Login() {
     const data = {username,password};
     axios.post(URL,data)
     .then((res) => {
-      console.log(res.data);
       if(res.data.message){
         alert(res.data.message);
         if(res.data.token){
@@ -24,7 +23,6 @@ function Login() {
       }
     })
     .catch((err) => {
-      console.log(err);
       alert('SERVer ERR')
     });
   }

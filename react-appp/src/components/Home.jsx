@@ -3,13 +3,14 @@ import Header from './Header';
 import Categories from './Categories';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
-
+import { FaHeart} from 'react-icons/fa';
 function Home() {
 
   const navigate = useNavigate()
 
   //creating stae for products
   const [products, setproducts] = useState([]);
+  const [cproducts, setcproducts] = useState([]);
   const [search, setsearch] = useState("");
 
   // for not acces home page without login thi useeffrct is used..
@@ -21,8 +22,8 @@ function Home() {
   useEffect(() => {
     const url = "http://localhost:4000/get-products";
     axios
-       .get(url)
-       .then((res) => {
+      .get(url)
+      .then((res) => {
         if (res.data.products) {
           setproducts(res.data.products);
         }
@@ -37,25 +38,23 @@ function Home() {
   }
   const handleClick = () => {
     let filteredProducts = products.filter((item) => {
-      console.log(item)
       if (item.pname.toLowerCase().includes(search.toLowerCase()) ||
         item.pdesc.toLowerCase().includes(search.toLowerCase()) ||
         item.category.toLowerCase().includes(search.toLowerCase())) {
         return item;
       }
     })
-    setproducts(filteredProducts)
+    setcproducts(filteredProducts)
   }
-  
+
   const handleCategory = (value) => {
-    console.log(value, "v")
-    let filteredProducts = products.filter((item) => {
-      if (item.category.toLowerCase() == (search.toLowerCase())) {
+    let filteredProducts = products.filter((item,index) => {
+      if (item.category == value ) {
         return item;
       }
     })
-    setproducts(filteredProducts)
-  } 
+    setcproducts(filteredProducts)
+  }
 
 
   return (
@@ -64,11 +63,14 @@ function Home() {
       <Categories handleCategory={handleCategory} />
       {localStorage.getItem('token') && <Link to="/add-product"> ADD PRODUCT </Link>}
 
+      <h5>SEARCH PRODUCTS : </h5>
+
       <div className='d-flex justify-content-center flex-wrap'>
-        {products && products.length > 0 &&
-          products.map((item, index) => {
+        {cproducts && products.length > 0 &&
+          cproducts.map((item, index) => {
             return (
               <div key={item._id} className="card m-3" >
+                <FaHeart />
                 <img width="500px" height="200px" src={'http://localhost:4000/' + item.pimg} />
                 <p className='m-2 '>{item.pname} | {item.category} </p>
                 <p className="m-2 text-danger">{item.price}</p>
@@ -77,6 +79,22 @@ function Home() {
             )
           })}
       </div>
+        <h5>ALL RESULTS : </h5>
+
+        <div className='d-flex justify-content-center flex-wrap'>
+          {products && products.length > 0 &&
+            products.map((item, index) => {
+              return (
+                <div key={item._id} className="card m-3" >
+                  <FaHeart className='icons'/>
+                  <img width="500px" height="200px" src={'http://localhost:4000/' + item.pimg} />
+                  <p className='m-2 '>{item.pname} | {item.category} </p>
+                  <p className="m-2 text-danger">{item.price}</p>
+                  <p className="m-2 text-success">{item.pdesc}</p>
+                </div>
+              )
+            })}
+        </div>
     </div>
   );
 }

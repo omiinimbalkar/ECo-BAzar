@@ -14,13 +14,11 @@ function Signup() {
     const data = {username,password};
     axios.post(URL,data)
     .then((res) => {
-      console.log(res.data);
       if(res.data.message === 'User created'){
         alert('User created');
       }
     })
     .catch((err) => {
-      console.log(err);
       alert('SERVer ERR')
     });
   }
