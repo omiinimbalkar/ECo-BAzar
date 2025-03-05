@@ -1994,6 +1994,90 @@ import { FaHeart} from 'react-icons/fa';
 
 🚀 : so server and applicatiin want to restarat because whenever you ad sometghong or package so it need to 
 
+5325..
+% so app.css for iicons in home 
+so go again 4 v
+.icons{
+  font-size: 32px;
+  height:32px;
+  width: 332px;
+  color: rgb(245, 240, 240);
+
+}
+now go in home.jsx and just add style insid the  <FaHeart className='icons'/>/tag
+% waht simply we do is changes inside div tag used itt and div give a name icons-container
+% .cod line
+ <div className="icons-conatiner">
+     <FaHeart style={{ color: 'red', fontSize: '32px' }} />
+</div>
+% so we creating home.css for styling on home....
+% and import in home.jsx🙏🙏
+
+so now what is happen we crerate a file for home styling so now...
+delete style from above as we define now we jsut 
+
+home.css
+.icons{
+    font-size: 32px;
+    height:32px;
+    width: 32px;
+    color: rgb(245, 240, 240);
+}
+.icons-conatiner{
+  position : absolute;
+    top : 0;
+    right: 0;
+    border-radius: 50%;
+    padding: 7px;
+    background-color: #fff; 
+    margin: 7px
+}
+
+so after this changes what actually we did is just changes in styling add like butoon in  eft side and cool it all funda looks fiffernt afterward we do when clickwd its color change into red..
+
+  .icon:hover{
+    color: red
+  }
+add before icon-container
+
+% now styling on links....
+.links{
+    text-decoration: none;
+    font-size: 24px;
+    color: #002f34;
+    font-weight: bold;
+}
+/* for this give the link clasname as links */ = header.jsx add button and add top lets see...
+
+now add product ko button bante hai bhaii..= home.jsx
+   {!!localStorage.getItem('token') && <Link to="/add-product"><button className='logout-btn'>ADD PRODUCT</button>  </Link>}
+
+% cut this line and paste inside the header after secod last div  and go to header.cs logout-btn css and changes in margin...😭
+✅✅✅✅
+.logout-btn{
+    height: 35px;
+    background: #002f34;
+    color: #fff;
+    border-radius: 5px ;
+    outline: none; /*like this none for remove default funda on outline */
+    border: none;  
+    padding: 1px 16px;
+    margin-right: 10px;
+}//header.css
+      <div>
+      {!!localStorage.getItem('token') && 
+      <Link to="/add-product"><button className='logout-btn'>ADD PRODUCT</button>  
+      </Link>}
+
+        {!localStorage.getItem('token') ?
+          <Link to='/login'> LOGIN </Link> :
+          <button className="logout-btn" onClick={handleLogout}> LOGOUT </button>}
+      </div>//header.jsx
+
+
+
+5 v work is when we clicked on liked its goes in backend and save....!!
+
 
 ["😂", "❤️", "🤣", "👍", "😭", "🙏", "😍", "🥰", "😊", "🤔", 
  "💕", "😘", "😅", "🤗", "🤩", "💖", "💯", "🎉", "🥺", "🤷‍♂️" 

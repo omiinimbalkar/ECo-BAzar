@@ -3,7 +3,8 @@ import Header from './Header';
 import Categories from './Categories';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
-import { FaHeart} from 'react-icons/fa';
+import { FaHeart } from 'react-icons/fa';
+import './Home.css'
 function Home() {
 
   const navigate = useNavigate()
@@ -48,8 +49,8 @@ function Home() {
   }
 
   const handleCategory = (value) => {
-    let filteredProducts = products.filter((item,index) => {
-      if (item.category == value ) {
+    let filteredProducts = products.filter((item, index) => {
+      if (item.category == value) {
         return item;
       }
     })
@@ -61,7 +62,6 @@ function Home() {
     <div>
       <Header search={search} handlesearch={handlesearch} handleClick={handleClick} />
       <Categories handleCategory={handleCategory} />
-      {localStorage.getItem('token') && <Link to="/add-product"> ADD PRODUCT </Link>}
 
       <h5>SEARCH PRODUCTS : </h5>
 
@@ -70,7 +70,9 @@ function Home() {
           cproducts.map((item, index) => {
             return (
               <div key={item._id} className="card m-3" >
-                <FaHeart />
+               <div className="icons-conatiner">
+                  <FaHeart className='icons' />
+               </div>
                 <img width="500px" height="200px" src={'http://localhost:4000/' + item.pimg} />
                 <p className='m-2 '>{item.pname} | {item.category} </p>
                 <p className="m-2 text-danger">{item.price}</p>
@@ -79,22 +81,24 @@ function Home() {
             )
           })}
       </div>
-        <h5>ALL RESULTS : </h5>
+      <h5>ALL RESULTS : </h5>
 
-        <div className='d-flex justify-content-center flex-wrap'>
-          {products && products.length > 0 &&
-            products.map((item, index) => {
-              return (
-                <div key={item._id} className="card m-3" >
-                  <FaHeart className='icons'/>
-                  <img width="500px" height="200px" src={'http://localhost:4000/' + item.pimg} />
-                  <p className='m-2 '>{item.pname} | {item.category} </p>
-                  <p className="m-2 text-danger">{item.price}</p>
-                  <p className="m-2 text-success">{item.pdesc}</p>
+      <div className='d-flex justify-content-center flex-wrap'>
+        {products && products.length > 0 &&
+          products.map((item, index) => {
+            return (
+              <div key={item._id} className="card m-3" >
+                <div className="icons-conatiner">
+                  <FaHeart className='icons' />
                 </div>
-              )
-            })}
-        </div>
+                <img width="500px" height="200px" src={'http://localhost:4000/' + item.pimg} />
+                <p className='m-2 '>{item.pname} | {item.category} </p>
+                <p className="m-2 text-danger">{item.price}</p>
+                <p className="m-2 text-success">{item.pdesc}</p>
+              </div>
+            )
+          })}
+      </div>
     </div>
   );
 }
