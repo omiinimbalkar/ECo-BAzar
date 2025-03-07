@@ -29,7 +29,12 @@ const mongoose = require('mongoose');
 
 mongoose.connect('mongodb+srv://omssn21:om212006@cluster0.vr8ns.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
 
-const Users = mongoose.model('Users', { username: String, password: String });  // we are creating a model
+
+const Users = mongoose.model('Users', 
+  { username: String, 
+    password: String,
+    likedProducts : [{type : mongoose.Schema.Types.ObjectId,ref:'Products'}]
+  });  // we are creating a model
 const Products = mongoose.model('Products', { pname: String, pdesc:String, price:String, category:String, pimg:String});  // we are creating a model for product 
 
 // app.get('/ap', (req, res) => {
@@ -37,10 +42,23 @@ app.get('/', (req, res) => {
   res.send('Hello Coder.....🌐 ')
 })
 
+app.post('/liked-product', (req ,res) =>{
+    let productId = req.body.productId;
+    let userId = req.body.userId;
+    
+    console.log(req.body)
+
+    //update user model
+    Users.updateOne({_id: ( userId )} ,{$addToSet : { likedProducts : productId }})
+    .then(() => {
+      res.send({message : 'Liked successfully'})
+    })
+    .catch(() => {
+    res.send({message: 'Server Error'});  
+    });
+})
 //we get data frm frotend fro add product
 app.post('/add-product',upload.single('pimg'),(req,res)=>{
-    console.log(req.body)
-    console.log(req.file.path)
     const pname  = req.body.pname;
     const pdesc  = req.body.pdesc;
     const price  = req.body.price;
@@ -60,7 +78,6 @@ app.post('/add-product',upload.single('pimg'),(req,res)=>{
 app.get('/get-products',(req,res)=>{
   Products.find()//findall
   .then((result)=>{
-    console.log(result, "product data")
     res.send({message:"succesfully saved.." , products : result})
   })
   .catch((err)=>{
@@ -71,7 +88,6 @@ app.get('/get-products',(req,res)=>{
 // we get data frm frontend so we give name as signup
 
 app.post ('/signup', (req, res) => {
-  console.log(req.body);
   const username  = req.body.username;
   const password = req.body.password; 
   const user = new Users({ username: username, password: password });
@@ -88,14 +104,12 @@ app.post ('/signup', (req, res) => {
 // we get data frm frontend so we give name as login
 
 app.post ('/login', (req, res) => {
-  console.log(req.body);
   const username  = req.body.username;
   const password = req.body.password; 
 
   Users.findOne({username: username})  
 
   .then((result) => {
-    console.log(result  ,"userData");
     if(!result){
       res.send({message : 'User not found'}) //user dta not found
     }
@@ -104,7 +118,7 @@ app.post ('/login', (req, res) => {
         const token = jwt.sign({
           data:  result 
         }, 'MYKEY', { expiresIn: '1h'});
-        res.send({message : 'User found',token:token}) //user data found
+        res.send({message : 'User found',token:token , userId : result._id}) //user data found
       }
       if(result.password !== password){
         res.send({message : 'Password not matched'}) //password not matched

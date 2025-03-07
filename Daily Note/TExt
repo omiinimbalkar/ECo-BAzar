@@ -2075,8 +2075,132 @@ now add product ko button bante hai bhaii..= home.jsx
       </div>//header.jsx
 
 
-
 5 v work is when we clicked on liked its goes in backend and save....!!
+7325.......
+% so work on add to fav wala ig and the when we clicked on product we go that page okh.. + css changes
+% run server both side 👍👍👍👍👍👍👍👍
+
+% go node folder inside that index.js and check what things user ahve..........addlik product in that.. so go on code line will paste here...... //-is indicates the changes in code.
+
+[{ type : mongoose.Schema.Types.Objects,ref:'Products'}]// this tell as type of mongoose is schenma which objectid save objeect id which created by mongo..type of objectid
+so simple we picked up for here for product if we need more so popluated itt..
+
+% in const part📝
+const Users = mongoose.model('Users', 
+  { username: String, 
+    password: String,
+    // likedProducts : [{type : mongoose.Schema.Types.Objects,ref:'Products'}]
+  });  // we are creating a model
+
+
+% post 📝
+
+app.post('liked-product', (req ,res) =>{
+    let productId = req.body.productId;
+    let userId = req.body.userId;
+
+    //update user model
+    Users.updateOne({_id: ObjectId( userId )} ,{$addToSet : { likedProducts : productId }})
+    .then(() => {
+      res.send({message : 'Liked successfully'})
+    })
+    .catch(() => {
+    res.send({message: 'Server Error'});  
+    });
+})
+
+
+<!-- Api is ready hit them from frontend in home.jsx... 📦-->
+now simple to do ki in fav product div onclicked an othr work go in that...
+<!-- 
+     <div onClick={handleLike} className="icons-conatiner">
+                  <FaHeart className='icons' />
+                </div>
+              this onclied change in both  -->
+
+ const handleLike = () => {
+    console.log('user id', 'product id')
+  }
+<!-- normal to checked its working or nott..... -->
+
+<!-- after sloving a small error  we go to the  -->
+now get it..
+
+<!-- as simple we get product id in output console okh  -->
+<div onClick={() => handleLike(item._id)} className="icons-conatiner">
+                  <FaHeart className='icons' />
+                </div>
+
+
+ const handleLike = (productId) => {
+    console.log('user id', 'product id',productId)
+  }
+
+<!-- changes in code onclied and in console and () -->
+
+<!-- now again logout go to knowm user id we go on index.jsand check login api -->
+<!-- so simple when user login how we save token  like that user id saved when use rlogin --> for that chanegs in login.jsx to 
+
+<!-- index.js login post wala else part
+        res.send({message : 'User found',token:token , userId : result._id}) //user data found
+ -->
+
+ <!-- login.jsx 
+ in const dat username name etc secon if part
+ localStorage.setItem('userId',res.data.userId); -->
+<!-- now after changes we go to login again to get user id with tokeen  -->
+
+/////<!-- so check that go in output console  , next go in appliction next in right side click on console option etc and go on...... you can se your taken and userId ✅-->////
+
+/////so we want in home page so we go to on home.jsx and changes in code line ..............
+
+ const handleLike = (productId) => {
+    /let userId = localStorage.getItem('userId')
+    /console.log('user id', 'product id',productId,userId)
+  }
+
+<!-- changes in code / so simple as that and no sent to api  -->
+<!-- index.js  
+app.post('/liked-product', (req ,res) =>{
+-->
+
+changes in code 
+<!-- home.jsx 
+const handleLike = (productId) => {
+    let userId = localStorage.getItem('userId');
+    console.log('user id', 'product id',productId,userId);
+    const url = "http://localhost:4000/liked-product";
+    const data = { userId , productId } // same things so not required to write double productId:prooduict..
+    axios.post(url,data)
+      .then((res) => {
+        if (res.data.products) {
+          setproducts(res.data.products); // chaneg in the codee 
+          before this check in console.log(res)
+        }
+      })
+      .catch((err) => {
+        alert("server error")
+      });
+
+  }
+ -->
+
+
+ <!-- remove all console in index.js to not required ❌❌ -->
+
+ <!-- index.jss 
+   
+    console.log(req.body)
+    return; 
+    to check it getting or not in output consolee......  in terminal of nod also .. -->
+    <!-- now when we cliked in liked w eget wjolwe data iof product like din output console.......
+    {data: {…}, status: 200, statusText: 'OK', headers: AxiosHeaders, config: {…}, …}config: {transitional: {…}, adapter: Array(3), transformRequest: Array(1), transformResponse: Array(1), timeout: 0, …}data: {message: 'Liked successfully'}headers: AxiosHeaders {content-length: '32', content-type: 'application/json; charset=utf-8'}request: XMLHttpRequest {onreadystatechange: null, readyState: 4, timeout: 0, withCredentials: false, upload: XMLHttpRequestUpload, …}status: 200statusText: "OK"[[Prototype]]: Object -->
+
+
+
+ <!-- yes we are getting it so go in mongo to checked we are getting the liked dat in mongo to......... 📡-->
+
+<!-- so now go aND CREAT A NEW USER TO GET LIKED PRODCUTR ARRAY ............. -->
 
 
 ["😂", "❤️", "🤣", "👍", "😭", "🙏", "😍", "🥰", "😊", "🤔", 

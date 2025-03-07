@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Header from './Header';
 import Categories from './Categories';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, data } from 'react-router-dom';
 import axios from 'axios';
 import { FaHeart } from 'react-icons/fa';
 import './Home.css'
@@ -57,6 +57,23 @@ function Home() {
     setcproducts(filteredProducts)
   }
 
+  const handleLike = (productId) => {
+    let userId = localStorage.getItem('userId');
+    console.log('user id', 'product id',productId,userId);
+    const url = "http://localhost:4000/liked-product";
+    const data = { userId , productId }
+    axios.post(url,data)
+      .then((res) => {
+        // if (res.data.products) {
+        //   setproducts(res.data.products);
+        // }
+        console.log(res)
+      })
+      .catch((err) => {
+        alert("server error")
+      });
+
+  }
 
   return (
     <div>
@@ -70,9 +87,9 @@ function Home() {
           cproducts.map((item, index) => {
             return (
               <div key={item._id} className="card m-3" >
-               <div className="icons-conatiner">
+                <div onClick={() => handleLike(item._id)} className="icons-conatiner">
                   <FaHeart className='icons' />
-               </div>
+                </div>
                 <img width="500px" height="200px" src={'http://localhost:4000/' + item.pimg} />
                 <p className='m-2 '>{item.pname} | {item.category} </p>
                 <p className="m-2 text-danger">{item.price}</p>
@@ -88,8 +105,8 @@ function Home() {
           products.map((item, index) => {
             return (
               <div key={item._id} className="card m-3" >
-                <div className="icons-conatiner">
-                  <FaHeart className='icons' />
+                <div onClick={() => handleLike(item._id)} className="icons-conatiner">
+                <FaHeart className='icons' />
                 </div>
                 <img width="500px" height="200px" src={'http://localhost:4000/' + item.pimg} />
                 <p className='m-2 '>{item.pname} | {item.category} </p>
