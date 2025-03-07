@@ -59,15 +59,13 @@ function Home() {
 
   const handleLike = (productId) => {
     let userId = localStorage.getItem('userId');
-    console.log('user id', 'product id',productId,userId);
     const url = "http://localhost:4000/liked-product";
     const data = { userId , productId }
     axios.post(url,data)
       .then((res) => {
-        // if (res.data.products) {
-        //   setproducts(res.data.products);
-        // }
-        console.log(res)
+        if (res.data.message) {
+          alert('Liked')
+        }
       })
       .catch((err) => {
         alert("server error")

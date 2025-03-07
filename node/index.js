@@ -46,7 +46,6 @@ app.post('/liked-product', (req ,res) =>{
     let productId = req.body.productId;
     let userId = req.body.userId;
     
-    console.log(req.body)
 
     //update user model
     Users.updateOne({_id: ( userId )} ,{$addToSet : { likedProducts : productId }})
@@ -83,6 +82,16 @@ app.get('/get-products',(req,res)=>{
   .catch((err)=>{
     res.send({message:"server err"})
   })
+})
+
+app.post('/liked-products', (req, res) => {
+  Users.findOne({_id: req.body.userId}).populate('likedProducts')
+    .then((result) => {
+      res.send({ message: "succesfully saved..", products: result.likedProducts})
+    })
+    .catch((err) => {
+      res.send({ message: "server err" })
+    })
 })
 
 // we get data frm frontend so we give name as signup

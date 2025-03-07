@@ -13,6 +13,7 @@ import Home from "./components/Home";  // Import the Home component
 import Login from './components/Login';
 import Signup from './components/Signup';
 import AddProduct from './components/AddProduct';
+import LikedProducts from './components/LikedProducts';
 
 const router = createBrowserRouter([
 
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
   {
     path: "/add-product",  
     element: (<AddProduct/>),  
+  },
+  {
+    path: "/liked-products",
+    element: (<LikedProducts/>),
   },
 ]);
 

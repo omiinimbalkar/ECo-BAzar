@@ -23,14 +23,20 @@ function Header(props) {
         />
         <button className="search-btn" onClick={() => props.handleClick && props.handleClick()}>SEARCH</button>
 
-      
+
       </div>
 
 
       <div>
-      {!!localStorage.getItem('token') && 
-      <Link to="/add-product"><button className='logout-btn'>ADD PRODUCT</button>  
-      </Link>}
+        {!!localStorage.getItem('token') &&
+          <Link to="/add-product">
+          <button className='logout-btn'>ADD PRODUCT</button>
+          </Link>}
+
+        {!!localStorage.getItem('token') &&
+          <Link to="/liked-products">
+          <button className='logout-btn'>LIKED PRODUCTS</button>
+          </Link>}
 
         {!localStorage.getItem('token') ?
           <Link to='/login'> LOGIN </Link> :

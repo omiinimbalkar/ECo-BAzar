@@ -2200,7 +2200,325 @@ const handleLike = (productId) => {
 
  <!-- yes we are getting it so go in mongo to checked we are getting the liked dat in mongo to......... 📡-->
 
-<!-- so now go aND CREAT A NEW USER TO GET LIKED PRODCUTR ARRAY ............. -->
+<!-- so now go aND CREAT A NEW USER TO GET LIKED PRODCUTR ARRAY ...........💾.. -->
+remove all user to get again anew data , remove console.log in index.js 🧪
+
+<!-- remove condole log from hom.jsx to after  handle liked coonst next wala -->
+ axios.post(url,data)
+      .then((res) => {
+        if (res.data.message) {
+          alert('Liked')
+        }
+      })🚀🚀
+
+<!-- now check in like dis okh . -->
+<!-- Liked product created to saved all liked product so create inside comonents -->
+@-@
+
+# REact page
+
+// copy home page coe to paste inside this okh 😊
+<!-- liked products in same as homepage bas like  liked product save dther eso do it some changes okhhhh -->
+ 
+<!-- first render in index.js in react-app -->
+{
+    path: "/liked-products",
+    element: (<LikedProducts/>),
+  },
+  <!-- after adding this line inside the index.js we get an good virw after in out put in chages add /after locl host... -->
+[text](http://localhost:3000/liked-products)🔗
+
+<!-- liked.jsx 
+ useEffect(() => {
+    const url = "http://localhost:4000/liked-products";
+    axios 
+    it give an error : because nothing inside that... -->
+
+
+@-@
+
+# Node js
+index.js
+
+<!-- chnages get-products  with liked-product
+app.get('/liked-products', (req, res) => {
+  Users.find() -->
+  copy paset get prooduct api..first ?
+froms user we search how many dta and teh n likedproduct wali ali
+
+<!-- .code changes
+
+app.get('/liked-products', (req, res) => {
+  Users.find({_id: req.body.userId}).populate('likedProducts')
+    .then((result) => {
+      res.send({ message: "succesfully saved..", products: result.likedProducts})
+    })
+    .catch((err) => {
+      res.send({ message: "server err" })
+    })
+})
+ -->
+
+after the raect code chnages\ change sin react code to ge only result in post api
+and change in find with findOne
+@-@
+
+# REact page
+likedproducts.jsx
+
+let data = { userId : localStorage.getItem('userId)}
+axios.post(url,data)// change in code line
+
+<!-- errror to update mongo  -->
+solved we get ouput as fav in /liked-product
+<!-- so created a link foor like product  in header -->
+<!-- go to Hedaer.jsx -->
+/////
+
+<!-- copy paste code of add produt ig some lne chages -->
+
+
+////////now work on 4 product s show in line 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ["😂", "❤️", "🤣", "👍", "😭", "🙏", "😍", "🥰", "😊", "🤔", 
