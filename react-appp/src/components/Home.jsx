@@ -60,8 +60,8 @@ function Home() {
   const handleLike = (productId) => {
     let userId = localStorage.getItem('userId');
     const url = "http://localhost:4000/liked-product";
-    const data = { userId , productId }
-    axios.post(url,data)
+    const data = { userId, productId }
+    axios.post(url, data)
       .then((res) => {
         if (res.data.message) {
           alert('Liked')
@@ -72,7 +72,9 @@ function Home() {
       });
 
   }
-
+  const handelProduct = (id) => {
+    navigate('/product/' + id)
+  }
   return (
     <div>
       <Header search={search} handlesearch={handlesearch} handleClick={handleClick} />
@@ -102,13 +104,13 @@ function Home() {
         {products && products.length > 0 &&
           products.map((item, index) => {
             return (
-              <div key={item._id} className="card m-3" >
+              <div onClick={() => { handelProduct(item._id) }} key={item._id} className="card m-3" >
                 <div onClick={() => handleLike(item._id)} className="icons-conatiner">
-                <FaHeart className='icons' />
+                  <FaHeart className='icons' />
                 </div>
-                <img width="500px" height="200px" src={'http://localhost:4000/' + item.pimg} />
+                <img width="300px" height="200px" src={'http://localhost:4000/' + item.pimg} />
+                <p className="m-2 price-text"> Rs.{item.price} /-</p>
                 <p className='m-2 '>{item.pname} | {item.category} </p>
-                <p className="m-2 text-danger">{item.price}</p>
                 <p className="m-2 text-success">{item.pdesc}</p>
               </div>
             )

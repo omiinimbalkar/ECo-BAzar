@@ -2,6 +2,7 @@ import React from "react";
 import './Header.css'
 import { Link, useNavigate } from "react-router-dom";
 // import { Link } from "react-router-dom";
+import { FaSearch } from "react-icons/fa";
 function Header(props) {
 
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ function Header(props) {
           value={props && props.search}
           onChange={(e) => props.handlesearch && props.handlesearch(e.target.value)}
         />
-        <button className="search-btn" onClick={() => props.handleClick && props.handleClick()}>SEARCH</button>
+        <button className="search-btn" onClick={() => props.handleClick && props.handleClick()}><FaSearch /></button>
 
 
       </div>

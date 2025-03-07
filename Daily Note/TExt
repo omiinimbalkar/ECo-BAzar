@@ -2279,50 +2279,139 @@ solved we get ouput as fav in /liked-product
 
 
 ////////now work on 4 product s show in line 
+<!-- home.jsx -->
+<!-- change image width and height eith 250px and 150px chnage in txt of prize 
+             </div>
+                <img width="300px" height="200px" src={'http://localhost:4000/' + item.pimg} />
+                <p className="m-2 price-text"> Rs.{item.price} /</p>
+                <p className='m-2 '>{item.pname} | {item.category} </p>
+                <p className="m-2 text-success">{item.pdesc}</p>
+              </div>-->
+hardcoded Rs. and ..../
+  <p className="m-2 price-text"> Rs.{item.price} /-</p>
+
+<!-- in home.css//////// -->
+.price-text{
+    color: #002f34;
+    font-size: larger;//
+    font-weight: 700;// this two my lines
+}
+
+<!-- chnages in header background  -->
+<!-- go heade.cc in header-conatiner/// -->
+.header-container{
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+    padding: 10px 20px;
+    background-color: #002f3400;
+    border-bottom: 3px solid #fff;
+}
+.cat-container{
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,.1);
+    padding: 8px 20px;
+}
+
+<!-- and in serach button and input 
+.search{
+    margin-left: 80px;
+    outline: none;
+    padding-left: 10px;
+    width: 400px;//
+    height: 44px;//
+    border: 2px solid #002f34;
+    border-radius: 5px 0px 0px 5px;
+}
+.search-btn{
+    height: 44px;//
+    background: #002f34;
+    color: #fff;
+    border-radius: 0px 5px 5px 0px;
+    outline: none; /*like this none for remove default funda on outline */
+    border: none;  
+} -->
+
+
+<!-- button changes  go t raect-icons -->
+<!-- go to header.jsx -->
+
+
+<!-- now we need detailed page  -->
+create ProductDetail.jsx
+and add in raact-app
+index.js 
+call /productdetail
+index.js
+{
+    path: "/product/:id",
+    element: (<ProductDetail/>),
+  },
+<!-- output -->
+[text](http://localhost:3000/product/22)
+shows waht you sasve inside function
+
+<!-- go to home.jsx -->
+
+ <div onClick={handelProduct} key={item._id} className="card m-3" >
+ changes in code line and set in const before all return..............
+<!-- changes -->
+
+  <div onClick={() => handleLike(item._id)} className="icons-conatiner">
+
+<!-- sett
+const handelProduct = (id) =>{
+  navigate('/product/'+id)
+} -->
+
+so when you clicked on home page you get product get by id by ommmom 
+
+<!-- go to product-detail  -->
+ const p = useParams()
+    console.log(p) //add and we get id and console.log..
+<!-- change in index.js in id only with productId -->
+
+o/p:- {productId: '67c359b97b3486487638f62f'}productId: "67c359b97b3486487638f62f"[[Prototype]]: Object in console of output
+
+    console.log(p.productId)
+<!-- so we are getting prodduct id and id okh  -->
+<!-- /////////////////////////////////////////////////////////////////// -->
+
+<!-- now we want to send it to backend  -->
+
+<!-- go to productDetail.jsx -->
+
+    useEffect(() => {
+        const url = "http://localhost:4000/get-product" + p.productId;
+        axios
+            .get(url)
+            .then((res) => {
+               console.log(res)
+            })
+            .catch((err) => {
+                alert("server error")
+            });
+    }, []);
+    //copy by home page its show in errro because  not call in backend so go in node index.js
 
 
 
+@-@
 
+# Node js
+index.js
+copy get-product and pste in next
+<!-- r product detail
+app.get('/get-product',(req,res)=>{
+  console.log(req.params)
+  
+  Products.find()//findall
+  .then((result)=>{
+    res.send({message:"succesfully saved.." , products : result})
+  })
+  .catch((err)=>{
+    res.send({message:"server err"})
+  })
+}) -->
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<!-- and go to product deatil and solve erroor whic axiso import -->
 
 
 

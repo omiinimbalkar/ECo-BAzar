@@ -14,6 +14,7 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 import AddProduct from './components/AddProduct';
 import LikedProducts from './components/LikedProducts';
+import ProductDetail from './components/ProductDetail';
 
 const router = createBrowserRouter([
 
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
   {
     path: "/liked-products",
     element: (<LikedProducts/>),
+  },
+  {
+    path: "/product/:productId",
+    element: (<ProductDetail/>),
   },
 ]);
 

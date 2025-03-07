@@ -83,7 +83,20 @@ app.get('/get-products',(req,res)=>{
     res.send({message:"server err"})
   })
 })
+//for product detail
+app.get('/get-product',(req,res)=>{
+  console.log(req.params)
+  
+  Products.find()//findall
+  .then((result)=>{
+    res.send({message:"succesfully saved.." , products : result})
+  })
+  .catch((err)=>{
+    res.send({message:"server err"})
+  })
+})
 
+//liked product
 app.post('/liked-products', (req, res) => {
   Users.findOne({_id: req.body.userId}).populate('likedProducts')
     .then((result) => {

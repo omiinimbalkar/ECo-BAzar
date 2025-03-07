@@ -24,3 +24,8 @@
     font-weight: bold;
 }
 /* for this give the link clasname as links */
+.price-text{
+    color: #002f34;
+    font-size: larger;
+    font-weight: 700;
+}

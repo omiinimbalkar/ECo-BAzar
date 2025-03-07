@@ -11,10 +11,12 @@
 .header-container{
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
     padding: 10px 20px;
+    background-color: #002f3400;
+    border-bottom: 3px solid #fff;
 }
 .cat-container{
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
-    padding: 10px 20px;
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,.1);
+    padding: 8px 20px;
 }
 .mt-3{
     /* span walaa part  */
@@ -25,18 +27,19 @@
     margin-left: 80px;
     outline: none;
     padding-left: 10px;
-    width: 200px;
-    height: 35px;
+    width: 400px;
+    height: 44px;
     border: 2px solid #002f34;
     border-radius: 5px 0px 0px 5px;
 }
 .search-btn{
-    height: 35px;
+    height: 44px;
     background: #002f34;
     color: #fff;
     border-radius: 0px 5px 5px 0px;
     outline: none; /*like this none for remove default funda on outline */
     border: none;  
+    padding: 0px 15px;
 }
 .logout-btn{
     height: 35px;
