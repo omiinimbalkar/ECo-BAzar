@@ -84,12 +84,12 @@ app.get('/get-products',(req,res)=>{
   })
 })
 //for product detail
-app.get('/get-product',(req,res)=>{
+app.get('/get-product/:pId',(req,res)=>{
   console.log(req.params)
   
-  Products.find()//findall
+  Products.findOne({  _id :req.params.pId } )
   .then((result)=>{
-    res.send({message:"succesfully saved.." , products : result})
+    res.send({ message:"successs" , product : result})
   })
   .catch((err)=>{
     res.send({message:"server err"})

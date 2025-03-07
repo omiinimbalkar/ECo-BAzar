@@ -2264,6 +2264,8 @@ and change in find with findOne
 @-@
 
 # REact page
+
+
 likedproducts.jsx
 
 let data = { userId : localStorage.getItem('userId)}
@@ -2413,16 +2415,31 @@ app.get('/get-product',(req,res)=>{
 
 <!-- and go to product deatil and solve erroor whic axiso import -->
 
+index.js
+app.get('/get-product/:id',(req,res)=>{
+
+  Products.findOne( {  _id :req.params.pId } )
+
+@-@
+
+# REact page
+
+80525....
+        const url = "http://localhost:4000/get-product/" + p.productId;
+<!-- inside Product -->
+
+ouput we get id...../////////.
+
+<!-- after changing each we go to inspect in output by in urllocalhost:3000/product and by inscept go to network and go in preview to check ......... -->
+
+afetr ouput get it 
 
 
+<!-- ProductDetail.jsx --> from singl product will be show
+show that product and sav it innn
 
 
-
-
-
-
-
-
+futher dettailsss
 
 
 
