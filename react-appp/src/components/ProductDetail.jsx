@@ -5,14 +5,11 @@ import Header from './Header';
 function ProductDetail() {
 
     const [product, setproduct] = useState()
-
     const p = useParams()
-    console.log(p.productId)
 
     useEffect(() => {
         const url = "http://localhost:4000/get-product/" + p.productId;
-        axios
-            .get(url)
+        axios.get(url)
             .then((res) => {
                 if (res.data.product) {
                     setproduct(res.data.product)
@@ -24,33 +21,24 @@ function ProductDetail() {
     }, []);
 
     return (
-        <div>
+        <>
             <Header />
-            PRODUCT DETAILS : 
-            {product && product.pname}
-
-            {product && <div>
-                <div>
-                    <img src={ 'http://localhost/4000/'+ product.pimage } alt="" />
-                </div>
-                <div>
-
-                </div>
-            </div>}                   
-
-
-
-
-
-
-
-
-
-
-
-
-        </div>
-
+            <div>
+                PRODUCT DETAILS :
+                {product && <div className="d-flex justify-content-between flex-wrap">
+                    <div>
+                        <img width="700px" height="300px" src={'http://localhost:4000/' + product.pimg} alt="" />
+                        <h6>PRODUCT DETAIL:</h6>{product.pdesc}
+                    </div>
+                    <div>
+                        <p className="m-2 price-text"> Rs.{product.price} /-</p>
+                        <p className='m-2 '>{product.pname} | {product.category} </p>
+                        <p className="m-2 text-success">{product.pdesc}</p>
+                        {/* go  to home.jx for p tag */}
+                    </div>
+                </div>}
+            </div >
+        </>
     )
 }
 
