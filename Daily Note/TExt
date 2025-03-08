@@ -2499,44 +2499,173 @@ d-80325,v=6
 <!-- so we make a search api we are searching locally before now take it from baceknd okh....... -->
 
 
+work on product deatail all categories././././././
+<!-- addd product ask for 2 image in addig  -->
+
+@-@
+
+# Node js
+index.js
+
+<!-- now/../ working search api
+ -->
+
+
+app.get('/search', (req,res) => {
+
+  let query =  req.query;
+
+  Products.find()
+  .then((result) =>{
+    res.send({message:'success', product:result})
+  })
+  .catch((err) =>{
+    res.send({message: ' server error in search '})
+  })
+});
+
+after home.jsx change in codde down we error not show just pass query we write 
+index.js
+//for search
+app.get('/search', (req,res) => {
+
+  let query =  req.query;
+  console.log(query);
+  return;
 
 
 
+@-@
+
+# REact page
+
+home.jsx
+
+  const handleClick = () => {
+    
+    const url = 'http://localhost:4000/search?search=' + search ;
+    axios.get(url)
+    .then((res) => {
+      console.log(res.data)
+    })
+    .catch((err) => {
+      alert("server error")
+    });
+
+    // let filteredProducts = products.filter((item) => {
+    //   if (item.pname.toLowerCase().includes(search.toLowerCase()) ||
+    //     item.pdesc.toLowerCase().includes(search.toLowerCase()) ||
+    //     item.category.toLowerCase().includes(search.toLowerCase())) {
+    //     return item;
+    //   }
+    // })
+    // setcproducts(filteredProducts)
+
+
+  }
+
+
+@-@
+
+# Node js
+index.js
+
+in momdodb query we want to add something we used $
+
+.code
+app.get('/search', (req, res) => {
+  let search = req.query.search;
+  Products.find({
+    $or: [
+      {pname: { $regex: search} },
+      {pdesc: { $regex: search} },
+      {price: { $regex: search}},
+    ]
+  })
+    .then((result) => {
+      res.send({ message: 'success', product: result })
+    })
+    .catch((err) => {
+      res.send({ message: ' server error in search ' })
+    })
+});
+so thse work in backend api to fetch it . so we search in output we get a product in network etc..
+
+
+@-@
+
+# REact page
+
+chagne in code line ...
+
+because we not able tosee in search product so for that we work with that and change the below line 
+axios.get(url)
+    .then((res) => {
+      setcproducts(res.data.products);
+
+
+<!-- 
+solve the error of results in index .js and home.js is about products to product..
+index.js :  .then((results) => {
+      res.send({ message: 'success', product: results })
+home.jsx: axios.get(url)
+    .then((res) => {
+      setcproducts(res.data.product)
+ -->
+
+
+during writeing the code be careefully in wordssss..
 
 
 
+<!-- now work on switch like show only search and all product diffret  -->
+<!-- home.jsx -->
 
 
+      {search && cproducts && <h5>SEARCH RESULT : </h5>}
+      {search && cproducts && cproducts.length == 0 && <h5> No Result found......... </h5>}
+
+      {search && (
+        <>
+          <div className='d-flex justify-content-center flex-wrap'>
+            {cproducts && products.length > 0 &&
+              cproducts.map((item, index) => {
+
+above line of code is for changes in wehen only search it need to work
+
+<!-- supper duper cool -->
+
+shift + {} to ad in selected code 
+
+<!-- last dicv in home.jsx changes wohh for remove all result and differntin serarch and all rsukt aotoimatically in chnage in code... -->
+      {!issearch && <div className='d-flex justify-content-center flex-wrap'>
+        {products && products.length > 0 &&
+          products.map((item, index) => {
+            return (
+              <div onClick={() => { handelProduct(item._id) }} key={item._id} className="card m-3" >
+                <div onClick={() => handleLike(item._id)} className="icons-conatiner">
+                  <FaHeart className='icons' />
+                </div>
+                <img width="300px" height="200px" src={'http://localhost:4000/' + item.pimg} />
+                <p className="m-2 price-text"> Rs.{item.price} /-</p>
+                <p className='m-2 '>{item.pname} | {item.category} </p>
+                <p className="m-2 text-success">{item.pdesc}</p>
+              </div>
+            )
+          })}
+      </div>}
 
 
+now addd option clear result..
+<!-- changes after search resulut divvvvvvvvvv
+  {issearch && cproducts && <
+        h5>SEARCH RESULT :
+        <button className="clear" onClick={()=> setissearch(false)}> CLEAR </button>
+         </h5>}-->
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<!-- home.css clear-btn working for css so we seee
+ -->
+next 28;12 category workkkkk...
 
 
 

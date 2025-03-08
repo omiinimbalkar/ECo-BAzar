@@ -46,7 +46,7 @@
 // app.post('/liked-product', (req ,res) =>{
 //     let productId = req.body.productId;
 //     let userId = req.body.userId;
-    
+
 
 //     //update user model
 //     Users.updateOne({_id: ( userId )} ,{$addToSet : { likedProducts : productId }})
@@ -217,6 +217,24 @@ const Products = mongoose.model('Products', {
 // API Routes
 app.get('/', (req, res) => {
   res.send('Hello Coder.....🌐');
+});
+
+//for search
+app.get('/search', (req, res) => {
+  let search = req.query.search;
+  Products.find({
+    $or: [
+      {pname: { $regex: search} },
+      {pdesc: { $regex: search} },
+      {price: { $regex: search}},
+    ]
+  })
+    .then((results) => {
+      res.send({ message: 'success', product: results })
+    })
+    .catch((err) => {
+      res.send({ message: ' server error in search ' })
+    })
 });
 
 // Add Product API
