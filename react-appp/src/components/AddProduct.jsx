@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Header from './Header';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import categories from './CategoriesList';
 function AddProduct() {
 
     const navigate = useNavigate();
@@ -10,6 +11,7 @@ function AddProduct() {
     const [price, setprize] = useState('');
     const [category, setcategory] = useState('');
     const [pimg, setpimg] = useState('');
+    const [pimg2, setpimg2] = useState('');
 
     useEffect(() => {
         if (!localStorage.getItem('token')) {
@@ -25,6 +27,8 @@ function AddProduct() {
         fromData.append('price', price)
         fromData.append('category', category)
         fromData.append('pimg', pimg)
+        fromData.append('pimg2', pimg2)
+        fromData.append('userId', localStorage.getItem('userId'))
 
         const url = 'http://localhost:4000/add-product';
         axios.post(url, fromData)
@@ -60,9 +64,19 @@ function AddProduct() {
                     <option> Bottle </option>
                     <option> Bucket</option>
                     <option> Clothes </option>
+                    {
+                        categories &&  categories.length > 0 && 
+                        categories.map((item,index) => {
+                            return(
+                                <option key={'option' + index} > {item} </option>
+                            )
+                        })
+                    }
                 </select>
                 <label> Product Image </label>
                 <input className="form-control" type="file" onChange={(e) => { setpimg(e.target.files[0]) }} />
+                <label> Product Second Image </label>
+                <input className="form-control" type="file" onChange={(e) => { setpimg2(e.target.files[0]) }} />
                 <button onClick={handleApi} className="btn btn-primary mt-3"> Sumbit </button>
             </div>
         </div>

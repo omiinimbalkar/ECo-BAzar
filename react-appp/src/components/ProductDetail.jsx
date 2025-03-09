@@ -27,7 +27,8 @@ function ProductDetail() {
                 PRODUCT DETAILS :
                 {product && <div className="d-flex justify-content-between flex-wrap">
                     <div>
-                        <img width="700px" height="300px" src={'http://localhost:4000/' + product.pimg} alt="" />
+                        <img width="400px" height="200px" src={'http://localhost:4000/' + product.pimg} alt="" />
+                        <img width="400px" height="200px" src={'http://localhost:4000/' + product.pimg2} alt="" />
                         <h6>PRODUCT DETAIL:</h6>{product.pdesc}
                     </div>
                     <div>

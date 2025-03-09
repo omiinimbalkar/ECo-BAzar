@@ -211,7 +211,9 @@ const Products = mongoose.model('Products', {
   pdesc: String,
   price: String,
   category: String,
-  pimg: String
+  pimg: String,
+  pimg2: String,
+  addedBy : mongoose.Schema.Types.ObjectId
 });
 
 // API Routes
@@ -238,12 +240,17 @@ app.get('/search', (req, res) => {
 });
 
 // Add Product API
-app.post('/add-product', upload.single('pimg'), async (req, res) => {
+app.post('/add-product', upload.fields([ {name : 'pimg'} , {name : 'pimg2'} ]), async (req, res) => {
+  console.log(req.files)
+  console.log(req.body)
+
   try {
     const { pname, pdesc, price, category } = req.body;
-    const pimg = req.file ? req.file.path : '';
+    const pimg = req.files ? req.files.pimg[0].path : '';
+    const pimg2 = req.files ? req.files.pimg2[0].path : '';
+    const addedBy = req.body.userId;
 
-    const product = new Products({ pname, pdesc, price, category, pimg });
+    const product = new Products({ pname, pdesc, price, category, pimg ,pimg2, addedBy });
     await product.save();
 
     res.json({ message: 'Product is saved', product });
@@ -256,9 +263,15 @@ app.post('/add-product', upload.single('pimg'), async (req, res) => {
 // Get All Products API
 app.get('/get-products', async (req, res) => {
   const  catName = req.query.catName;
-  console.log(catName)
+  let _f = {}
+
+  if (catName){
+    _f = { category : catName
+     }
+  }
+
   try {
-    const products = await Products.find({category:catName});
+    const products = await Products.find(_f);
     if (products.length === 0) {
       return res.json({ message: "No products found", products: [] });
     }

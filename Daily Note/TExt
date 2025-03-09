@@ -2729,40 +2729,124 @@ now we are getting by calling api the category but one ata a toime so change in 
 
 <!-- ///////////////////////////now working on product deatil page show user id and contact wala part///////////////////////////////////////// -->
 
+//./././././././././././/./.././././././././././././/./././././/.///.//////////././././/./././././././././././..
+<!-- go to index.js in backenddddd................/ -->
+
+const Products = mongoose.model('Products', {
+  pname: String,
+  pdesc: String,
+  price: String,
+  category: String,
+  pimg: String,
+  addedBy : mongoose.Schema.Types.ObjectId // from user id from local storage ..
+});
+
+/addd-product api add two line of code .....
+
+const addedBy = req.body.userId;
+
+    const product = new Products({ pname, pdesc, price, category, pimg , addedBy });
+
+<!-- react-app in frontend add-product.jsx 
+add line of cod ......
+ -->
+import categories from './CategoriesList';
+
+<!-- in fromfdta
+        fromData.append('userId', localStorage.getItem('userId'))
+ -->
+
+ <!-- after return  :  return(
+                                <option key={'option' + index} > {item} </option>
+                            ) -->
+
+<!-- after function: 
+ const [pimg, setpimg] = useState('');
+    const [pimg2, setpimg2] = useState(''); -->
+
+<!-- const handle api:    fromData.append('pimg2', pimg2) -->
+
+<!-- 
+from mutliple 2 image in product input and usestae for image two time with name change..
+                <label> Product Image 1</label>
+                  <input className="form-control" type="file" onChange={(e) => { setpimg(e.target.files[0]) }} />
+                <label> Product Image 2 </label>
+                <input className="form-control" type="file" onChange={(e) => { setpimg2(e.target.files[0]) }} /> -->
 
 
+///////setup in backend Tooooo////////
+<!-- index.js -->
+
+app.post('/add-product', upload.single('pimg'), async (req, res) => {
+  console.log(req.file)
+  console.log(req.body)
+  return;
+  <!-- checking purpose before this we add in two image =abovvwe code.. -->
+
+so dta is taking but not uplod or save in backend so solution for that (server error) while sumbit...............
+
+//////////////////////go on google and search multer multi file upload//////////////////////////////////
+
+[text](https://stackoverflow.com/questions/39350040/uploading-multiple-files-with-multer)🔗
+
+<!-- after these code changes in lines we get in console 
+app.post('/add-product', upload.fields([ {name : 'pimg'} , {name : 'pimg2'} ]), async (req, res) => {
+  console.log(req.files)
+  console.log(req.body)
+  return;
+ -->
+
+below codde line chnages..
+// shows the changesss
+app.post('/add-product', upload.fields([ {name : 'pimg'} , {name : 'pimg2'} ]), async (req, res) => {
+  //console.log(req.files)
+  //console.log(req.body)
+
+  try {
+    const { pname, pdesc, price, category } = req.body;
+    //const pimg = req.files ? req.files.pimg[0].path : '';
+   // const pimg2 = req.files ? req.files.pimg2[0].path : '';
+    const addedBy = req.body.userId;
+
+   // const product = new Products({ pname, pdesc, price, category, pimg ,pimg2, addedBy });
+    await product.save();
+
+    res.json({ message: 'Product is saved', product });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server Error' });
+  }
+});
+
+<!-- not shwoing home page......... -->
+
+condition on get-products.. to show all product if category come then only its print and category /
+
+ const  catName = req.query.catName;
+  let _f = {}
+
+  if (catName){
+    _f = { category : catName
+     }
+  }
+
+  try {
+    const products = await Products.find(_f);
 
 
+/////after this chages we get all home page product category bass we go i detail and check imag 2 atre in networkkk
 
 
+<!-- go to frontend and change in productDetail.jsx code
+{product && <div className="d-flex justify-content-between flex-wrap">
+                    <div>
+                        <img width="400px" height="200px" src={'http://localhost:4000/' + product.pimg} alt="" />
+                        <img width="400px" height="200px" src={'http://localhost:4000/' + product.pimg2} alt="" />
+                        <h6>PRODUCT DETAIL:</h6>{product.pdesc}
+                    </div>
+                    <div> -->
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+till here weget all product in home page two image addand show side by sideein product deatil... and stup in frotend and backend 
 
 
 
