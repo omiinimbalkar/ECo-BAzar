@@ -255,8 +255,10 @@ app.post('/add-product', upload.single('pimg'), async (req, res) => {
 
 // Get All Products API
 app.get('/get-products', async (req, res) => {
+  const  catName = req.query.catName;
+  console.log(catName)
   try {
-    const products = await Products.find();
+    const products = await Products.find({category:catName});
     if (products.length === 0) {
       return res.json({ message: "No products found", products: [] });
     }

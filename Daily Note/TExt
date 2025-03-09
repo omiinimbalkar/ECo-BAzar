@@ -2667,19 +2667,67 @@ now addd option clear result..
  -->
 next 28;12 category workkkkk...
 
+90325 - d  6 -v
+
+<!-- copy home.jsx code and paste inside and create a CategoryPage.jsx and paste here....... -->
+
+call inside index.js in frontend......
+
+<!-- next...... -->
+
+categories.js
+<!-- changes in code line 
+           <span onClick={() => props.handleCategory && props.handleCategory(item)} key={index} className="category"> {item} </span>
+ after: 
+              <span onClick={() => navigate('/catgeory/' + item)} key={index} className="category"> {item} </span>
+              -->
 
 
+<!-- now nextt.... -->
+               <span onClick={() => navigate('/category/' + item)} key={index} className="category"> {item} </span> //line word mistake solve
+CategoryPage.jsx..
 
 
+  const param = useParams()
+  console.log(param);
+
+  ouput console:
+  {catName: 'Newspaper'}
+CategoryPage.jsx:14 {catName: 'Book'}
+
+<!-- after runnign we are gettingthe categories byt whole things are showing so changes..
+categorypage.jsx 
+    const url = "http://localhost:4000/get-products?catName=" + param.catName;
+-->
 
 
+@-@
 
+# Node js
+<!-- index.js -->
 
+now in backend to send it...... // used to changeeee
+app.get('/get-products', async (req, res) => {
+  //const  catName = req.query.catName;
+  print in terminal on code//console.log(catName)
+  try {
+    const products = await Products.find({category:catName});//find insidr chnges
+    if (products.length === 0) {
+      return res.json({ message: "No products found", products: [] });
+    }
+    res.json({ message: "Products fetched successfully", products });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server Error" });
+  }
+});
 
+now we are getting by calling api the category but one ata a toime so change in frontend in code line likeeee
 
+<!-- React  categoryPage.jsx
+   }, [param]); -->
 
-
-
+<!-- ///////////////////////////now working on product deatil page show user id and contact wala part///////////////////////////////////////// -->
 
 
 
