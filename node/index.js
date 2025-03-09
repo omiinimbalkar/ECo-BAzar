@@ -202,6 +202,8 @@ const upload = multer({ storage: storage });
 // Mongoose Models
 const Users = mongoose.model('Users', {
   username: String,
+  email: String,
+  mobile: String,
   password: String,
   likedProducts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Products' }]
 });
@@ -213,7 +215,7 @@ const Products = mongoose.model('Products', {
   category: String,
   pimg: String,
   pimg2: String,
-  addedBy : mongoose.Schema.Types.ObjectId
+  addedBy: mongoose.Schema.Types.ObjectId
 });
 
 // API Routes
@@ -226,9 +228,9 @@ app.get('/search', (req, res) => {
   let search = req.query.search;
   Products.find({
     $or: [
-      {pname: { $regex: search} },
-      {pdesc: { $regex: search} },
-      {price: { $regex: search}},
+      { pname: { $regex: search } },
+      { pdesc: { $regex: search } },
+      { price: { $regex: search } },
     ]
   })
     .then((results) => {
@@ -240,7 +242,7 @@ app.get('/search', (req, res) => {
 });
 
 // Add Product API
-app.post('/add-product', upload.fields([ {name : 'pimg'} , {name : 'pimg2'} ]), async (req, res) => {
+app.post('/add-product', upload.fields([{ name: 'pimg' }, { name: 'pimg2' }]), async (req, res) => {
   console.log(req.files)
   console.log(req.body)
 
@@ -250,7 +252,7 @@ app.post('/add-product', upload.fields([ {name : 'pimg'} , {name : 'pimg2'} ]), 
     const pimg2 = req.files ? req.files.pimg2[0].path : '';
     const addedBy = req.body.userId;
 
-    const product = new Products({ pname, pdesc, price, category, pimg ,pimg2, addedBy });
+    const product = new Products({ pname, pdesc, price, category, pimg, pimg2, addedBy });
     await product.save();
 
     res.json({ message: 'Product is saved', product });
@@ -262,12 +264,13 @@ app.post('/add-product', upload.fields([ {name : 'pimg'} , {name : 'pimg2'} ]), 
 
 // Get All Products API
 app.get('/get-products', async (req, res) => {
-  const  catName = req.query.catName;
+  const catName = req.query.catName;
   let _f = {}
 
-  if (catName){
-    _f = { category : catName
-     }
+  if (catName) {
+    _f = {
+      category: catName
+    }
   }
 
   try {
@@ -326,8 +329,8 @@ app.post('/liked-products', async (req, res) => {
 // Signup API
 app.post('/signup', async (req, res) => {
   try {
-    const { username, password } = req.body;
-    const user = new Users({ username, password });
+    const { username,email,mobile, password } = req.body;
+    const user = new Users({ username, email, mobile, password });
 
     await user.save();
     res.json({ message: 'User created' });
@@ -337,6 +340,16 @@ app.post('/signup', async (req, res) => {
   }
 });
 
+app.get('/get-user/:uId', async (req, res) => {
+  const _userId = req.params.uId;
+  Users.findOne({ _id: _userId })
+    .then((result) => {
+      res.send({ message: " sucess. ", user: result })
+    })
+    .catch(() => {
+      res.send({ message: " server error in user  " })
+    })
+})
 // Login API
 app.post('/login', async (req, res) => {
   try {

@@ -4,7 +4,9 @@ import axios from "axios";
 import Header from './Header';
 function ProductDetail() {
 
-    const [product, setproduct] = useState()
+    const [product, setproduct] = useState();
+    const [user, setuser] = useState();
+    console.log(user,"userrrrrrrr")
     const p = useParams()
 
     useEffect(() => {
@@ -19,7 +21,19 @@ function ProductDetail() {
                 alert("server error")
             });
     }, []);
-
+    const handleContact = (addedBy) => {
+        console.log('id', addedBy)
+        const url = "http://localhost:4000/get-user/" + addedBy;
+        axios.get(url)
+            .then((res) => {
+                if (res.data.user) {
+                    setuser(res.data.user)
+                }
+            })
+            .catch((err) => {
+                alert("server error")
+            });
+    }
     return (
         <>
             <Header />
@@ -35,7 +49,12 @@ function ProductDetail() {
                         <p className="m-2 price-text"> Rs.{product.price} /-</p>
                         <p className='m-2 '>{product.pname} | {product.category} </p>
                         <p className="m-2 text-success">{product.pdesc}</p>
-                        {/* go  to home.jx for p tag */}
+
+                        {product.addedBy &&
+                            <button onClick={() => handleContact(product.addedBy)}>
+                                SHOW CONTACT DETAILS
+                            </button>}
+                            {user && user.username && <h4>{user.username}</h4>}
                     </div>
                 </div>}
             </div >
