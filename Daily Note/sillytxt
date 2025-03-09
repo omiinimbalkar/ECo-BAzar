@@ -58,3 +58,13 @@ axios : Axios is a popular JavaScript library used for making HTTP requests in w
 
 
 <!-- in momdodb query we want to add something we used $ -->
+
+
+<!-- why always ip changs in mongo  -->
+=> It looks like your IP address keeps changing, which is why MongoDB Atlas keeps asking you to add your current IP again.
+
+This happens because:
+
+You are using mobile data or a dynamic IP (your internet provider changes your IP frequently).
+You are switching networks (WiFi to mobile hotspot, VPN, etc.).
+MongoDB Atlas needs your current IP every time it changes.

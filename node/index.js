@@ -185,7 +185,6 @@ mongoose.connect('mongodb+srv://omssn21:om212006@cluster0.vr8ns.mongodb.net/?ret
     console.error('MongoDB connection error:', err);
   });
 
-
 // Storage Configuration for File Upload
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -329,7 +328,7 @@ app.post('/liked-products', async (req, res) => {
 // Signup API
 app.post('/signup', async (req, res) => {
   try {
-    const { username,email,mobile, password } = req.body;
+    const { username, email, mobile, password } = req.body;
     const user = new Users({ username, email, mobile, password });
 
     await user.save();
@@ -344,7 +343,14 @@ app.get('/get-user/:uId', async (req, res) => {
   const _userId = req.params.uId;
   Users.findOne({ _id: _userId })
     .then((result) => {
-      res.send({ message: " sucess. ", user: result })
+      res.send({
+        message: " sucess. ",
+        user: {
+          email: result.email,
+          mobile: result.mobile,
+          username: result.username
+        }
+      })
     })
     .catch(() => {
       res.send({ message: " server error in user  " })

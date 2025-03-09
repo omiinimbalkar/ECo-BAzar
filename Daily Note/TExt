@@ -2981,15 +2981,43 @@ signup.jsx
       }
       /> -->
 
+<!-- errorin mongo so solution go to network acces and  ad ip add current ip and save and confirm so its will never say again again  -->
 
 
+///////////////now go on add product in output to get all mobilenumber ettccc/////////////////////
 
+@-@
 
+# Node js
 
+go in backed to show phoen number and username email ig go in get-user ///////////
+<!-- change in line 
+.then((result) => {
+      res.send({
+        message: " sucess. ",
+        user: {
+          email: result.email,
+          mobile: result.mobile,
+          username: result.username
+        }
+      })
+    }) -->
 
+////////////now we gret in console but not shown inn button so go in frontend for tht in product detail
 
+<!-- productDteial.jsx
+   </button>}
+                            {user && user.username && <h4>{user.username}</h4>}
+                            {user && user.email && <h3>{user.email}</h3>}
+                            {user && user.mobile && <h6>{user.mobile}</h6>}
+ -->
 
+<!-- so what happen previous code funda error not showeing contact detail
+changes in codeeeeeeeeeee
+                       { product.pimg2 && <img width="400px" height="200px" src={'http://localhost:4000/' + product.pimg2} alt="" />}
+ -->
 
+1.23.11 working on login page before that
 
 
 
