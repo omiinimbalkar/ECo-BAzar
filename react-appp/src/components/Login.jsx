@@ -32,24 +32,26 @@ function Login() {
   return (
     <div>
       <Header />
-      <h1>Login</h1>
+      <div className='p-3 m-3 '>
+      <h4> Welcome to Login Page </h4>
       <br />
       USERNAME
-      <input type="text" value={username}
+      <input className='form-control' type="text" value={username}
       onChange={(e) =>{
         setUsername(e.target.value)
       }}
       />
       <br />
       PASSWORD
-      <input type="password" value={password}
+      <input className='form-control' type="password" value={password}
       onChange={(e) => {
         setPassword(e.target.value)
       }}
       />
       <br />
-      <button onClick={handleApi}>LOGIN</button>
-      <Link to ='/signup'><button>SIGNUP</button></Link>
+      <button className='btn btn-primary mr-3' onClick={handleApi}>LOGIN</button>
+      <Link className='m-3' to ='/signup'><button>SIGNUP</button></Link>
+      </div>
     </div>
   );
 }   

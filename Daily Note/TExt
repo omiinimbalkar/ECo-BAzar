@@ -3020,27 +3020,68 @@ changes in codeeeeeeeeeee
 1.23.11 working on login page before that
 
 
+go to login.jsx 
+css changes 
 
 
+logout from output ..
 
+6-v  /////works to do..
+location search that particular location product only shows.......
+chnage the add product with sell
+and the logout and liked in dropdown okhhh!!
 
+<!-- so work on input in before search....... -->
 
+@-@
 
+# REact page
 
+header.jsx
+code in linee chnage 
 
+   {/* Dropdown for selecting a location */}
+        <select>
+          {locations.map((item, index) => (
+            <option value={  `${item.latitude},${item.longitude}` }>
+              {item.placeName}
+            </option>
+          ))}
+        </select>
+        <!-- after home  -->
 
+/ Define locations outside of handleLogout so it's accessible in JSX
+  let locations = [
+    {
+      'latitude': 28.6139,
+      'longitude': 77.2099,
+      'placeName': "New Delhi, Delhi"
+    },
+    {
+      'latitude': 19.0760,
+      'longitude': 72.8777,
+      'placeName': "Mumbai, Maharashtra"
+    },
+  ];
+<!-- in before returnnnnnn -->
 
+<!-- now ork on loacation chnages by user it need to store some where so we store in local storage 
+line odf codde chnage  -->
+<select value='' onChange={(e) => {
+          localStorage.setItem('userLoc', e.target.value)
+        }}>
 
+///after this line of code chnages we go and inspect and check we are getting thelocation in application localstorage 
 
+<!-- so we are getting ken	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.
+userId	67cd8f6f0da3f0ac53ef165c	
+userLoc	28.6139,77.2099	
+ -->
 
+so at add product we add location with infoo....
 
-
-
-
-
-
-
-
+<!-- GOOOOOOOOOOOOO -->////////////////////
+<!-- AddProduct.jsx -->
 
 
 
