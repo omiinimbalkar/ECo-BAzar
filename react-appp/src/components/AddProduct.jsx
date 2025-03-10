@@ -21,28 +21,31 @@ function AddProduct() {
 
     const handleApi = () => {
 
-        const fromData = new FormData();
-        fromData.append('pname', pname)
-        fromData.append('pdesc', pdesc)
-        fromData.append('price', price)
-        fromData.append('category', category)
-        fromData.append('pimg', pimg)
-        fromData.append('pimg2', pimg2)
-        fromData.append('userId', localStorage.getItem('userId'))
-
-        const url = 'http://localhost:4000/add-product';
-        axios.post(url, fromData)
-            .then((res) => {
-                console.log(res)
-                if (res.data.message) {
-                    alert(res.data.message)
-                    navigate('/')
-                }
-            })
-            .catch((err) => {
-                alert('Server Error')
-            })
-
+        navigator.geolocation.getCurrentPosition((position) =>{ 
+            const fromData = new FormData();
+            fromData.append('plat', position.coords.latitude)
+            fromData.append('plog', position.coords.longitude)
+            fromData.append('pname', pname)
+            fromData.append('pdesc', pdesc)
+            fromData.append('price', price)
+            fromData.append('category', category)
+            fromData.append('pimg', pimg)
+            fromData.append('pimg2', pimg2)
+            fromData.append('userId', localStorage.getItem('userId'))
+    
+            const url = 'http://localhost:4000/add-product';
+            axios.post(url, fromData)
+                .then((res) => {
+                    console.log(res)
+                    if (res.data.message) {
+                        alert(res.data.message)
+                        navigate('/')
+                    }
+                })
+                .catch((err) => {
+                    alert('Server Error')
+                })
+        })
     }
     return (
         <div>

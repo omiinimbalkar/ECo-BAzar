@@ -3082,23 +3082,122 @@ so at add product we add location with infoo....
 
 <!-- GOOOOOOOOOOOOO -->////////////////////
 <!-- AddProduct.jsx -->
+///////////////////////without telling useer we save ittt........
+  const handleApi = () => {
+
+        navigator.geolocation.getCurrentPosition((position) =>{ 
+            console.log(position)
+        })
+<!-- ///after adding this line of codee we get a location navigate after clicking sumbit with a sever errro and okh -->
 
 
+    const handleApi = () => {
+
+        navigator.geolocation.getCurrentPosition((position) =>{ 
+            const fromData = new FormData();
+            fromData.append('plat', position.coords.latitude)
+            fromData.append('plog', position.coords.longitude)
+            fromData.append('pname', pname)
+            fromData.append('pdesc', pdesc)
+            fromData.append('price', price)
+            fromData.append('category', category)
+            fromData.append('pimg', pimg)
+            fromData.append('pimg2', pimg2)
+            fromData.append('userId', localStorage.getItem('userId'))
+    
+            const url = 'http://localhost:4000/add-product';
+            axios.post(url, fromData)
+                .then((res) => {
+                    console.log(res)
+                    if (res.data.message) {
+                        alert(res.data.message)
+                        navigate('/')
+                    }
+                })
+                .catch((err) => {
+                    alert('Server Error')
+                })
+        })
+    }
+  
+after line of code changes it get an fixing now go to backend and call api
 
 
+@-@
+
+# Node js
+index.js
+
+<!-- in api call of add-product an add a return after 2 consoole to check n node terminal is working or not  
+so we get in this i terminal
+plat: '19.473476',
+  plog: '72.858566',
+  pname: '',
+  pdesc: '',
+  price: '',
+  category: '',
+  pimg: '',
+  pimg2: '',
+  userId: '67cd8f6f0da3f0ac53ef165c'
+}-->
+
+now we get long and lat from frontend now work on schema,/./././././
+
+we need to addindexing that why we are doing this!!!
 
 
+let schema = new mongoose.Schema({
+  pname: String,
+  pdesc: String,
+  price: String,
+  category: String,
+  pimg: String,
+  pimg2: String,
+  addedBy: mongoose.Schema.Types.ObjectId,
+  pLoc :{
+    type : {
+      type: String,
+      enum :['Point'],
+      default: 'Point'
+    },
+    coordinates : {
+      type : [Number]
+    }
+  }
+
+})
+
+schema.index({ pLoc : '2dsphere'}); // four side area scan
 
 
+app.post('/add-product', upload.fields([{ name: 'pimg' }, { name: 'pimg2' }]), async (req, res) => {
+  console.log(req.files)
+  console.log(req.body)
+  try {
+    const { plat,plong,pname, pdesc, price, category } = req.body;
+    const pimg = req.files ? req.files.pimg[0].path : '';
+    const pimg2 = req.files ? req.files.pimg2[0].path : '';
+    const addedBy = req.body.userId;
 
+    const product = new Products({ pname, pdesc, price, category, pimg, pimg2, addedBy, pLoc: { type: 'Point', coordinates: [parseFloat(plong), parseFloat(plat)] } });
+    await product.save();
 
+    res.json({ message: 'Product is saved', product });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server Error' });
+  }
+});
 
+<!-- now add a product.... -->
 
+so at 11.37 we cam eback after afternoon we are no geetti9ng the product AS PER LOCATION SO WE DID a small chmage in frontend
 
+@-@
 
+# REact page
 
-
-
+home.jsx
 
 
 

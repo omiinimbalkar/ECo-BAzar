@@ -35,7 +35,7 @@ function Header(props) {
           localStorage.setItem('userLoc', e.target.value)
         }}>
           {locations.map((item, index) => (
-            <option value={`${item.latitude},${item.longitude}`}>
+            <option key={index} value={`${item.latitude},${item.longitude}`}>
               {item.placeName}
             </option>
           ))}

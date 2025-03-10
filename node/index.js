@@ -166,6 +166,7 @@ const jwt = require('jsonwebtoken');
 const multer = require('multer');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const { type } = require('os');
 
 const app = express();
 const port = 4000;
@@ -207,15 +208,30 @@ const Users = mongoose.model('Users', {
   likedProducts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Products' }]
 });
 
-const Products = mongoose.model('Products', {
+let schema = new mongoose.Schema({
   pname: String,
   pdesc: String,
   price: String,
   category: String,
   pimg: String,
   pimg2: String,
-  addedBy: mongoose.Schema.Types.ObjectId
-});
+  addedBy: mongoose.Schema.Types.ObjectId,
+  pLoc :{
+    type : {
+      type: String,
+      enum :['Point'],
+      default: 'Point'
+    },
+    coordinates : {
+      type : [Number]
+    }
+  }
+
+})
+
+schema.index({ pLoc : '2dsphere'}); // four side area scan
+
+const Products = mongoose.model('Products',schema);
 
 // API Routes
 app.get('/', (req, res) => {
@@ -244,22 +260,29 @@ app.get('/search', (req, res) => {
 app.post('/add-product', upload.fields([{ name: 'pimg' }, { name: 'pimg2' }]), async (req, res) => {
   console.log(req.files)
   console.log(req.body)
+  const plat = req.body.plat;
+  const plog = req.body.plog;
+  const pname = req.body.pname;
+  const pdesc = req.body.pdesc;
+  const price = req.body.price;
+  const category = req.body.category;
+  const pimg = req.files?.pimg?.[0]?.path || '';
+  const pimg2 = req.files?.pimg2?.[0]?.path || '';  
+  const addedBy = req.body.userId;
 
-  try {
-    const { pname, pdesc, price, category } = req.body;
-    const pimg = req.files ? req.files.pimg[0].path : '';
-    const pimg2 = req.files ? req.files.pimg2[0].path : '';
-    const addedBy = req.body.userId;
-
-    const product = new Products({ pname, pdesc, price, category, pimg, pimg2, addedBy });
-    await product.save();
-
-    res.json({ message: 'Product is saved', product });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Server Error' });
-  }
+  const product = new Products({ pname, pdesc, price , category, pimg , pimg2 , addedBy, pLoc :{
+    type: 'Point', coordinates: [plat,plog]
+  } })
+  product.save()
+     .then(() =>{
+       res.send({message : "saved success product."})
+     })
+     .catch(()=>{
+      res.send({message: "server error product."})
+     })
 });
+
+
 
 // Get All Products API
 app.get('/get-products', async (req, res) => {
