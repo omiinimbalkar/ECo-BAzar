@@ -3191,6 +3191,32 @@ app.post('/add-product', upload.fields([{ name: 'pimg' }, { name: 'pimg2' }]), a
 
 <!-- now add a product.... -->
 
+// Add Product API
+app.post('/add-product', upload.fields([{ name: 'pimg' }, { name: 'pimg2' }]), async (req, res) => {
+  console.log(req.files)
+  console.log(req.body)
+  const plat = req.body.plat;
+  const plog = req.body.plog;
+  const pname = req.body.pname;
+  const pdesc = req.body.pdesc;
+  const price = req.body.price;
+  const category = req.body.category;
+  const pimg = req.files?.pimg?.[0]?.path || '';
+  const pimg2 = req.files?.pimg2?.[0]?.path || '';  
+  const addedBy = req.body.userId;
+
+  const product = new Products({ pname, pdesc, price , category, pimg , pimg2 , addedBy, pLoc :{
+    type: 'Point', coordinates: [plat,plog]
+  } })
+  product.save()
+     .then(() =>{
+       res.send({message : "saved success product."})
+     })
+     .catch(()=>{
+      res.send({message: "server error product."})
+     })
+});
+<!-- above code is after code error solving -->
 so at 11.37 we cam eback after afternoon we are no geetti9ng the product AS PER LOCATION SO WE DID a small chmage in frontend
 
 @-@
@@ -3198,6 +3224,331 @@ so at 11.37 we cam eback after afternoon we are no geetti9ng the product AS PER 
 # REact page
 
 home.jsx
+
+  const handleClick = () => {
+
+    const url = 'http://localhost:4000/search?search=' + search + '&loc=' +localStorage.getItem('userLoc');
+    axios.get(url)
+
+<!-- when seach we get it and now i go backend and work n ittt....
+ -->
+
+@-@
+
+# Node js
+
+search api
+//for search
+app.get('/search', (req, res) => {
+  console.log(req.query)
+  return;
+
+<!-- aftrr this changes in code of line we click on search and check in terminal -->
+{ search: '', loc: '28.6139,77.2099' }
+
+<!-- again change return in array -->
+app.get('/search', (req, res) => {
+  let latitude = req.query.loc.split(',')[0];
+  let longitude = req.query.loc.split(',')[1];
+
+  let search = req.query.search;
+  Products.find({
+    $or: [
+      { pname: { $regex: search } },
+      { pdesc: { $regex: search } },
+      { price: { $regex: search } },
+    ],
+    pLoc: {
+      $near: {
+        $geometry: {
+          type: 'Point',
+          coordinates: [parseFloat(longitude), parseFloat(latitude)]
+        }
+      }
+    }
+  })
+
+<!-- after this line of codes chnages we get and good outpu which if present basede on location then shows...
+we get: no result found and if we search for latest that we aaded based on location then we get oittt... -->
+
+so above arrow was not chnages why?
+
+@-@
+
+# REact page
+header.jsx
+
+<!-- chnage in line of codeee -->
+
+  const [loc , setLoc] = useState(null)
+
+ <select value={loc} onChange={(e) => {
+          localStorage.setItem('userLoc', e.target.value)
+          setLoc(e.target.value)
+        }}>
+<!-- after this changes we get an dropdown working staggeeee in output -->
+
+@-@
+
+# Node js
+
+<!-- aswe change dropdown list we get an in inspect of output chnage in useLoc like chnagebale.. -->
+
+<!-- ////// as we see we get on both location hte same product so to change them we chooose do to somethiingg//////// -->
+       coordinates: [parseFloat(latitude), parseFloat(longitude)]
+        },
+        $maxDistance : 500 * 1000,
+
+        <!-- after  these line chnae in index.js we get both diff dropdownnnnn..... -->
+
+@-@
+
+# REact page
+
+header.jsx for cretae a link for sell...
+<div style={{
+          display: 'flex', justifyContent: 'center',
+          alignItems: 'center', background: 'blue',
+          width: '40px', height: '40px',
+          borderRadius: '49%'
+        }}> OM </div>
+
+        {true && <div>
+
+        </div>}
+        onclcik we get box
+<!-- after add on thi chnage in code we get aaal the like product and inside this  -->
+ {true && <div style={{
+          width: '200px',
+          background: 'blue',
+          position : 'absolute',
+          top: '0',
+          right : '0',
+          marginTop : '50px',
+          marginRight : '50px'
+        }}>
+
+<!--         
+1st chahge :
+////above :
+  const [showOver, setshowOver] = useState(false)
+
+///afer logout button:
+{true && <div style={{
+          width: '200px',
+          background: 'blue',
+          position : 'absolute',
+          top: '0',
+          right : '0',
+          marginTop : '50px',
+          marginRight : '50px'
+        }}>
+         
+          {!!localStorage.getItem('token') &&
+            <Link to="/liked-products">
+              <button className='logout-btn'>LIKED PRODUCTS</button>
+            </Link>
+          }
+        </div>}
+
+/////////// set showOver and showOver chnae in code for onclick workiggggg!@!!! 
+
+
+////below three div group add this inside the circle logo ///
+
+ <div>
+            {!!localStorage.getItem('token') &&
+              <Link to="/add-product">
+                <button className='logout-btn'>ADD PRODUCT</button>
+              </Link>
+            }
+          </div>
+
+          <div>{!!localStorage.getItem('token') &&
+            <Link to="/liked-products">
+              <button className='logout-btn'>LIKED PRODUCTS</button>
+            </Link>}</div>
+
+          <div>{!localStorage.getItem('token') ?
+            <Link to='/login'> LOGIN </Link> :
+            <button className="logout-btn" onClick={handleLogout}> LOGOUT </button>}</div>
+ <div
+          onClick={() => {
+            setshowOver(!showOver)
+          }}
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            background: '#002f34',
+            color: "#fff",
+            fontSize: '14px',
+            width: '40px',
+            height: '40px',
+            borderRadius: '49%'
+          }}> OM </div>
+
+        {showOver && <div style={{
+          minHeight: '100px',
+          width: '200px',
+          background: 'blue',
+          position: 'absolute',
+          top: '0',
+          right: '0',
+          zIndex: 1,
+          marginTop: '50px',
+          marginRight: '50px',
+          color :'red', 
+          fontSize: '14px',
+          background : '#002f34',
+          borderRadius : '10px'
+        }}>
+
+          <div>
+            {!!localStorage.getItem('token') &&
+              <Link to="/add-product">
+                <button className='logout-btn'>ADD PRODUCT</button>
+              </Link>
+            }
+          </div>
+
+          <div>{!!localStorage.getItem('token') &&
+            <Link to="/liked-products">
+              <button className='logout-btn'>LIKED PRODUCTS</button>
+            </Link>}</div>
+
+          <div>{!localStorage.getItem('token') ?
+            <Link to='/login'> LOGIN </Link> :
+            <button className="logout-btn" onClick={handleLogout}> LOGOUT </button>}</div>
+
+after above huge chnage in code we egt an good ouput in gheader right corner but problrm is if user not login that can aslso liked the product...
+
+-->
+<!-- home.jsx: solution -->
+
+let userId = localStorage.getItem('userId');
+
+    if(!userId) {
+      alert("Please Login First!! ")
+      return;
+    }
+
+<!-- header.jsx -->
+
+  <!-- const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+
+so for checking we first login nd then logout so we are getting......!
+
+                    <div onClick={(e) =>  handleLike(item._id) && e.stopPropagation()} className="icons-conatiner">
+to stopproprgation in child
+
+  const handleLike = (productId) => {
+    e.stopPropagation();
+    let userId = localStorage.getItem('userId');
+
+    if(!userId) {
+      alert("Please Login First!! ")
+      return; -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -216,22 +216,22 @@ let schema = new mongoose.Schema({
   pimg: String,
   pimg2: String,
   addedBy: mongoose.Schema.Types.ObjectId,
-  pLoc :{
-    type : {
+  pLoc: {
+    type: {
       type: String,
-      enum :['Point'],
+      enum: ['Point'],
       default: 'Point'
     },
-    coordinates : {
-      type : [Number]
+    coordinates: {
+      type: [Number]
     }
   }
 
 })
 
-schema.index({ pLoc : '2dsphere'}); // four side area scan
+schema.index({ pLoc: '2dsphere' }); // four side area scan
 
-const Products = mongoose.model('Products',schema);
+const Products = mongoose.model('Products', schema);
 
 // API Routes
 app.get('/', (req, res) => {
@@ -240,13 +240,25 @@ app.get('/', (req, res) => {
 
 //for search
 app.get('/search', (req, res) => {
+  let latitude = req.query.loc.split(',')[0];
+  let longitude = req.query.loc.split(',')[1];
+
   let search = req.query.search;
   Products.find({
     $or: [
       { pname: { $regex: search } },
       { pdesc: { $regex: search } },
       { price: { $regex: search } },
-    ]
+    ],
+    pLoc: {
+      $near: {
+        $geometry: {
+          type: 'Point',
+          coordinates: [parseFloat(latitude), parseFloat(longitude)]
+        },
+        $maxDistance : 500 * 1000,
+      }
+    }
   })
     .then((results) => {
       res.send({ message: 'success', product: results })
@@ -267,19 +279,21 @@ app.post('/add-product', upload.fields([{ name: 'pimg' }, { name: 'pimg2' }]), a
   const price = req.body.price;
   const category = req.body.category;
   const pimg = req.files?.pimg?.[0]?.path || '';
-  const pimg2 = req.files?.pimg2?.[0]?.path || '';  
+  const pimg2 = req.files?.pimg2?.[0]?.path || '';
   const addedBy = req.body.userId;
 
-  const product = new Products({ pname, pdesc, price , category, pimg , pimg2 , addedBy, pLoc :{
-    type: 'Point', coordinates: [plat,plog]
-  } })
+  const product = new Products({
+    pname, pdesc, price, category, pimg, pimg2, addedBy, pLoc: {
+      type: 'Point', coordinates: [plat, plog]
+    }
+  })
   product.save()
-     .then(() =>{
-       res.send({message : "saved success product."})
-     })
-     .catch(()=>{
-      res.send({message: "server error product."})
-     })
+    .then(() => {
+      res.send({ message: "saved success product." })
+    })
+    .catch(() => {
+      res.send({ message: "server error product." })
+    })
 });
 
 

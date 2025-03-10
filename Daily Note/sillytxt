@@ -68,3 +68,8 @@ This happens because:
 You are using mobile data or a dynamic IP (your internet provider changes your IP frequently).
 You are switching networks (WiFi to mobile hotspot, VPN, etc.).
 MongoDB Atlas needs your current IP every time it changes.
+
+
+<!-- zIndex: 1, this line of css is to the mutliple div canot go back of the another componensts
+Index in CSS (or inline styles in React) is used to control the stacking order of elements. It determines which element appears on top when multiple elements overlap.
+ -->

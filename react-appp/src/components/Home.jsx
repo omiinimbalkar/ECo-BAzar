@@ -40,7 +40,7 @@ function Home() {
   }
   const handleClick = () => {
 
-    const url = 'http://localhost:4000/search?search=' + search;
+    const url = 'http://localhost:4000/search?search=' + search + '&loc=' +localStorage.getItem('userLoc');
     axios.get(url)
       .then((res) => {
         setcproducts(res.data.product);
@@ -71,8 +71,14 @@ function Home() {
     setcproducts(filteredProducts)
   }
 
-  const handleLike = (productId) => {
+  const handleLike = (productId, e) => {
+    e.stopPropagation();
     let userId = localStorage.getItem('userId');
+
+    if(!userId) {
+      alert("Please Login First!! ")
+      return;
+    }
     const url = "http://localhost:4000/liked-product";
     const data = { userId, productId }
     axios.post(url, data)
@@ -107,7 +113,7 @@ function Home() {
               cproducts.map((item, index) => {
                 return (
                   <div key={item._id} className="card m-3" >
-                    <div onClick={() => handleLike(item._id)} className="icons-conatiner">
+                    <div onClick={(e) =>  handleLike(item._id) && e.stopPropagation()} className="icons-conatiner">
                       <FaHeart className='icons' />
                     </div>
                     <img width="500px" height="200px" src={'http://localhost:4000/' + item.pimg} />
