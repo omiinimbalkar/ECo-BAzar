@@ -256,7 +256,7 @@ app.get('/search', (req, res) => {
           type: 'Point',
           coordinates: [parseFloat(latitude), parseFloat(longitude)]
         },
-        $maxDistance : 500 * 1000,
+        $maxDistance: 500 * 1000,
       }
     }
   })
@@ -360,6 +360,20 @@ app.post('/liked-products', async (req, res) => {
     console.error(error);
     res.status(500).json({ message: "Server Error" });
   }
+});
+
+//my ads
+app.post('/my-products', async (req, res) => {
+  const userId = req.body.userId;
+
+  Products.find({ addedBy : userId })
+  .then((result) => {
+    res.send({message: 'success', products:result})
+   })
+   .catch((err) =>{
+    res.send({message: 'server err in addproduct'})
+   })
+
 });
 
 // Signup API

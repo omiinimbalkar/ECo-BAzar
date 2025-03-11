@@ -3453,30 +3453,62 @@ to stopproprgation in child
       return; -->
 
 
+v - 8
+<!-- 1. mys ads , 2.user profile, 3.search err,code push , refsctor codeeee// -->
+
+login user use ke product usii koo..... based on user id we doo.....////
+
+<!-- create a myproduct and paste inside that likedproject code... -->
+
+chnage in cod eliek chnage function name and export name 
+ and now cretae a api to show in index.js
+
+  {
+    path: "/my-products",
+    element: (<MyProducts/>),
+  },
+  after adding this line we get an output but a server because ther ei s no in backend store for work on that in backend
+so we created a link to directly react on my product who can show only login user
 
 
+<!-- go in header.jsx for creating a link for that purpose  -->
+<div>{!!localStorage.getItem('token') &&
+            <Link to="/liked-products">
+              <button className='logout-btn'> FAVOURITES </button>
+            </Link>}</div>
+
+          <div>{!!localStorage.getItem('token') &&
+            <Link to="/my-products">
+              <button className='logout-btn'>MY AD</button>
+            </Link>}</div>
+
+after this line of chnage we done our one link added in circle logoooo
 
 
+<!-- go to backend to create an api -->
+@-@
+
+# Node js
 
 
+//my ads
+app.post('/my-products', async (req, res) => {
+  const userId = req.body.userId;
 
+  Products.find({ addedBy : userId })
+  .then((result) => {
+    res.send({message: 'success', products:result})
+   })
+   .catch((err) =>{
+    res.send({message: 'server err in addproduct'})
+   })
 
+});
+<!-- so we go on frontend and check the working or nnot by refersihningg -->
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<!-- if u login or signup with new id then it not shows anny kind of my ads okkhh
+ -->
+<!-- 11.00 srop here fro now~!!! -->
 
 
 

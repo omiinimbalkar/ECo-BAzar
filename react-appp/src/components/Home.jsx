@@ -71,10 +71,10 @@ function Home() {
     setcproducts(filteredProducts)
   }
 
-  const handleLike = (productId, e) => {
-    e.stopPropagation();
+  const handleLike = (productId , e) => {
     let userId = localStorage.getItem('userId');
-
+    e.stopPropagation();
+    
     if(!userId) {
       alert("Please Login First!! ")
       return;
@@ -113,7 +113,7 @@ function Home() {
               cproducts.map((item, index) => {
                 return (
                   <div key={item._id} className="card m-3" >
-                    <div onClick={(e) =>  handleLike(item._id) && e.stopPropagation()} className="icons-conatiner">
+                    <div onClick={(e) =>  handleLike(item._id,e)} className="icons-conatiner">
                       <FaHeart className='icons' />
                     </div>
                     <img width="500px" height="200px" src={'http://localhost:4000/' + item.pimg} />
@@ -132,7 +132,7 @@ function Home() {
           products.map((item, index) => {
             return (
               <div onClick={() => { handelProduct(item._id) }} key={item._id} className="card m-3" >
-                <div onClick={() => handleLike(item._id)} className="icons-conatiner">
+                <div onClick={(e) => handleLike(item._id) && e.stopPropagation() } className="icons-conatiner">
                   <FaHeart className='icons' />
                 </div>
                 <img width="300px" height="200px" src={'http://localhost:4000/' + item.pimg} />
