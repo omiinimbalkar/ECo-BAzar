@@ -4034,6 +4034,32 @@ app.listen(port, () => {
 
  <!-- 9 v about dploy based ig -->
 
+we used render for deploy from backeend
+[text](https://dashboard.render.com/)
+inside process is usd frree and connect git and gicv comand deploy we service / first select web service 
+
+<!-- and after deploy you gte an error so solve that we need add line inside a package.json -->
+
+
+
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "build" :"npm run build"//afdd this
+
+
+    
+steps to folloe: 
+web service 
+<!-- new web service selsct -->
+
+
+
+
+
+netlify used from frontrnd
+
 
 
 
