@@ -3509,25 +3509,530 @@ app.post('/my-products', async (req, res) => {
 <!-- if u login or signup with new id then it not shows anny kind of my ads okkhh
  -->
 <!-- 11.00 srop here fro now~!!! -->
+oh detle
+
+@-@
+
+# REact page
 
 
+<!-- the problem of categoryPage to based on location getting now? by changing thi sline of code ..!
+  const handleClick = () => {
+
+    // const url = 'http://localhost:4000/search?search=' + search;
+    const url = 'http://localhost:4000/search?search=' + search + '&loc=' +localStorage.getItem('userLoc');
+
+ -->
+
+next 
+<!-- user profile....
+ 
+ //create a userProfilr folder 
+ 
+function MyProfile(){
+    return(
+        <div>
+            <h4>User Profilee</h4>
+        </div>
+    )
+}
+export default MyProfile;
+
+and used inside the index.js//
+ {
+    path: "/my-profile",
+    element: (<MyProfile/>),
+  },
+ -->
+// we go and hrck in frotend page about that!?
+/my-profile
+
+<!-- normal code chnage 
+import Header from "./Header";
+function Myprofile(){
+    return(
+        <div>
+            <Header/>
+            <h4 className="text-center"// bootstrap class mt-3>User Profilee</h4>
+        </div>
+    )
+}
+export default Myprofile; -->
 
 
+<!-- show what we need call api for user dtaa show?
+ -->
+
+<!-- changre to call apii
+import { useEffect } from "react";
+import Header from "./Header";
+import axios from "axios";
+
+function Myprofile() {
 
 
+    useEffect(() => {
+        let url = 'http://localhost:4000/my-profile/' + localStorage.getItem('userId');
+        axios.get(url)
+            .then((res) => {
+                console.log(res.data)
+            })
+        .catch((err) => {
+            alert("server error")
+        })
+}, []);
+
+return (
+    <div>
+        <Header />
+        <h4 className="text-center mt-2">User Profilee</h4>
+    </div>
+)
+}
+export default Myprofile; -->
+
+servere errro becasue my profilre api is not iin backendd....
+
+@-@
+
+# Node js
+
+app.get('/my-profile/:userId' , (req,res) =>{
+  console.log(req.params);
+  return;
+})
+<!-- add this line w get knoem n node terminal ki its working or not?1 -->
+
+Server running on port 4000
+MongoDB Connected
+{ userId: '67cd8f6f0da3f0ac53ef165c' } we get ittt...
+
+app.get('/my-profile/:userId' , (req,res) =>{
+  let uid = req.params.userId
+
+  Users.findOne({ _id : uid })
+  .then((result) => {
+    res.send({
+      message: " sucess. ",
+      user: {
+        email: result.email,
+        mobile: result.mobile,
+        username: result.username
+      }
+    })
+  })
+  .catch(() => {
+    res.send({ message: " server error in user  " })
+  })
+})
+network
+output:{message: " sucess. ", user: {email: "omn@gmail.com", mobile: "01234567891", username: "omii"}}
+message
+: 
+" sucess. "
+user
+: 
+{email: "omn@gmail.com", mobile: "01234567891", username: "omii"}
+console:{message: ' sucess. ', user: {…}}message: " sucess. "user: {email: 'omn@gmail.com', mobile: '01234567891', username: 'omii'}[[Prototype]]: Object
 
 
+@-@
+
+# REact page
+
+import { useEffect, useState } from "react";
+import Header from "./Header";
+import axios from "axios";
+
+function Myprofile() {
+
+    const [user, setuser] = useState({})
+    useEffect(() => {
+        let url = 'http://localhost:4000/my-profile/' + localStorage.getItem('userId');
+        axios.get(url)
+            .then((res) => {
+                console.log(res.data)
+                if (res.data.user) {
+                    setuser(res.data.user);
+                }
+            })
+            .catch((err) => {
+                alert("server error")
+            })
+    }, []);
+
+    return (
+        <div>
+            <Header />
+            <h4 className="text-center mt-2">User Profilee</h4>
+            <table>
+                <tr>
+                    <td> USERNAME </td>
+                    <td> EMAIL ID </td>
+                    <td> MOBILE </td>
+                </tr>
+                <tr>
+                    <td>{user.username}</td>
+                    <td>{user.email}</td>
+                    <td> {user.mobile} </td>
+                </tr>
+
+            </table>
+        </div>
+    )
+}
+export default Myprofile;
+<!-- after that we are getting user page.. -->
+
+<!-- for styling we go to bootstrap tBLE IN SEARCH BAR..... -->
+
+<!-- push it  -->
+
+@-@
+
+# Node js
+<!-- refactor code
+ controllers folder create
+ inside that  userController.js & productController.js
 
 
+ productController.js
+ 
+const mongoose = require('mongoose');
 
+let schema = new mongoose.Schema({
+    pname: String,
+    pdesc: String,
+    price: String,
+    category: String,
+    pimg: String,
+    pimg2: String,
+    addedBy: mongoose.Schema.Types.ObjectId,
+    pLoc: {
+        type: {
+            type: String,
+            enum: ['Point'],
+            default: 'Point'
+        },
+        coordinates: {
+            type: [Number]
+        }
+    }
 
+})
 
+schema.index({ pLoc: '2dsphere' }); // four side area scan
 
+const Products = mongoose.model('Products', schema);
 
+module.exports.search = (req, res) => {
+    let latitude = req.query.loc.split(',')[0];
+    let longitude = req.query.loc.split(',')[1];
 
+    let search = req.query.search;
+    Products.find({
+        $or: [
+            { pname: { $regex: search } },
+            { pdesc: { $regex: search } },
+            { price: { $regex: search } },
+        ],
+        pLoc: {
+            $near: {
+                $geometry: {
+                    type: 'Point',
+                    coordinates: [parseFloat(latitude), parseFloat(longitude)]
+                },
+                $maxDistance: 500 * 1000,
+            }
+        }
+    })
+        .then((results) => {
+            res.send({ message: 'success', product: results })
+        })
+        .catch((err) => {
+            res.send({ message: ' server error in search ' })
+        })
+}
 
+module.exports.addProduct = async (req, res) => {
+    console.log(req.files)
+    console.log(req.body)
+    const plat = req.body.plat;
+    const plog = req.body.plog;
+    const pname = req.body.pname;
+    const pdesc = req.body.pdesc;
+    const price = req.body.price;
+    const category = req.body.category;
+    const pimg = req.files?.pimg?.[0]?.path || '';
+    const pimg2 = req.files?.pimg2?.[0]?.path || '';
+    const addedBy = req.body.userId;
 
+    const product = new Products({
+        pname, pdesc, price, category, pimg, pimg2, addedBy, pLoc: {
+            type: 'Point', coordinates: [plat, plog]
+        }
+    })
+    product.save()
+        .then(() => {
+            res.send({ message: "saved success product." })
+        })
+        .catch(() => {
+            res.send({ message: "server error product." })
+        })
+}
 
+module.exports.getProducts = async (req, res) => {
+    const catName = req.query.catName;
+    let _f = {}
+
+    if (catName) {
+        _f = {
+            category: catName
+        }
+    }
+
+    try {
+        const products = await Products.find(_f);
+        if (products.length === 0) {
+            return res.json({ message: "No products found", products: [] });
+        }
+        res.json({ message: "Products fetched successfully", products });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Server Error" });
+    }
+}
+
+module.exports.getProductsById = async (req, res) => {
+    try {
+        const product = await Products.findById(req.params.pId);
+        if (!product) {
+            return res.status(404).json({ message: "Product not found" });
+        }
+        res.json({ message: "Product found", product });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Server Error" });
+    }
+}
+
+module.exports.myProducts = async (req, res) => {
+    const userId = req.body.userId;
+
+    Products.find({ addedBy: userId })
+        .then((result) => {
+            res.send({ message: 'success', products: result })
+        })
+        .catch((err) => {
+            res.send({ message: 'server err in addproduct' })
+        })
+
+}
+usercontroller 
+
+const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
+
+// Mongoose Models
+const Users = mongoose.model('Users', {
+    username: String,
+    email: String,
+    mobile: String,
+    password: String,
+    likedProducts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Products' }]
+});
+
+module.exports.likedProducts = (req, res) => {
+        let productId = req.body.productId;
+        let userId = req.body.userId;
+    
+        Users.updateOne({ _id: userId }, { $addToSet: { likedProducts: productId } })
+            .then(() => {
+                res.send({ message: 'liked success.' })
+            })
+            .catch(() => {
+                res.send({ message: 'server err' })
+            })
+    
+    }
+    
+
+module.exports.signup = async (req, res) => {
+    try {
+        const { username, email, mobile, password } = req.body;
+        const user = new Users({ username, email, mobile, password });
+
+        await user.save();
+        res.json({ message: 'User created' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server Error' });
+    }
+}
+
+module.exports.myProfileById = (req, res) => {
+    let uid = req.params.userId
+
+    Users.findOne({ _id: uid })
+        .then((result) => {
+            res.send({
+                message: " sucess. ",
+                user: {
+                    email: result.email,
+                    mobile: result.mobile,
+                    username: result.username
+                }
+            })
+        })
+        .catch(() => {
+            res.send({ message: " server error in user  " })
+        })
+}
+
+module.exports.getUserById = async (req, res) => {
+    const _userId = req.params.uId;
+    Users.findOne({ _id: _userId })
+        .then((result) => {
+            res.send({
+                message: " sucess. ",
+                user: {
+                    email: result.email,
+                    mobile: result.mobile,
+                    username: result.username
+                }
+            })
+        })
+        .catch(() => {
+            res.send({ message: " server error in user  " })
+        })
+}
+
+module.exports.login = async (req, res) => {
+    try {
+        const { username, password } = req.body;
+        const user = await Users.findOne({ username });
+
+        if (!user) {
+            return res.json({ message: 'User not found' });
+        }
+
+        if (user.password !== password) {
+            return res.json({ message: 'Password not matched' });
+        }
+
+        const token = jwt.sign({ data: user }, 'MYKEY', { expiresIn: '1h' });
+        res.json({ message: 'User found', token, userId: user._id });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server Error' });
+    }
+}
+
+module.exports.likedProducts = (req, res) => {
+
+    Users.findOne({ _id: req.body.userId }).populate('likedProducts')
+        .then((result) => {
+            res.send({ message: 'success', products: result.likedProducts })
+        })
+        .catch((err) => {
+            res.send({ message: 'server err' })
+        })
+
+}
+
+index,js
+
+const express = require('express');
+const path = require('path');
+const cors = require('cors');
+const jwt = require('jsonwebtoken');
+const multer = require('multer');
+const productController = require('./controllers/productController');
+const userController = require('./controllers/userController');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const { type } = require('os');
+
+const app = express();
+const port = 4000;
+
+// Middleware
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors());
+
+// Database Connection
+mongoose.connect('mongodb+srv://omssn21:om212006@cluster0.vr8ns.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
+  .then(() => {
+    console.log('MongoDB Connected');
+  })
+  .catch(err => {
+    console.error('MongoDB connection error:', err);
+  });
+
+// Storage Configuration for File Upload
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads');
+  },
+  filename: function (req, file, cb) {
+    const fileExtension = file.originalname.split('.').pop();
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, file.fieldname + '-' + uniqueSuffix + '.' + fileExtension);
+  },
+});
+const upload = multer({ storage: storage });
+
+// API Routes
+app.get('/', (req, res) => {
+  res.send('Hello Coder.....🌐');
+});
+
+//for search
+app.get('/search', productController.search);
+
+// Liked Products API
+app.post('/liked-product', userController.likedProducts);
+
+// Add Product API
+app.post('/add-product', upload.fields([{ name: 'pimg' }, { name: 'pimg2' }]), productController.addProduct);
+
+// Get All Products API
+app.get('/get-products', productController.getProducts);
+
+// Get Product by ID
+app.get('/get-product/:pId', productController.getProductsById);
+
+// Get Liked Products API
+app.post('/liked-products', userController.likedProducts);
+
+//my ads
+app.post('/my-products', productController.myProducts);
+
+// Signup API
+app.post('/signup', userController.signup);
+
+//getprofile by id api
+app.get('/my-profile/:userId', userController.myProfileById)
+
+//get user api
+app.get('/get-user/:uId', userController.getUserById)
+
+// Login API
+app.post('/login', userController.login);
+
+// Start Server
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
+
+ -->
+
+ 👍👍👍👍👍👍👍
+ adtrer all god changes we get an good workibg output
+
+ <!-- 9 v about dploy based ig -->
 
 
 

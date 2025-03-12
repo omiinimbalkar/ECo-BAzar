@@ -44,7 +44,9 @@ function CategoryPage() {
   }
   const handleClick = () => {
 
-    const url = 'http://localhost:4000/search?search=' + search;
+    // const url = 'http://localhost:4000/search?search=' + search;
+    const url = 'http://localhost:4000/search?search=' + search + '&loc=' +localStorage.getItem('userLoc');
+
     axios.get(url)
       .then((res) => {
         setcproducts(res.data.product);

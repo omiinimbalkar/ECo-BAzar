@@ -132,7 +132,7 @@ function Home() {
           products.map((item, index) => {
             return (
               <div onClick={() => { handelProduct(item._id) }} key={item._id} className="card m-3" >
-                <div onClick={(e) => handleLike(item._id) && e.stopPropagation() } className="icons-conatiner">
+                <div onClick={(e) => handleLike(item._id ,e)  } className="icons-conatiner">
                   <FaHeart className='icons' />
                 </div>
                 <img width="300px" height="200px" src={'http://localhost:4000/' + item.pimg} />
