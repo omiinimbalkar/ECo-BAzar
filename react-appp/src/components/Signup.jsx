@@ -11,7 +11,7 @@ function Signup() {
   const [password, setPassword] = useState(""); // we are creating a state   
 
   const handleApi = () => {
-    const URL = "http://localhost:4000/signup";
+    const URL = API_URL + "/signup";
     const data = { username, password , email , mobile};
     axios.post(URL, data)
       .then((res) => {

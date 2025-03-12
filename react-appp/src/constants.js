@@ -1,3 +1,4 @@
 
+API_URL = 'htttp://localhost:4000'
 
-module.exports.getProductAPiUrl = 'xsysysshs'
+export default API_URL;

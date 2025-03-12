@@ -10,7 +10,7 @@ function Login() {
 
   const handleApi = () => {
     console.log({username , password});// we are printing the username & password
-    const URL = "http://localhost:4000/login";
+    const URL =  API_URL + "/login";
     const data = {username,password};
     axios.post(URL,data)
     .then((res) => {

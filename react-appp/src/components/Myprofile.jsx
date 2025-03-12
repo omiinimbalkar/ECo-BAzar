@@ -6,7 +6,7 @@ function Myprofile() {
 
     const [user, setuser] = useState({})
     useEffect(() => {
-        let url = 'http://localhost:4000/my-profile/' + localStorage.getItem('userId');
+        let url =  API_URL + '/my-profile/' + localStorage.getItem('userId');
         axios.get(url)
             .then((res) => {
                 console.log(res.data)

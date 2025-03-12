@@ -22,7 +22,7 @@ function Home() {
   //   }
   // }, [])
   useEffect(() => {
-    const url = "http://localhost:4000/get-products";
+    const url = API_URL + "/get-products";
     axios
       .get(url)
       .then((res) => {
@@ -40,7 +40,7 @@ function Home() {
   }
   const handleClick = () => {
 
-    const url = 'http://localhost:4000/search?search=' + search + '&loc=' +localStorage.getItem('userLoc');
+    const url =  API_URL + '/search?search=' + search + '&loc=' +localStorage.getItem('userLoc');
     axios.get(url)
       .then((res) => {
         setcproducts(res.data.product);
@@ -79,7 +79,7 @@ function Home() {
       alert("Please Login First!! ")
       return;
     }
-    const url = "http://localhost:4000/liked-product";
+    const url = API_URL + "/liked-product";
     const data = { userId, productId }
     axios.post(url, data)
       .then((res) => {
@@ -116,7 +116,7 @@ function Home() {
                     <div onClick={(e) =>  handleLike(item._id,e)} className="icons-conatiner">
                       <FaHeart className='icons' />
                     </div>
-                    <img width="500px" height="200px" src={'http://localhost:4000/' + item.pimg} />
+                    <img width="500px" height="200px" src={ API_URL + item.pimg} />
                     <p className='m-2 '>{item.pname} | {item.category} </p>
                     <p className="m-2 text-danger">{item.price}</p>
                     <p className="m-2 text-success">{item.pdesc}</p>
@@ -135,7 +135,7 @@ function Home() {
                 <div onClick={(e) => handleLike(item._id ,e)  } className="icons-conatiner">
                   <FaHeart className='icons' />
                 </div>
-                <img width="300px" height="200px" src={'http://localhost:4000/' + item.pimg} />
+                <img width="300px" height="200px" src={ API_URL + item.pimg} />
                 <p className="m-2 price-text"> Rs.{item.price} /-</p>
                 <p className='m-2 '>{item.pname} | {item.category} </p>
                 <p className="m-2 text-success">{item.pdesc}</p>

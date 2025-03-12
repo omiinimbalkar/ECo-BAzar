@@ -4035,6 +4035,9 @@ app.listen(port, () => {
  <!-- 9 v about dploy based ig -->
 
 we used render for deploy from backeend
+    
+steps to folloe: 
+web service 
 [text](https://dashboard.render.com/)
 inside process is usd frree and connect git and gicv comand deploy we service / first select web service 
 
@@ -4048,10 +4051,9 @@ inside process is usd frree and connect git and gicv comand deploy we service / 
     "dev": "nodemon index.js",
     "build" :"npm run build"//afdd this
 
+and push teh cde on git 
 
-    
-steps to folloe: 
-web service 
+<!-- and go thatpage again and rsatrt noooo click deploy latest commit -->
 <!-- new web service selsct -->
 
 
@@ -4059,9 +4061,14 @@ web service
 
 
 netlify used from frontrnd
+steps : https://www.netlify.com/
 
+<!-- frtend run on bases of bacekdn so api in constant is imp -->
 
+API_URL = 'htttp://localhost:4000'
 
+export default API_URL;
+<!-- after that creating constant we can use it now in code  -->
 
 
 
