@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import categories from './CategoriesList';
 import API_URL from '../constants';
+// import { API_URL } from '../constants'
 function AddProduct() {
 
     const navigate = useNavigate();
