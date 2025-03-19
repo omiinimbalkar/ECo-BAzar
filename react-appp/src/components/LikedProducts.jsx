@@ -5,6 +5,8 @@ import { useNavigate, Link, data } from 'react-router-dom';
 import axios from 'axios';
 import { FaHeart } from 'react-icons/fa';
 import './Home.css'
+import API_URL from "../constants";
+
 function LikedProducts() {
 
     const navigate = useNavigate()
@@ -88,7 +90,7 @@ function LikedProducts() {
                                 <div onClick={() => handleLike(item._id)} className="icons-conatiner">
                                     <FaHeart className='icons' />
                                 </div>
-                                <img width="500px" height="200px" src={ API_URL + item.pimg} />
+                                <img width="500px" height="200px" src={ API_URL + '/'+ item.pimg} />
                                 <p className='m-2 '>{item.pname} | {item.category} </p>
                                 <p className="m-2 text-danger">{item.price}</p>
                                 <p className="m-2 text-success">{item.pdesc}</p>
@@ -106,7 +108,7 @@ function LikedProducts() {
                                 <div onClick={() => handleLike(item._id)} className="icons-conatiner">
                                     <FaHeart className='icons' />
                                 </div>
-                                <img width="500px" height="200px" src={ API_URL + item.pimg} />
+                                <img width="500px" height="200px" src={ API_URL + '/' + item.pimg} />
                                 <p className='m-2 '>{item.pname} | {item.category} </p>
                                 <p className="m-2 text-danger">{item.price}</p>
                                 <p className="m-2 text-success">{item.pdesc}</p>

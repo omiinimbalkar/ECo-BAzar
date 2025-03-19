@@ -4,7 +4,6 @@ import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import categories from './CategoriesList';
 import API_URL from '../constants';
-// import { API_URL } from '../constants'
 function AddProduct() {
 
     const navigate = useNavigate();
@@ -23,7 +22,7 @@ function AddProduct() {
 
     const handleApi = () => {
 
-        navigator.geolocation.getCurrentPosition((position) =>{ 
+        navigator.geolocation.getCurrentPosition((position) => {
             const fromData = new FormData();
             fromData.append('plat', position.coords.latitude)
             fromData.append('plog', position.coords.longitude)
@@ -34,7 +33,7 @@ function AddProduct() {
             fromData.append('pimg', pimg)
             fromData.append('pimg2', pimg2)
             fromData.append('userId', localStorage.getItem('userId'))
-    
+
             const url = API_URL + '/add-product';
             axios.post(url, fromData)
                 .then((res) => {
@@ -64,24 +63,30 @@ function AddProduct() {
                 <label> Product Category </label>
                 <input className="form-control" type="text" value={category} onChange={(e) => { setcategory(e.target.value) }} />
                 <select className="form-control" value={category} onChange={(e) => { setcategory(e.target.value) }}>
-                    <option> Book</option>       
+                    <option> Book</option>
                     <option> Newspaper </option>
                     <option> Bottle </option>
                     <option> Bucket</option>
                     <option> Clothes </option>
                     {
-                        categories &&  categories.length > 0 && 
-                        categories.map((item,index) => {
-                            return(
+                        categories && categories.length > 0 &&
+                        categories.map((item, index) => {
+                            return (
                                 <option key={'option' + index} > {item} </option>
                             )
                         })
                     }
                 </select>
                 <label> Product Image </label>
-                <input className="form-control" type="file" onChange={(e) => { setpimg(e.target.files[0]) }} />
+                <input className="form-control" type="file"
+                    onChange={(e) => {
+                        setpimg(e.target.files[0])
+                    }} />
                 <label> Product Second Image </label>
-                <input className="form-control" type="file" onChange={(e) => { setpimg2(e.target.files[0]) }} />
+                <input className="form-control" type="file"
+                    onChange={(e) => {
+                        setpimg2(e.target.files[0])
+                    }} />
                 <button onClick={handleApi} className="btn btn-primary mt-3"> Sumbit </button>
             </div>
         </div>

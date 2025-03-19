@@ -2,6 +2,8 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Header from './Header';
+import API_URL from "../constants";
+
 function ProductDetail() {
 
     const [product, setproduct] = useState();
@@ -41,7 +43,7 @@ function ProductDetail() {
                 PRODUCT DETAILS :
                 {product && <div className="d-flex justify-content-between flex-wrap">
                     <div>
-                        <img width="400px" height="200px" src={API_URL + product.pimg} alt="" />
+                        <img width="400px" height="200px" src={API_URL + '/' + product.pimg} alt="" />
                        { product.pimg2 && <img width="400px" height="200px" src={API_URL +  product.pimg2} alt="" />}
                         <h6>PRODUCT DETAIL:</h6>{product.pdesc}
                     </div>

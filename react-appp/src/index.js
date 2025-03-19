@@ -18,6 +18,7 @@ import ProductDetail from './components/ProductDetail';
 import CategoryPage from './components/CategoryPage';
 import MyProducts from './components/MyProducts';
 import MyProfile from './components/Myprofile';
+
 const router = createBrowserRouter([
 
   {
@@ -29,7 +30,7 @@ const router = createBrowserRouter([
     element: (<CategoryPage />),
   },
   {
-    path: "/about",
+    path: "about",
     element: <div>About</div>,
   },
   {
