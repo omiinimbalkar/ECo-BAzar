@@ -14,6 +14,9 @@ function Home() {
 
   //creating stae for products
   const [products, setproducts] = useState([]);
+  const [likedproducts, setlikedproducts] = useState([]);
+  const [refresh, setrefresh] = useState(false);
+  console.log(likedproducts)
   const [cproducts, setcproducts] = useState([]);
   const [search, setsearch] = useState("");
   const [issearch, setissearch] = useState(false);
@@ -36,14 +39,27 @@ function Home() {
       .catch((err) => {
         alert("server error")
       });
-  }, []);
+
+    const url2 = API_URL + "/liked-products";
+    let data = { userId: localStorage.getItem('userId') };
+
+    axios.post(url2, data)
+      .then((res) => {
+        if (res.data.products) {
+          setlikedproducts(res.data.products);
+        }
+      })
+      .catch((err) => {
+        alert("server error")
+      });
+  }, [refresh]);
 
   const handlesearch = (value) => {
     setsearch(value);
   }
   const handleClick = () => {
 
-    const url =  API_URL + '/search?search=' + search + '&loc=' +localStorage.getItem('userLoc');
+    const url = API_URL + '/search?search=' + search + '&loc=' + localStorage.getItem('userLoc');
     axios.get(url)
       .then((res) => {
         setcproducts(res.data.product);
@@ -74,11 +90,11 @@ function Home() {
     setcproducts(filteredProducts)
   }
 
-  const handleLike = (productId , e) => {
+  const handleLike = (productId, e) => {
     let userId = localStorage.getItem('userId');
     e.stopPropagation();
-    
-    if(!userId) {
+
+    if (!userId) {
       alert("Please Login First!! ")
       return;
     }
@@ -88,6 +104,9 @@ function Home() {
       .then((res) => {
         if (res.data.message) {
           alert('Liked')
+          setrefresh(!refresh)
+
+
         }
       })
       .catch((err) => {
@@ -105,8 +124,8 @@ function Home() {
 
       {issearch && cproducts && <
         h5>SEARCH RESULT :
-        <button className="clear-btn" onClick={()=> setissearch(false)}> CLEAR </button>
-         </h5>}
+        <button className="clear-btn" onClick={() => setissearch(false)}> CLEAR </button>
+      </h5>}
       {issearch && cproducts && cproducts.length == 0 && <h5> No Result found......... </h5>}
 
       {issearch && (
@@ -116,10 +135,10 @@ function Home() {
               cproducts.map((item, index) => {
                 return (
                   <div key={item._id} className="card m-3" >
-                    <div onClick={(e) =>  handleLike(item._id,e)} className="icons-conatiner">
+                    <div onClick={(e) => handleLike(item._id, e)} className="icons-conatiner">
                       <FaHeart className='icons' />
                     </div>
-                    <img width="500px" height="200px" src={ API_URL + '/' + item.pimg} />
+                    <img width="500px" height="200px" src={API_URL + '/' + item.pimg} />
                     <p className='m-2 '>{item.pname} | {item.category} </p>
                     <p className="m-2 text-danger">{item.price}</p>
                     <p className="m-2 text-success">{item.pdesc}</p>
@@ -135,10 +154,15 @@ function Home() {
           products.map((item, index) => {
             return (
               <div onClick={() => { handelProduct(item._id) }} key={item._id} className="card m-3" >
-                <div onClick={(e) => handleLike(item._id ,e)  } className="icons-conatiner">
-                  <FaHeart className='icons' />
+                <div onClick={(e) => handleLike(item._id, e)} className="icons-conatiner">
+                  {
+                    likedproducts.find((likedItem) => likedItem._id == item._id) ?
+                      <FaHeart className='red-icons' /> :
+                      <FaHeart className='icons' />
+
+                  }
                 </div>
-                <img width="300px" height="200px" src={ API_URL + '/' + item.pimg} />
+                <img width="300px" height="200px" src={API_URL + '/' + item.pimg} />
                 <p className="m-2 price-text"> Rs.{item.price} /-</p>
                 <p className='m-2 '>{item.pname} | {item.category} </p>
                 <p className="m-2 text-success">{item.pdesc}</p>

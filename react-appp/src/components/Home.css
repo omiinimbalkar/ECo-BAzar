@@ -5,8 +5,15 @@
     color: rgb(245, 240, 240);
     cursor: pointer;
 }
+.red-icons{
+    font-size: 32px;
+    height:32px;
+    width: 32px;
+    color: rgba(17, 0, 255, 0.796);
+    cursor: pointer;
+}
 .icons:hover{
-    color: red
+    color: rgb(217, 13, 64)
   }
 .icons-conatiner{
     position : absolute;
