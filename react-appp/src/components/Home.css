@@ -9,11 +9,11 @@
     font-size: 32px;
     height:32px;
     width: 32px;
-    color: rgba(17, 0, 255, 0.796);
+    color: rgb(243, 94, 8);
     cursor: pointer;
 }
 .icons:hover{
-    color: rgb(217, 13, 64)
+    color: #aaa
   }
 .icons-conatiner{
     position : absolute;

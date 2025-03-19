@@ -11,20 +11,33 @@ const Users = mongoose.model('Users', {
     likedProducts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Products' }]
 });
 
-module.exports.likedProducts = (req, res) => {
-        let productId = req.body.productId;
-        let userId = req.body.userId;
-    
-        Users.updateOne({ _id: userId }, { $addToSet: { likedProducts: productId } })
-            .then(() => {
-                res.send({ message: 'liked success.' })
-            })
-            .catch(() => {
-                res.send({ message: 'server err' })
-            })
-    
-    }
-    
+module.exports.likedProduct = (req, res) => {
+    let productId = req.body.productId;
+    let userId = req.body.userId;
+
+    Users.updateOne({ _id: userId }, { $addToSet: { likedProducts: productId } })
+        .then(() => {
+            res.send({ message: 'liked success.' })
+        })
+        .catch(() => {
+            res.send({ message: 'server err' })
+        })
+
+}
+
+module.exports.dislikedProduct = (req, res) => {
+    let productId = req.body.productId;
+    let userId = req.body.userId;
+
+    Users.updateOne({ _id: userId }, { $pull : { likedProducts: productId } })
+        .then(() => {
+            res.send({ message: 'Disliked success.' })
+        })
+        .catch(() => {
+            res.send({ message: 'server err' })
+        })
+
+}
 
 module.exports.signup = async (req, res) => {
     try {

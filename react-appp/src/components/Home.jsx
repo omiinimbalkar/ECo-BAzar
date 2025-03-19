@@ -103,7 +103,7 @@ function Home() {
     axios.post(url, data)
       .then((res) => {
         if (res.data.message) {
-          alert('Liked')
+          // alert('Liked')
           setrefresh(!refresh)
 
 
@@ -114,6 +114,30 @@ function Home() {
       });
 
   }
+
+  const handleDisLike = (productId, e) => {
+    let userId = localStorage.getItem('userId');
+    e.stopPropagation();
+
+    if (!userId) {
+      alert("Please Login First!! ")
+      return;
+    }
+    const url = API_URL + "/disliked-product";
+    const data = { userId, productId }
+    axios.post(url, data)
+      .then((res) => {
+        if (res.data.message) {
+          // alert('DisLiked')
+          setrefresh(!refresh)
+        }
+      })
+      .catch((err) => {
+        alert("server error")
+      });
+
+  }
+
   const handelProduct = (id) => {
     navigate('/product/' + id)
   }
@@ -154,11 +178,11 @@ function Home() {
           products.map((item, index) => {
             return (
               <div onClick={() => { handelProduct(item._id) }} key={item._id} className="card m-3" >
-                <div onClick={(e) => handleLike(item._id, e)} className="icons-conatiner">
+                <div className="icons-conatiner">
                   {
                     likedproducts.find((likedItem) => likedItem._id == item._id) ?
-                      <FaHeart className='red-icons' /> :
-                      <FaHeart className='icons' />
+                      <FaHeart onClick={(e) => handleDisLike(item._id, e)} className='red-icons' /> :
+                      <FaHeart onClick={(e) => handleLike(item._id, e)} className='icons' />
 
                   }
                 </div>

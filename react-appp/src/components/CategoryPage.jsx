@@ -16,6 +16,9 @@ function CategoryPage() {
 
   //creating stae for products
   const [products, setproducts] = useState([]);
+  const [likedproducts, setlikedproducts] = useState([]);
+  const [refresh, setrefresh] = useState(false);
+  console.log(likedproducts)
   const [cproducts, setcproducts] = useState([]);
   const [search, setsearch] = useState("");
   const [issearch, setissearch] = useState(false);
@@ -27,7 +30,7 @@ function CategoryPage() {
   //   }
   // }, [])
   useEffect(() => {
-    const url = API_URL +  "/get-products?catName=" + param.catName;
+    const url = API_URL + "/get-products?catName=" + param.catName;
     axios
       .get(url)
       .then((res) => {
@@ -38,7 +41,21 @@ function CategoryPage() {
       .catch((err) => {
         alert("server error")
       });
-  }, [param]);
+
+    const url2 = API_URL + "/liked-products";
+    let data = { userId: localStorage.getItem('userId') };
+
+    axios.post(url2, data)
+      .then((res) => {
+        if (res.data.products) {
+          setlikedproducts(res.data.products);
+        }
+      })
+      .catch((err) => {
+        alert("server error")
+      });
+
+  }, [param, refresh]);
 
   const handlesearch = (value) => {
     setsearch(value);
@@ -46,7 +63,7 @@ function CategoryPage() {
   const handleClick = () => {
 
     // const url = 'http://localhost:4000/search?search=' + search;
-    const url =  API_URL +'/search?search=' + search + '&loc=' +localStorage.getItem('userLoc');
+    const url = API_URL + '/search?search=' + search + '&loc=' + localStorage.getItem('userLoc');
 
     axios.get(url)
       .then((res) => {
@@ -78,14 +95,40 @@ function CategoryPage() {
     setcproducts(filteredProducts)
   }
 
-  const handleLike = (productId) => {
+  const handleLike = (productId, e) => {
+    e.stopPropagation();
     let userId = localStorage.getItem('userId');
-    const url =  API_URL + "/liked-product";
+    const url = API_URL + "/liked-product";
     const data = { userId, productId }
     axios.post(url, data)
       .then((res) => {
         if (res.data.message) {
-          alert('Liked')
+          // alert('Liked')
+          setrefresh(!refresh)
+        }
+      })
+      .catch((err) => {
+        alert("server error")
+      });
+  }
+
+  const handleDisLike = (productId, e) => {
+    let userId = localStorage.getItem('userId');
+    e.stopPropagation();
+
+    if (!userId) {
+      alert("Please Login First!! ")
+      return;
+    }
+    const url = API_URL + "/disliked-product";
+    const data = { userId, productId }
+    axios.post(url, data)
+      .then((res) => {
+        if (res.data.message) {
+          // alert('DisLiked')
+          setrefresh(!refresh)
+
+
         }
       })
       .catch((err) => {
@@ -93,6 +136,7 @@ function CategoryPage() {
       });
 
   }
+
   const handelProduct = (id) => {
     navigate('/product/' + id)
   }
@@ -103,8 +147,8 @@ function CategoryPage() {
 
       {issearch && cproducts && <
         h5>SEARCH RESULT :
-        <button className="clear-btn" onClick={()=> setissearch(false)}> CLEAR </button>
-         </h5>}
+        <button className="clear-btn" onClick={() => setissearch(false)}> CLEAR </button>
+      </h5>}
       {issearch && cproducts && cproducts.length == 0 && <h5> No Result found......... </h5>}
 
       {issearch && (
@@ -134,9 +178,14 @@ function CategoryPage() {
             return (
               <div onClick={() => { handelProduct(item._id) }} key={item._id} className="card m-3" >
                 <div onClick={() => handleLike(item._id)} className="icons-conatiner">
-                  <FaHeart className='icons' />
+                  {
+                    likedproducts.find((likedItem) => likedItem._id == item._id) ?
+                      <FaHeart onClick={(e) => handleDisLike(item._id, e)} className='red-icons' /> :
+                      <FaHeart onClick={(e) => handleLike(item._id, e)} className='icons' />
+
+                  }
                 </div>
-                <img width="300px" height="200px" src={API_URL + '/' + item.pimg}/>
+                <img width="300px" height="200px" src={API_URL + '/' + item.pimg} />
                 <p className="m-2 price-text"> Rs.{item.price} /-</p>
                 <p className='m-2 '>{item.pname} | {item.category} </p>
                 <p className="m-2 text-success">{item.pdesc}</p>

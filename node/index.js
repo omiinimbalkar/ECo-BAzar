@@ -50,7 +50,10 @@ app.get('/', (req, res) => {
 app.get('/search', productController.search);
 
 // Liked Products API
-app.post('/liked-product', userController.likedProducts);
+app.post('/liked-product', userController.likedProduct);
+
+// DisLiked Products API
+app.post('/disliked-product', userController.dislikedProduct);
 
 // Add Product API
 app.post('/add-product', upload.fields([{ name: 'pimg' }, { name: 'pimg2' }]), productController.addProduct);
