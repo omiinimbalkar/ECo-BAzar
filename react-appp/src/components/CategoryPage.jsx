@@ -136,7 +136,7 @@ function CategoryPage() {
                 <div onClick={() => handleLike(item._id)} className="icons-conatiner">
                   <FaHeart className='icons' />
                 </div>
-                <img width="300px" height="200px" src={API_URL + '/' + item.pimage}/>
+                <img width="300px" height="200px" src={API_URL + '/' + item.pimg}/>
                 <p className="m-2 price-text"> Rs.{item.price} /-</p>
                 <p className='m-2 '>{item.pname} | {item.category} </p>
                 <p className="m-2 text-success">{item.pdesc}</p>

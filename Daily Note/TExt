@@ -4071,41 +4071,71 @@ export default API_URL;
 <!-- after that creating constant we can use it now in code  -->
 
 
+so after long time to do it deploy process t we notr propably deploy so we install in render site and then pass so go in seting of project send..
+
+ <!-- npm install && npm run build write this changes fbefor buildd.. -->
+
+now work on react buold wqe create env folder for that 
+
+env: REACT_APP_BASE_URL = 'https://localhost:4000'
+constant : 
+const API_URL = process.env.REACT_APP_BASE_URL 
+console.log(API_URL, "API_URL");
+
+export default API_URL;
+<!-- <!-- first we get an weooor so fix that we did it to env chnage in code and try to coonsole it becauseto check now we are running on which localhost so for you  need to just specific some thinkkkk  restrt the react serve again-->
+
+
+so n render we get an errro again for that wehat we did w ego in setting an npm install only remove npm build 
+==> Uploaded in 5.5s. Compression took 5.2s
+==> Build successful 🎉
+==> Deploying...
+[text](https://eco-bazar-node.onrender.com) we get it on our projct url okhh..
+
+now we add / and ask rom getproducts
+https://eco-bazar-node.onrender.com/get-products
+
+<!-- .code frontend  -->
+const API_URL = process.env.REACT_APP_BASE_URL 
+console.log(process.env, "API_URL");
+
+export default API_URL;
+
+<!-- we get this after change in constant code  -->
+{NODE_ENV: 'development', PUBLIC_URL: '', WDS_SOCKET_HOST: undefined, WDS_SOCKET_PATH: undefined, WDS_SOCKET_PORT: undefined, …} 'API_URL'
+
+
+
+ API_URL = process.env.NODE_ENV != 'development' ?
+    process.env.REACT_APP_BASE_URL :
+    'http://localhost:4000'
+ this changes is for making the code it good and they get by two side in env side or the localhost side..
+
+<!-- nxtttttttttttttt -->
+
+<!-- now simple process now the netfiy need a build older so for that what we do simple install build folder bu runinng this commnd on terimnal -->
+
+<!-- npm run build // so we get inside the react folder a build folder...... -->
+
+The build folder is ready to be deployed.
+You may serve it with a static server:
+
+  npm install -g serve
+  serve -s build
+
+Find out more about deployment here:
+
+  https://cra.link/deployment
+
+
+now copy build folder and paset in netify upload filee
 
 
 
 
+after lotsof play we gtan must output link
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+https://joyful-salmiakki-d7b692.netlify.app/category/Book
 
 
 
