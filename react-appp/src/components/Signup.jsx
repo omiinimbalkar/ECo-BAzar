@@ -58,6 +58,7 @@ function Signup() {
         <br />
         <button className='btn btn-primary' onClick={handleApi}>SignUP</button>
         <Link className='m-3' to='/login'><button>Login</button></Link>
+        navigate('/login')
       </div>
     </div>
   );

@@ -58,8 +58,15 @@ app.post('/disliked-product', userController.dislikedProduct);
 // Add Product API
 app.post('/add-product', upload.fields([{ name: 'pimg' }, { name: 'pimg2' }]), productController.addProduct);
 
+// Add Product API
+app.post('/edit-product', upload.fields([{ name: 'pimg' }, { name: 'pimg2' }]), productController.editProduct);
+
 // Get All Products API
 app.get('/get-products', productController.getProducts);
+
+// Delete Product API
+app.post('/delete-product', productController.deleteProducts);
+
 
 // Get Product by ID
 app.get('/get-product/:pId', productController.getProductsById);

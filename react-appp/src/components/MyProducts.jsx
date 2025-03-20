@@ -15,6 +15,7 @@ function MyProducts() {
     const [products, setproducts] = useState([]);
     const [cproducts, setcproducts] = useState([]);
     const [search, setsearch] = useState("");
+    const [refresh, setrefresh] = useState(false);
 
     // for not acces home page without login thi useeffrct is used..
     // useEffect(() => {
@@ -23,7 +24,7 @@ function MyProducts() {
     //   }
     // }, [])
     useEffect(() => {
-        const url =  API_URL + "/my-products";
+        const url = API_URL + "/my-products";
         let data = { userId: localStorage.getItem('userId') };
         axios.post(url, data)
             .then((res) => {
@@ -34,7 +35,7 @@ function MyProducts() {
             .catch((err) => {
                 alert("server error")
             });
-    }, []);
+    }, [refresh]);
 
     const handlesearch = (value) => {
         setsearch(value);
@@ -61,7 +62,7 @@ function MyProducts() {
 
     const handleLike = (productId) => {
         let userId = localStorage.getItem('userId');
-        const url =   API_URL + "/liked-product";
+        const url = API_URL + "/liked-product";
         const data = { userId, productId }
         axios.post(url, data)
             .then((res) => {
@@ -75,6 +76,29 @@ function MyProducts() {
 
     }
 
+    const handleDel = (pid) => {
+        console.log(pid)
+        if (!localStorage.getItem('userId')) {  // if user is not logged in
+            alert('Please login to delete product')
+            return;
+        }
+        const url = API_URL + "/delete-product";
+        const data = {
+            pid,
+            userId: localStorage.getItem('userId')
+        }
+        axios.post(url, data)
+            .then((res) => {
+                if (res.data.message) {
+                    alert('Product Deleted')
+                    setrefresh(!refresh)    // to refresh the page
+                }
+            })
+            .catch((err) => {
+                alert("server error")
+            });
+
+    }
     return (
         <div>
             <Header search={search} handlesearch={handlesearch} handleClick={handleClick} />
@@ -89,7 +113,7 @@ function MyProducts() {
                                 <div onClick={() => handleLike(item._id)} className="icons-conatiner">
                                     <FaHeart className='icons' />
                                 </div>
-                                <img width="500px" height="200px" src={ API_URL + item.pimg} />
+                                <img width="500px" height="200px" src={API_URL + item.pimg} />
                                 <p className='m-2 '>{item.pname} | {item.category} </p>
                                 <p className="m-2 text-danger">{item.price}</p>
                                 <p className="m-2 text-success">{item.pdesc}</p>
@@ -107,10 +131,14 @@ function MyProducts() {
                                 <div onClick={() => handleLike(item._id)} className="icons-conatiner">
                                     <FaHeart className='icons' />
                                 </div>
-                                <img width="500px" height="200px" src={ API_URL + '/' +item.pimg} />
+                                <img width="500px" height="200px" src={API_URL + '/' + item.pimg} />
                                 <p className='m-2 '>{item.pname} | {item.category} </p>
                                 <p className="m-2 text-danger">{item.price}</p>
                                 <p className="m-2 text-success">{item.pdesc}</p>
+                                <p className="m-2 text-success">
+                                <Link to = {`/edit-product/${item._id}`}> EDIT PRODUCT </Link>
+                                </p>
+                                <button onClick={() => handleDel(item._id)}> DELETE PRODUCT  </button>
                             </div>
                         )
                     })}

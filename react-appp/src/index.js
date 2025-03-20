@@ -18,6 +18,7 @@ import ProductDetail from './components/ProductDetail';
 import CategoryPage from './components/CategoryPage';
 import MyProducts from './components/MyProducts';
 import MyProfile from './components/Myprofile';
+import EditProduct from './components/EditProduct';
 
 const router = createBrowserRouter([
 
@@ -46,6 +47,11 @@ const router = createBrowserRouter([
     element: (<AddProduct/>),  
   },
   {
+    path: "/edit-product/:productId", 
+    element: (<EditProduct/>),
+  },
+  {
+   
     path: "/liked-products",
     element: (<LikedProducts/>),
   },
@@ -61,7 +67,6 @@ const router = createBrowserRouter([
     path: "/my-profile",
     element: (<MyProfile/>),
   },
- 
 ]);
 
 createRoot(document.getElementById("root")).render(

@@ -82,6 +82,63 @@ module.exports.addProduct = async (req, res) => {
         })
 }
 
+module.exports.editProduct = async (req, res) => {
+    console.log(req.files)
+    console.log(req.body)
+
+    const pid = req.body.pid;
+    const pname = req.body.pname;
+    const pdesc = req.body.pdesc;
+    const price = req.body.price;
+    const category = req.body.category;
+    let pimg = '';
+    let pimg2 = '';
+    if (req.files && req.files.pimg && req.files.pimg.length > 0) {
+        pimg = req.files?.pimg?.[0]?.path || '';
+    }
+    if (req.files && req.files.pimg && req.files.pimg.length > 0) {
+        pimg2 = req.files?.pimg2?.[0]?.path || '';
+    }
+
+
+    // const addedBy = req.body.userId;
+
+    // const product = new Products({
+    //     pname, pdesc, price, category, pimg, pimg2, addedBy, pLoc: {
+    //         type: 'Point', coordinates: [plat, plog]
+    //     }
+    // })
+
+    let editObj = {};
+
+    if (pname) {
+        editObj.pname = pname;
+    }
+    if (pdesc) {
+        editObj.pdesc = pdesc;
+    }
+    if (price) {
+        editObj.price = price;
+    }
+    if (category) {
+        editObj.category = category;
+    }
+    if (pimg) {
+        editObj.pimg = pimg;
+    }
+    if (pimg2) {
+        editObj.pimg2 = pimg2;
+    }
+
+    Products.updateOne({ _id: pid }, editObj, { new: true })
+        .then((result) => {
+            res.send({ message: "Edit success product.", product: result })
+        })
+        .catch(() => {
+            res.send({ message: "server error product." })
+        })
+}
+
 module.exports.getProducts = async (req, res) => {
     const catName = req.query.catName;
     let _f = {}
@@ -103,6 +160,7 @@ module.exports.getProducts = async (req, res) => {
         res.status(500).json({ message: "Server Error" });
     }
 }
+
 
 module.exports.getProductsById = async (req, res) => {
     try {
@@ -128,5 +186,23 @@ module.exports.myProducts = async (req, res) => {
             res.send({ message: 'server err in addproduct' })
         })
 
+}
+
+module.exports.deleteProducts = async (req, res) => {
+
+    Products.findOne({ _id: req.body.pid })
+        .then((result) => {
+            if (result.addedBy == req.body.userId) {
+                Products.deleteOne({ _id: req.body.pid })
+                    .then((deleteResult) => {
+                        if (deleteResult.deletedCount == 1) {
+                            res.send({ message: 'Product Deleted' })
+                        }
+                    })
+            }
+        })
+        .catch(() => {
+            console.log('seerver err in delete product');
+        })
 }
 

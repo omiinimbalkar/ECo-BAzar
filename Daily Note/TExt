@@ -4566,6 +4566,562 @@ export default Home;
 
 <!-- next curd opeartion with the user data add plh in secong last videoo... -->
 
+                                <button onClick={() => handleDel(item._id)}> DELETE PRODUCT  </button>
+<!-- add this line in myproduct and just for checking ig we add  a console with const handledel -->
+
+before adding return we get this ...
+  const handleDel = (pid) => {
+        console.log(pid)
+
+    }
+
+omn click on button w get id as console in output inspect 
+<!--/// 67cd905d0da3f0ac53ef1660/// -->
+
+
+ const handleDel = (pid) => {
+        console.log(pid)
+        if (!localStorage.getItem('userId')) {  // if user is not logged in
+            alert('Please login to delete product')
+            return;
+        }
+        const url = API_URL + "/delete-product";
+        const data = {
+            pid,
+            userId: localStorage.getItem('userId')
+        }
+        axios.post(url, data)
+            .then((res) => {
+                if (res.data.message) {
+                    alert('Product Deleted')
+                    navigate('/my-products')
+                }
+            })
+            .catch((err) => {
+                alert("server error")
+            });
+
+    }
+    after addding this if  i go i on backend to check what haapen then it show errro when i click on delete the product beecaause api is not call in backend fro that first i need to call in backend 
+
+@-@
+
+# Node js
+ajao boss bgu yaaa!!
+
+module.exports.deleteProducts = async (req, res) => {
+   
+    console.log(req.body);
+    return;
+}
+<!-- check it run in console in networkkkkkk/payload. and in console of vscode ... -->
+
+
+module.exports.deleteProducts = async (req, res) => {
+
+    console.log(req.body);
+    // return;
+    Products.findOne({ _id: req.body.pid })
+        .then((result)=>{
+            if(result.addedBy == req.body.userId){
+                Products.deleteOne({_id: req.body.pid})
+                .then((deleteResult) => {
+                    console.log(deleteResult)
+                })
+            }
+        })
+        .catch((err)=>{ 
+            console.log('seerver err in delete product');
+        })
+}
+
+after click on detete
+
+{ acknowledged: true, deletedCount: 1 }
+
+now working but refersh state need to dd in fonted after deletee the product okhh.....
+
+
+
+
+
+@-@
+
+# REact page
+
+myproduct.jsx
+import { useEffect, useState } from 'react';
+import Header from './Header';
+import Categories from './Categories';
+import { useNavigate, Link, data } from 'react-router-dom';
+import axios from 'axios';
+import { FaHeart } from 'react-icons/fa';
+import './Home.css'
+import API_URL from "../constants";
+
+function MyProducts() {
+
+    const navigate = useNavigate()
+
+    //creating stae for products
+    const [products, setproducts] = useState([]);
+    const [cproducts, setcproducts] = useState([]);
+    const [search, setsearch] = useState("");
+    const [refresh, setrefresh] = useState(false);
+
+    // for not acces home page without login thi useeffrct is used..
+    // useEffect(() => {
+    //   if (!localStorage.getItem('token')) {
+    //     navigate('/login')
+    //   }
+    // }, [])
+    useEffect(() => {
+        const url = API_URL + "/my-products";
+        let data = { userId: localStorage.getItem('userId') };
+        axios.post(url, data)
+            .then((res) => {
+                if (res.data.products) {
+                    setproducts(res.data.products);
+                }
+            })
+            .catch((err) => {
+                alert("server error")
+            });
+    }, [refresh]);
+
+    const handlesearch = (value) => {
+        setsearch(value);
+    }
+    const handleClick = () => {
+        let filteredProducts = products.filter((item) => {
+            if (item.pname.toLowerCase().includes(search.toLowerCase()) ||
+                item.pdesc.toLowerCase().includes(search.toLowerCase()) ||
+                item.category.toLowerCase().includes(search.toLowerCase())) {
+                return item;
+            }
+        })
+        setcproducts(filteredProducts)
+    }
+
+    const handleCategory = (value) => {
+        let filteredProducts = products.filter((item, index) => {
+            if (item.category == value) {
+                return item;
+            }
+        })
+        setcproducts(filteredProducts)
+    }
+
+    const handleLike = (productId) => {
+        let userId = localStorage.getItem('userId');
+        const url = API_URL + "/liked-product";
+        const data = { userId, productId }
+        axios.post(url, data)
+            .then((res) => {
+                if (res.data.message) {
+                    alert('Liked')
+                }
+            })
+            .catch((err) => {
+                alert("server error")
+            });
+
+    }
+
+    const handleDel = (pid) => {
+        console.log(pid)
+        if (!localStorage.getItem('userId')) {  // if user is not logged in
+            alert('Please login to delete product')
+            return;
+        }
+        const url = API_URL + "/delete-product";
+        const data = {
+            pid,
+            userId: localStorage.getItem('userId')
+        }
+        axios.post(url, data)
+            .then((res) => {
+                if (res.data.message) {
+                    alert('Product Deleted')
+                    setrefresh(!refresh)    // to refresh the page
+                }
+            })
+            .catch((err) => {
+                alert("server error")
+            });
+
+    }
+    return (
+        <div>
+            <Header search={search} handlesearch={handlesearch} handleClick={handleClick} />
+            <Categories handleCategory={handleCategory} />
+
+
+            <div className='d-flex justify-content-center flex-wrap'>
+                {cproducts && products.length > 0 &&
+                    cproducts.map((item, index) => {
+                        return (
+                            <div key={item._id} className="card m-3" >
+                                <div onClick={() => handleLike(item._id)} className="icons-conatiner">
+                                    <FaHeart className='icons' />
+                                </div>
+                                <img width="500px" height="200px" src={API_URL + item.pimg} />
+                                <p className='m-2 '>{item.pname} | {item.category} </p>
+                                <p className="m-2 text-danger">{item.price}</p>
+                                <p className="m-2 text-success">{item.pdesc}</p>
+                            </div>
+                        )
+                    })}
+            </div>
+            <h5>ALL RESULTS : </h5>
+
+            <div className='d-flex justify-content-center flex-wrap'>
+                {products && products.length > 0 &&
+                    products.map((item, index) => {
+                        return (
+                            <div key={item._id} className="card m-3" >
+                                <div onClick={() => handleLike(item._id)} className="icons-conatiner">
+                                    <FaHeart className='icons' />
+                                </div>
+                                <img width="500px" height="200px" src={API_URL + '/' + item.pimg} />
+                                <p className='m-2 '>{item.pname} | {item.category} </p>
+                                <p className="m-2 text-danger">{item.price}</p>
+                                <p className="m-2 text-success">{item.pdesc}</p>
+                                <button onClick={() => handleDel(item._id)}> DELETE PRODUCT  </button>
+                            </div>
+                        )
+                    })}
+            </div>
+        </div>
+    );
+}
+export default MyProducts;    
+
+<!-- simple done with this wee ad staate inside this and cons delete add button in bottom -->
+
+<!-- now editProduct folder createe inside compnentsd -->
+copy paste addproduct content inside editProduct
+
+
+after small chnges in function and export name with file name in addproduct create a link to change the code befoore delete button
+
+ <p className="m-2 text-success">
+                                    <Link to={`/edit/${item._id}`}> EDIT PRODUCT </Link>
+                                </p>
+
+so simple this to create a link in outside page 
+now creat a url for edit-product okhh
+
+in frontend index.js
+after adding and importing we get proper output noew cd chnaes for edit productttt
+
+@-@
+
+# Node js
+
+
+now come in backend to createaaapi for backend to edit productt okh index.js
+after some checking 
+
+
+<!-- again in frontend some coode coopy from productdetail.jsx page for used in editproduct.jsx 
+useeffect code ehere we used getproduct 
+    const p = useParams();
+
+     useEffect(() => {
+        const url = API_URL + "/get-product/" + p.productId;
+        axios.get(url)
+            .then((res) => {
+                if (res.data.product) {
+                    setproduct(res.data.product)
+                }
+            })
+            .catch((err) => {
+                alert("server error")
+            });
+    }, []);
+this abovre code copy paste insid the editproduct.jsx in imprt after link add useParams
+
+editProduct clcik on link no we get like the output in inspect console 
+{pid: '67dbe7e8443a3ce0de303401'}pid: "67dbe7e8443a3ce0de303401"[[Prototype]]: Object
+
+we get by the index.js name after url of editproduct pid or eid that return inisde hat okh.
+
+
+import { useEffect, useState } from 'react';
+import Header from './Header';
+import { useNavigate, Link, useParams } from 'react-router-dom';
+import axios from 'axios';
+import categories from './CategoriesList';
+import API_URL from '../constants';
+function EditProduct() {
+
+    const p = useParams();
+    const navigate = useNavigate();
+    const [pname, setpname] = useState('');
+    const [pdesc, setpdesc] = useState('');
+    const [price, setprize] = useState('');
+    const [category, setcategory] = useState('');
+    const [pimg, setpimg] = useState('');
+    const [pimg2, setpimg2] = useState('');
+    const [poldpimg, setpoldpimg] = useState('');
+    const [poldpimg2, setpoldpimg2] = useState('');
+
+    useEffect(() => {
+        if (!localStorage.getItem('token')) {
+            navigate('/login')
+        }
+    }, []);
+
+    useEffect(() => {
+        const url = API_URL + "/get-product/" + p.productId;
+        axios.get(url)
+            .then((res) => {
+                if (res.data.product) {
+                    console.log(res.data.product)
+                    let product = res.data.product;
+                    setpname(product.pname)
+                    setpdesc(product.pdesc)
+                    setprize(product.price)
+                    setcategory(product.category)
+                    setpoldpimg(product.pimg)
+                    setpoldpimg2(product.pimg2)
+
+                }
+            })
+            .catch((err) => {
+                alert("server error")
+            });
+    }, []);
+
+    const handleApi = () => {
+
+        navigator.geolocation.getCurrentPosition((position) => {
+            const fromData = new FormData();
+            fromData.append('pname', pname)
+            fromData.append('pdesc', pdesc)
+            fromData.append('price', price)
+            fromData.append('category', category)
+            fromData.append('pimg', pimg)
+            fromData.append('pimg2', pimg2)
+            fromData.append('userId', localStorage.getItem('userId'))
+
+            const url = API_URL + '/edit-product';
+            axios.post(url, fromData)
+                .then((res) => {
+                    console.log(res)
+                    if (res.data.message) {
+                        alert(res.data.message)
+                        navigate('/')
+                    }
+                })
+                .catch((err) => {
+                    alert('Server Error')
+                })
+        })
+    }
+    return (
+        <div>
+            <Header />
+            <div className='p-3'>
+
+                <h2>EDIT PRODUCT HERE :</h2>
+                <label> Product Name</label>
+                <input className="form-control" type="text" value={pname} onChange={(e) => { setpname(e.target.value) }} />
+                <label> Product Description </label>
+                <input className="form-control" type="text" value={pdesc} onChange={(e) => { setpdesc(e.target.value) }} />
+                <label> Product Prize </label>
+                <input className="form-control" type="text" value={price} onChange={(e) => { setprize(e.target.value) }} />
+                <label> Product Category </label>
+                <input className="form-control" type="text" value={category} onChange={(e) => { setcategory(e.target.value) }} />
+                <select className="form-control" value={category} onChange={(e) => { setcategory(e.target.value) }}>
+                    <option> Book</option>
+                    <option> Newspaper </option>
+                    <option> Bottle </option>
+                    <option> Bucket</option>
+                    <option> Clothes </option>
+                    {
+                        categories && categories.length > 0 &&
+                        categories.map((item, index) => {
+                            return (
+                                <option key={'option' + index} > {item} </option>
+                            )
+                        })
+                    }
+                </select>
+
+                <label> Product Image </label>
+                <input style={{ width: '50%' }} className="form-control" type="file"
+                    onChange={(e) => {
+                        setpimg(e.target.files[0])
+                    }} />
+                <img src={API_URL + '/' + poldpimg} width={100} height={100} />
+                <br /> <br />
+
+                <label> Product Second Image </label>
+                <input style={{ width: '50%' }} className="form-control" type="file"
+                    onChange={(e) => {
+                        setpimg2(e.target.files[0])
+                    }} />
+                    <img src={API_URL + '/' + poldpimg2} width={100} height={100} />
+                <br /> <br />
+
+                <button onClick={handleApi} className="btn btn-primary mt-3"> Sumbit </button>
+            </div>
+        </div>
+    );
+}
+export default EditProduct;    
+above cod chage in api and add some image chnages to edit and cool go on and now call api in bacekdndso long waiting for thuis!!!
+
+
+
+-->
+
+index.js backend
+
+after making simalr used of ad roduct api and call it and now exporting module and just check it out and 
+module.exports.editProduct = async (req, res) => {
+    console.log(req.files)
+    console.log(req.body)
+
+    return;
+    const plat = req.body.plat;
+    const plog = req.body.plog;
+    const pname = req.body.pname;
+    const pdesc = req.body.pdesc;
+    const price = req.body.price;
+    const category = req.body.category;
+    const pimg = req.files?.pimg?.[0]?.path || '';
+    const pimg2 = req.files?.pimg2?.[0]?.path || '';
+    const addedBy = req.body.userId;
+
+    const product = new Products({
+        pname, pdesc, price, category, pimg, pimg2, addedBy, pLoc: {
+            type: 'Point', coordinates: [plat, plog]
+        }
+    })
+    product.save()
+        .then(() => {
+            res.send({ message: "saved success product." })
+        })
+        .catch(() => {
+            res.send({ message: "server error product." })
+        })
+}
+ by retuning in midh to check it working in body ree nad req
+
+
+
+<!-- frontnd code chnage to get id fromm frontend and pass in backend so go in editproduct.jsx and add one line 
+            fromData.append('pid', p.productId)
+this line add in handleapi const -->
+
+now chnage in backend line code added ..
+
+
+module.exports.editProduct = async (req, res) => {
+    console.log(req.files)
+    console.log(req.body)
+
+    const pid = req.body.pid;
+    const pname = req.body.pname;
+    const pdesc = req.body.pdesc;
+    const price = req.body.price;
+    const category = req.body.category;
+    const pimg = req.files?.pimg?.[0]?.path || '';
+    const pimg2 = req.files?.pimg2?.[0]?.path || '';
+    // const addedBy = req.body.userId;
+
+    // const product = new Products({
+    //     pname, pdesc, price, category, pimg, pimg2, addedBy, pLoc: {
+    //         type: 'Point', coordinates: [plat, plog]
+    //     }
+    // })
+
+    let editObj = {};
+
+    if (pname) {
+        editObj.pname = pname;
+    }
+    if (pdesc) {
+        editObj.pdesc = pdesc;
+    }
+    if (price) {
+        editObj.price = price;
+    }
+    if (category) {
+        editObj.category = category;
+    }   
+    if (pimg) {
+        editObj.pimg = pimg;
+    }
+    if (pimg2) {
+        editObj.pimg2 = pimg2;
+    }
+
+    Products.updateOne({ _id: pid }, editObj , {new: true})
+        .then((result) => {
+            res.send({ message: "Edit success product." , product: result})
+        })
+        .catch(() => {
+            res.send({ message: "server error product." })
+        })
+}
+simpe if condition added okh to check iki that particular chnage only count not els get count na d commnet part not used becuase its for add new product n user id need to sma eit scannt b chnages okh 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
