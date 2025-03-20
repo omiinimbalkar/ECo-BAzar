@@ -5070,48 +5070,323 @@ module.exports.editProduct = async (req, res) => {
 }
 simpe if condition added okh to check iki that particular chnage only count not els get count na d commnet part not used becuase its for add new product n user id need to sma eit scannt b chnages okh 
 
+<!-- chat with user!! -->
+in the last yrrr finally its comes to end oh oh 😭😭😭😭😭😭
+for that we used handle cors in search it socailly
+<!-- install inside node  -->
+
+by this cmd ; npm i socket.io
+
+and i react
+ by this cmd  ; npm i socket.io-client
 
 
+in backend we reqired two server to run that we see 
+
+<!-- above will se afterwards..../ -->
+
+go to backend ...../........
+
+<!-- first const -->
+const http = require('http'); 
+const { Server } = require ("socket.io");
+
+<!-- second const part -->
+const upload = multer({ storage: storage });
+const httpServer = http.createServer(app);  
+
+io.on('connection', (socket) => {
+  console.log('Socket Connected ',socket.id)
+})
+
+// Start Server
+httpServer.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
 
 
+<!-- frontend
+productDetail.jsx
+
+import io from 'socket.io-client';
+
+<!-- after function first useeffect -->
+// for server ig
+    useEffect(() => {
+        const socket  = io(API_URL)
+
+        socket.on('connect', () => {
+            alert('connected')
+        })
+
+    }, [])
 
 
+ -->
+
+ go again in backend 
+// Storage Configuration for File Upload
+
+const upload = multer({ storage: storage });
+<!-- const httpServer = http.createServer(app);  
+const io = new Server(httpServer , {
+  cors : {
+    origin : '*'
+  }
+}) --> commented code for editing and show alert in output 
+Socket Connected  ZbcpkpwaNBv4dFo4AAAD
+\
+
+/////////////////////////////////////// frotned ///////////////////////////////////////////////////
 
 
+<!-- again inn frontend to show in console socket id -->
+
+<!-- now chnage in alert with console and then div hanges styling we used bootstrappp.. -->
+let socket;
+<!-- after useeffect -->
+  const handleSend = () => {
+
+        const data = { username: 'usery', msg }
+        socket.emit('sendMSg', data)
+    }
+<!-- last div -->
+<div>
+                        CHATs
+                        <input value={msg} onChange={(e) => setmsg(e.target.value)} className="form-control" type="text" />
+                        <button onClick={handleSend} className="btn btn-primary">SEND</button>
+                    </div>
 
 
+//////////////////////again in backend////////////////////////
+
+let messages = [];
+
+io.on('connection', (socket) => {
+  console.log('Socket Connected ',socket.id)
+
+  socket.on('sendMsg' , (data) => {
+    messages.push(data);
+    io.emit('getMsg',messages)  
+  })
+  io.emit('getMsg',messages)
+
+})
+
+/////////////////////////////////////// frotned ///////////////////////////////////////////////////
+
+let socket;
+function ProductDetail() {
+
+    const [product, setproduct] = useState();
+    const [msg, setmsg] = useState('');
+    const [user, setuser] = useState();
+    console.log(user, "userrrrrrrr")
+    const p = useParams()
+
+    // for server ig
+    useEffect(() => {
+        socket = io(API_URL)
+
+        socket.on('connect', () => {
+            console.log('connected')
+        })
+
+        socket.on('getMsg', (data) => {
+            console.log(data, "data")
+        })
+
+    }, [])
+
+    const handleSend = () => {
+
+        const data = { username: 'userrr', msg }
+        socket.emit('sendMsg', data)
+    }
 
 
+<!-- fronntend below line ucode chnge
+   <div>
+                        CHATs
+                        {
+                            msgs && msgs.length > 0 && msgs.map((item, index) => {
+                                if (true) {
+                                    return (
+                                        <p>{item.username} : {item.msg}</p>
+                                    );
+                                }
+                                if (false) {
+                                    return(
+                                        <p>{item.username} : {item.msg}</p>
+                                    )
+                                }
+                            })
+                        }
+                        <input value={msg} onChange={(e) => setmsg(e.target.value)} className="form-control" type="text" />
+                        <button onClick={handleSend} className="btn btn-primary">SEND</button>
+                    </div>
+                </div>}
+            </div >
+        </>
+    )
+}
+
+export default ProductDetail;
+ -->
+
+in login.jsx
+          localStorage.setItem('userName',res.data.username);
+<!-- after adding this line after userId localstoarge wala then we go to bcaken in usercontroller to deiation of login api  -->
 
 
+<!-- baxkend
+login api call chnage in 
+    const token = jwt.sign({ data: user }, 'MYKEY', { expiresIn: '1h' });
+        res.json({ message: 'User found', token, userId: user._id , username :  result.username }); this line 
+ --> go and check in output application to geting or not
 
 
+<!-- frontend
+<div>
+                        CHATs
+                        {
+                            msgs && msgs.length > 0 && msgs.map((item, index) => {
+                                if (item.username === localStorage.getItem('userName')) {
+                                    return (
+                                        <p style={{ background: 'red' , borderRadius: '5px' }}>
+                                            {item.username} : {item.msg}</p>
+                                    );
+                                }
+                                if (item.username !== localStorage.getItem('userName')) {
+                                    return (
+                                        <p style={{ background: 'green' , borderRadius: '5px' }}>
+                                            {item.username} : {item.msg}</p>
+                                    );
+                                }
+                                
+                            })
+                        }
+ -->
 
 
+import { data, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import Header from './Header';
+import API_URL from "../constants";
+import io from 'socket.io-client';
 
+let socket;
+function ProductDetail() {
 
+    const [product, setproduct] = useState();
+    const [msg, setmsg] = useState('');
+    const [msgs, setmsgs] = useState([]);
+    const [user, setuser] = useState();
+    console.log(user, "userrrrrrrr")
+    const p = useParams()
 
+    // for server ig
+    useEffect(() => {
+        socket = io(API_URL)
 
+        socket.on('connect', () => {
+            console.log('connected')
+        })
 
+        socket.on('getMsg', (data) => {
+            console.log(data, "data")
 
+            setmsgs(data)
+        })
 
+    }, [])
 
+    const handleSend = () => {
 
+        const data = { username: localStorage.getItem('userName'), msg }
+        socket.emit('sendMsg', data)
+        setmsgs('')
+    }
 
+    useEffect(() => {
+        const url = API_URL + "/get-product/" + p.productId;
+        axios.get(url)
+            .then((res) => {
+                if (res.data.product) {
+                    setproduct(res.data.product)
+                }
+            })
+            .catch((err) => {
+                alert("server error")
+            });
+    }, []);
+    const handleContact = (addedBy) => {
+        console.log('id', addedBy)
+        const url = API_URL + "/get-user/" + addedBy;
+        axios.get(url)
+            .then((res) => {
+                if (res.data.user) {
+                    setuser(res.data.user)
+                }
+            })
+            .catch((err) => {
+                alert("server error")
+            });
+    }
+    return (
+        <>
+            <Header />
+            <div>
+                PRODUCT DETAILS :
+                {product && <div className="d-flex justify-content-between flex-wrap">
+                    <div>
+                        <img width="400px" height="200px" src={API_URL + '/' + product.pimg} alt="" />
+                        {product.pimg2 && <img width="400px" height="200px" src={API_URL + product.pimg2} alt="" />}
+                        <h6>PRODUCT DETAIL:</h6>{product.pdesc}
 
+                        <p className="m-2 price-text"> Rs.{product.price} /-</p>
+                        <p className='m-2 '>{product.pname} | {product.category} </p>
+                        <p className="m-2 text-success">{product.pdesc}</p>
 
+                        {product.addedBy &&
+                            <button onClick={() => handleContact(product.addedBy)}>
+                                SHOW CONTACT DETAILS
+                            </button>}
+                        {user && user.username && <h4>{user.username}</h4>}
+                        {user && user.email && <h3>{user.email}</h3>}
+                        {user && user.mobile && <h6>{user.mobile}</h6>}
+                    </div>
+                    <div>
+                        CHATs
+                        {
+                            msgs && msgs.length > 0 && msgs.map((item, index) => {
+                                if (item.username === localStorage.getItem('userName')) {
+                                    return (
+                                        <p style={{ color:"white", marginRight: '100px', background: '#61dafb' , borderRadius: '5px' }}>
+                                            {item.username} : {item.msg}</p>
+                                    );
+                                }
+                                if (item.username !== localStorage.getItem('userName')) {
+                                    return (
+                                        <p style={{ color:"white", marginLeft: '100px', background: '#282c34' , borderRadius: '5px' }}>
+                                            {item.username} : {item.msg}</p>
+                                    );
+                                }
+                                
+                            })
+                        }
+                        <input value={msg} onChange={(e) => setmsg(e.target.value)} className="form-control" type="text" />
+                        <button onClick={handleSend} className="btn btn-primary">SEND</button>
+                    </div>
+                </div>}
+            </div >
+        </>
+    )
+}
 
-
-
-
-
-
-
-
-
-
-
-
+export default ProductDetail;
+after chnage in this cod u need to seee all product the smae msg but we don't want that for that what we do!!!
 
 
 

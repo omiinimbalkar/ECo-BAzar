@@ -102,8 +102,9 @@ module.exports.login = async (req, res) => {
             return res.json({ message: 'Password not matched' });
         }
 
-        const token = jwt.sign({ data: user }, 'MYKEY', { expiresIn: '1h' });
-        res.json({ message: 'User found', token, userId: user._id });
+        const token = jwt.sign({ data: user }, 
+        'MYKEY', { expiresIn: '1h' });
+        res.json({ message: 'User found', token, userId: user._id , username: user.username });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server Error' });

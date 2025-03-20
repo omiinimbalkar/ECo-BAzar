@@ -4,6 +4,8 @@ const path = require('path');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const multer = require('multer');
+const http = require('http'); 
+const { Server } = require ("socket.io");
 const productController = require('./controllers/productController');
 const userController = require('./controllers/userController');
 const mongoose = require('mongoose');
@@ -40,6 +42,12 @@ const storage = multer.diskStorage({
   },
 });
 const upload = multer({ storage: storage });
+const httpServer = http.createServer(app);  
+const io = new Server(httpServer , {
+  cors : {
+    origin : '*'
+  }
+})
 
 // API Routes
 app.get('/', (req, res) => {
@@ -89,10 +97,43 @@ app.get('/get-user/:uId', userController.getUserById)
 // Login API
 app.post('/login', userController.login);
 
+//msg socket
+let messages = [];
+
+io.on('connection', (socket) => {
+  console.log('Socket Connected ',socket.id)
+
+  socket.on('sendMsg' , (data) => {
+    messages.push(data);
+    io.emit('getMsg',messages)  
+  })
+  io.emit('getMsg',messages)
+
+})
+
 // Start Server
-app.listen(port, () => {
+httpServer.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
