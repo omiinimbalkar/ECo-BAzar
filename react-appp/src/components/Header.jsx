@@ -30,15 +30,15 @@ function Header(props) {
   };
 
   return (
-    <div className="header-container d-flex justify-content-between">
-      <div className="header">
-        <Link className="links" to="/home">HOME</Link>
+    <div className="header-container d-flex justify-content-between align-items-center px-3 py-2 bg-light shadow">
+      <div className="d-flex align-items-center gap-3">
+        <Link className="links text-dark text-decoration-none fw-bold" to="/home">HOME</Link>
 
         {/* Dropdown for selecting a location */}
-        <select value={loc ?? ""} onChange={(e) => {
-          localStorage.setItem('userLoc', e.target.value)
-          setLoc(e.target.value)
-        }}>
+        <select className="form-select" value={loc ?? ""} onChange={(e) => {
+          localStorage.setItem('userLoc', e.target.value);
+          setLoc(e.target.value);
+        }} style={{ width: "150px" }}>
           {locations.map((item, index) => (
             <option key={index} value={`${item.latitude},${item.longitude}`}>
               {item.placeName}
@@ -47,73 +47,59 @@ function Header(props) {
         </select>
 
         {/* Search bar */}
-        <input className="search"
-          type="text"
-          value={props && props.search}
-          onChange={(e) => props.handlesearch && props.handlesearch(e.target.value)}
-        />
-        <button className="search-btn" onClick={() => props.handleClick && props.handleClick()}><FaSearch /></button>
+        <div className="d-flex">
+          <input className="form-control me-2"
+            type="text"
+            value={props && props.search}
+            onChange={(e) => props.handlesearch && props.handlesearch(e.target.value)}
+            placeholder="Search..."
+          />
+          <button className="btn btn-primary" onClick={() => props.handleClick && props.handleClick()}>
+            <FaSearch />
+          </button>
+        </div>
       </div>
-      <div>
 
-        {/* this below code for a circle logo to click on that we get al liked,logout and etc.. */}
-        <div
-          onClick={() => {
-            setshowOver(!showOver)
-          }}
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            background: '#002f34',
-            color: "#fff",
-            fontSize: '14px',
-            width: '40px',
-            height: '40px',
-            borderRadius: '49%'
-          }}> OM </div>
+      {/* Development Team and Location */}
+      <div className="fw-bold text-primary">
+        Development Team | Virar, Palghar
+      </div>
 
-        {showOver && <div style={{
-          minHeight: '100px',
-          width: '200px',
-          background: 'blue',
-          position: 'absolute',
-          top: '0',
-          right: '0',
-          zIndex: 1,
-          marginTop: '50px',
-          marginRight: '50px',
-          color :'red', 
-          fontSize: '14px',
-          background : '#002f34',
-          borderRadius : '10px'
-        }}>
+      {/* Profile and Menu */}
+      <div className="position-relative">
+        <div className="d-flex justify-content-center align-items-center bg-dark text-white rounded-circle"
+          style={{ width: '40px', height: '40px', cursor: 'pointer' }}
+          onClick={() => setshowOver(!showOver)}>
+          OM
+        </div>
 
-          <div>
-            {!!localStorage.getItem('token') &&
-              <Link to="/add-product">
-                <button className='logout-btn'>ADD PRODUCT</button>
-              </Link>
-            }
+        {showOver && (
+          <div className="position-absolute bg-dark text-white p-3 rounded shadow"
+            style={{ width: '200px', top: '50px', right: '0px', zIndex: 10 }}>
+            {!!localStorage.getItem('token') && (
+              <>
+                <Link to="/add-product" className="d-block text-white text-decoration-none mb-2">
+                  <button className='btn btn-outline-light w-100'>ADD PRODUCT</button>
+                </Link>
+                <Link to="/liked-products" className="d-block text-white text-decoration-none mb-2">
+                  <button className='btn btn-outline-light w-100'>FAVOURITES</button>
+                </Link>
+                <Link to="/my-products" className="d-block text-white text-decoration-none mb-2">
+                  <button className='btn btn-outline-light w-100'>MY AD</button>
+                </Link>
+              </>
+            )}
+
+            {!localStorage.getItem('token') ? (
+              <Link to='/login' className="d-block text-center text-white">LOGIN</Link>
+            ) : (
+              <button className="btn btn-danger w-100 mt-2" onClick={handleLogout}>LOGOUT</button>
+            )}
           </div>
-
-          <div>{!!localStorage.getItem('token') &&
-            <Link to="/liked-products">
-              <button className='logout-btn'> FAVOURITES </button>
-            </Link>}</div>
-
-          <div>{!!localStorage.getItem('token') &&
-            <Link to="/my-products">
-              <button className='logout-btn'>MY AD</button>
-            </Link>}</div>
-
-          <div>{!localStorage.getItem('token') ?
-            <Link to='/login'> LOGIN </Link> :
-            <button className="logout-btn" onClick={handleLogout}> LOGOUT </button>}</div>
-
-        </div>}
+        )}
       </div>
     </div>
+
   );
 }
 

@@ -5388,7 +5388,7 @@ function ProductDetail() {
 export default ProductDetail;
 after chnage in this cod u need to seee all product the smae msg but we don't want that for that what we do!!!
 
-
+noqw chnages in handle send in productdetail and just for sneding msg not show in other produuct dtaabase show in application in localstorage etccc
 
 
 

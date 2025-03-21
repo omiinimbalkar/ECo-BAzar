@@ -22,24 +22,30 @@ function ProductDetail() {
         socket.on('connect', () => {
             console.log('connected')
         })
+    }, [])
+    
+        useEffect(() => {
+
+            socket.emit('getMsgs' ,  {} )
 
         socket.on('getMsg', (data) => {
-            console.log(data, "data")
-            if(product && product._id){
-                const _data = data.filter((item,index) => {
-                    console.log(item,product)
-                    return item.productId === product._id
+            // if (product && product._id) {
+                
+                const _data = data.filter((item, index) => {
+                    return item.productId == p.productId
                 })
+                console.log(_data,"_data")
                 setmsgs(_data)
-            }
-            
+            // }
+
         })
 
-    }, [])
+    }, [p.productId])
 
     const handleSend = () => {
 
-        const data = { username: localStorage.getItem('userName'), msg , productId: product._id}
+        const data = { username: localStorage.getItem('userName'), msg, productId: localStorage.getItem('productId')}
+        console.log(data,"data send")
         socket.emit('sendMsg', data)
         setmsgs('')
     }
@@ -50,6 +56,7 @@ function ProductDetail() {
             .then((res) => {
                 if (res.data.product) {
                     setproduct(res.data.product)
+                    localStorage.setItem('productId', res.data.product._id)
                 }
             })
             .catch((err) => {
@@ -98,17 +105,17 @@ function ProductDetail() {
                             msgs && msgs.length > 0 && msgs.map((item, index) => {
                                 if (item.username === localStorage.getItem('userName')) {
                                     return (
-                                        <p style={{ color:"white", marginRight: '100px', background: '#61dafb' , borderRadius: '5px' }}>
+                                        <p key={item._id} style={{ color: "white", marginRight: '100px', background: '#61dafb', borderRadius: '5px' }}>
                                             {item.username} : {item.msg}</p>
                                     );
                                 }
                                 if (item.username !== localStorage.getItem('userName')) {
                                     return (
-                                        <p style={{ color:"white", marginLeft: '100px', background: '#282c34' , borderRadius: '5px' }}>
+                                        <p key={item._id} style={{ color: "white", marginLeft: '100px', background: '#282c34', borderRadius: '5px' }}>
                                             {item.username} : {item.msg}</p>
                                     );
                                 }
-                                
+
                             })
                         }
                         <input value={msg} onChange={(e) => setmsg(e.target.value)} className="form-control" type="text" />
