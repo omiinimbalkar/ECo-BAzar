@@ -82,6 +82,33 @@ module.exports.addProduct = async (req, res) => {
         })
 }
 
+module.exports.scrapProduct= async (req, res) => {
+    console.log(req.files)
+    console.log(req.body)
+    const plat = req.body.plat;
+    const plog = req.body.plog;
+    const pname = req.body.pname;
+    const pdesc = req.body.pdesc;
+    const price = req.body.price;
+    const category = req.body.category;
+    const pimg = req.files?.pimg?.[0]?.path || '';
+    const pimg2 = req.files?.pimg2?.[0]?.path || '';
+    const addedBy = req.body.userId;
+
+    const product = new Products({
+        pname, pdesc, price, category, pimg, pimg2, addedBy, pLoc: {
+            type: 'Point', coordinates: [plat, plog]
+        }
+    })
+    product.save()
+        .then(() => {
+            res.send({ message: "saved success product." })
+        })
+        .catch(() => {
+            res.send({ message: "server error product." })
+        })
+}
+
 module.exports.editProduct = async (req, res) => {
     console.log(req.files)
     console.log(req.body)
@@ -206,3 +233,5 @@ module.exports.deleteProducts = async (req, res) => {
         })
 }
 
+
+    

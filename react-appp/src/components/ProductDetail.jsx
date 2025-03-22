@@ -146,6 +146,7 @@ function ProductDetail() {
     const [msgs, setMsgs] = useState([]);
     const [user, setUser] = useState(null);
     const { productId } = useParams();
+    const [showContact, setShowContact] = useState(false);
 
     useEffect(() => {
         socket = io(API_URL);
@@ -178,12 +179,16 @@ function ProductDetail() {
     };
 
     const handleContact = (addedBy) => {
-        axios.get(`${API_URL}/get-user/${addedBy}`)
-            .then(res => {
-                if (res.data.user) setUser(res.data.user);
-            })
-            .catch(() => alert("Server error"));
+        if (!showContact) {  // Fetch data only if not already visible
+            axios.get(`${API_URL}/get-user/${addedBy}`)
+                .then(res => {
+                    if (res.data.user) setUser(res.data.user);
+                })
+                .catch(() => alert("Server error"));
+        }
+        setShowContact(!showContact); // Toggle visibility
     };
+
 
     return (
         <>
@@ -205,18 +210,28 @@ function ProductDetail() {
                             <h5 className="mt-3">{product.pname} | {product.category}</h5>
                             <p className="text-success">{product.pdesc}</p>
                             <h4 className="text-danger">Rs. {product.price} /-</h4>
+
+
+                            {/* conntact */}
                             {product.addedBy && (
-                                <Button className="mt-2" variant="primary" onClick={() => handleContact(product.addedBy)}>
-                                    Show Contact Details
-                                </Button>
+                                <>
+                                    <Button
+                                        className="mt-2 btn btn-primary"
+                                        onClick={() => handleContact(product.addedBy)}
+                                    >
+                                        {showContact ? "Hide Contact Details" : "📞 Show Contact Details"}
+                                    </Button>
+
+                                    {showContact && user && ( // Show details only if user data is fetched
+                                        <div className="mt-3 p-3 border rounded bg-light shadow-sm">
+                                            <h5 className="text-primary">Seller: {user.username || "Not Available"}</h5>
+                                            <p><strong>Email:</strong> {user.email || "Not Available"}</p>
+                                            <p><strong>Mobile:</strong> {user.mobile || "Not Available"}</p>
+                                        </div>
+                                    )}
+                                </>
                             )}
-                            {user && (
-                                <div className="mt-3">
-                                    <h5>Seller: {user.username}</h5>
-                                    <p>Email: {user.email}</p>
-                                    <p>Mobile: {user.mobile}</p>
-                                </div>
-                            )}
+
                         </Col>
                         <Col md={6}>
                             <h5>Chat</h5>

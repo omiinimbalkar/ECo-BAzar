@@ -141,59 +141,64 @@ function CategoryPage() {
     navigate('/product/' + id)
   }
   return (
-    <div>
+    <>
+      {/* Header & Categories */}
       <Header search={search} handlesearch={handlesearch} handleClick={handleClick} />
       <Categories handleCategory={handleCategory} />
 
-      {issearch && cproducts && <
-        h5>SEARCH RESULT :
-        <button className="clear-btn" onClick={() => setissearch(false)}> CLEAR </button>
-      </h5>}
-      {issearch && cproducts && cproducts.length == 0 && <h5> No Result found......... </h5>}
-
-      {issearch && (
-        <>
-          <div className='d-flex justify-content-center flex-wrap'>
-            {cproducts && products.length > 0 &&
-              cproducts.map((item, index) => {
-                return (
-                  <div key={item._id} className="card m-3" >
-                    <div onClick={() => handleLike(item._id)} className="icons-conatiner">
-                      <FaHeart className='icons' />
-                    </div>
-                    <img width="500px" height="200px" src={API_URL + '/' + item.pimg} />
-                    <p className='m-2 '>{item.pname} | {item.category} </p>
-                    <p className="m-2 text-danger">{item.price}</p>
-                    <p className="m-2 text-success">{item.pdesc}</p>
-                  </div>
-                )
-              })}
+      <div className='container mt-4'>
+        {/* Search Results Section */}
+        {issearch && cproducts && (
+          <div className="d-flex align-items-center justify-content-between bg-light p-3 rounded shadow-sm">
+            <h5 className="text-primary mb-0">🔍 SEARCH RESULT:</h5>
+            <button className="btn btn-outline-danger btn-sm" onClick={() => setissearch(false)}>
+              ❌ CLEAR
+            </button>
           </div>
-        </>
-      )}
+        )}
 
-      {!issearch && <div className='d-flex justify-content-center flex-wrap'>
-        {products && products.length > 0 &&
-          products.map((item, index) => {
-            return (
-              <div onClick={() => { handelProduct(item._id) }} key={item._id} className="card m-3" >
-                <div onClick={() => handleLike(item._id)} className="icons-conatiner">
-                  {
-                    likedproducts.find((likedItem) => likedItem._id == item._id) ?
-                      <FaHeart onClick={(e) => handleDisLike(item._id, e)} className='red-icons' /> :
-                      <FaHeart onClick={(e) => handleLike(item._id, e)} className='icons' />
+        {/* No Results Message */}
+        {issearch && cproducts && cproducts.length === 0 && (
+          <h5 className="text-center text-danger mt-3">No results found...</h5>
+        )}
 
-                  }
+        {/* Product Grid */}
+        <div className="row mt-3">
+          {(issearch ? cproducts : products)?.map((item) => (
+            <div key={item._id} className="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-4">
+              <div className="card border-0 shadow-lg rounded-4 overflow-hidden h-100 text-center p-2">
+
+                {/* Image & Heart Icon */}
+                <div className="position-relative">
+                  <img src={`${API_URL}/${item.pimg}`} className="card-img-top img-fluid rounded-3" style={{ height: "220px", objectFit: "cover" }} />
+                  <div className="position-absolute top-0 end-0 p-2">
+                    {likedproducts.find((likedItem) => likedItem._id === item._id) ? (
+                      <FaHeart onClick={(e) => handleDisLike(item._id, e)} className="text-danger fs-4" />
+                    ) : (
+                      <FaHeart onClick={(e) => handleLike(item._id, e)} className="text-secondary fs-4" />
+                    )}
+                  </div>
                 </div>
-                <img width="300px" height="200px" src={API_URL + '/' + item.pimg} />
-                <p className="m-2 price-text"> Rs.{item.price} /-</p>
-                <p className='m-2 '>{item.pname} | {item.category} </p>
-                <p className="m-2 text-success">{item.pdesc}</p>
+
+                {/* Product Details */}
+                <div className="card-body text-center bg-white d-flex flex-column ">
+                  <h6 className="fw-bold text-dark">{item.pname}</h6>
+                  <span className="badge bg-secondary mb-2 px-3 py-1">{item.category}</span>
+                  <p className="text-danger fw-bold fs-5 mt-1">
+                    💰 Rs. {item.price} /-
+                  </p>
+                  <p className="text-muted small">{item.pdesc}</p>
+                  <button className="btn btn-primary w-100 rounded-pill mt-auto" onClick={() => handelProduct(item._id)}>
+                    View Details
+                  </button>
+                </div>
               </div>
-            )
-          })}
-      </div>}
-    </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
+
   );
 }
 export default CategoryPage;    

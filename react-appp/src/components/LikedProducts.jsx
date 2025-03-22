@@ -77,44 +77,78 @@ function LikedProducts() {
 
     return (
         <div>
+            {/* Header & Categories */}
             <Header search={search} handlesearch={handlesearch} handleClick={handleClick} />
             <Categories handleCategory={handleCategory} />
 
-            <h5>SEARCH PRODUCTS : </h5>
-
-            <div className='d-flex justify-content-center flex-wrap'>
-                {cproducts && products.length > 0 &&
-                    cproducts.map((item, index) => {
-                        return (
-                            <div key={item._id} className="card m-3" >
-                                <div onClick={() => handleLike(item._id)} className="icons-conatiner">
-                                    <FaHeart className='icons' />
+            {/* Search Results */}
+            <h5 className="text-center mt-4 mb-4">🔍 Search Results</h5>
+            <div className="row justify-content-center">
+                {cproducts && products.length > 0 ? (
+                    cproducts.map((item) => (
+                        <div key={item._id} className="col-md-4 col-sm-6 mb-4">
+                            <div className="card shadow-sm border-0 rounded">
+                                <div className="position-relative">
+                                    {/* Heart Icon */}
+                                    <FaHeart 
+                                        className="position-absolute top-0 end-0 m-2 text-danger cursor-pointer" 
+                                        onClick={() => handleLike(item._id)} 
+                                        style={{ fontSize: "1.5rem" }} 
+                                    />
+                                    {/* Product Image */}
+                                    <img 
+                                        src={`${API_URL}/${item.pimg}`} 
+                                        className="card-img-top rounded-top"
+                                        style={{ height: "200px", objectFit: "cover" }} 
+                                        alt="Product" 
+                                    />
                                 </div>
-                                <img width="500px" height="200px" src={ API_URL + '/'+ item.pimg} />
-                                <p className='m-2 '>{item.pname} | {item.category} </p>
-                                <p className="m-2 text-danger">{item.price}</p>
-                                <p className="m-2 text-success">{item.pdesc}</p>
+                                <div className="card-body text-center">
+                                    <h6 className="fw-bold">{item.pname} | {item.category}</h6>
+                                    <p className="text-danger fw-bold">₹{item.price}</p>
+                                    <p className="text-success small">{item.pdesc}</p>
+                                </div>
                             </div>
-                        )
-                    })}
+                        </div>
+                    ))
+                ) : (
+                    <p className="text-center text-muted">No products found.</p>
+                )}
             </div>
-            <h5>ALL RESULTS : </h5>
 
-            <div className='d-flex justify-content-center flex-wrap'>
-                {products && products.length > 0 &&
-                    products.map((item, index) => {
-                        return (
-                            <div key={item._id} className="card m-3" >
-                                <div onClick={() => handleLike(item._id)} className="icons-conatiner">
-                                    <FaHeart className='red-icons' />
+            {/* All Products */}
+            <h5 className="text-center mt-4 mb-3">📦 All Products</h5>
+            <div className="row justify-content-center">
+                {products && products.length > 0 ? (
+                    products.map((item) => (
+                        <div key={item._id} className="col-md-4 col-sm-6 mb-4">
+                            <div className="card shadow-sm border-0 rounded">
+                                <div className="position-relative">
+                                    {/* Heart Icon */}
+                                    <FaHeart 
+                                        className="position-absolute top-0 end-0 m-2 text-danger cursor-pointer" 
+                                        onClick={() => handleLike(item._id)} 
+                                        style={{ fontSize: "1.5rem" }} 
+                                    />
+                                    {/* Product Image */}
+                                    <img 
+                                        src={`${API_URL}/${item.pimg}`} 
+                                        className="card-img-top rounded-top"
+                                        style={{ height: "200px", objectFit: "cover" }} 
+                                        alt="Product" 
+                                    />
                                 </div>
-                                <img width="500px" height="200px" src={ API_URL + '/' + item.pimg} />
-                                <p className='m-2 '>{item.pname} | {item.category} </p>
-                                <p className="m-2 text-danger">{item.price}</p>
-                                <p className="m-2 text-success">{item.pdesc}</p>
+                                <div className="card-body text-center">
+                                    <h6 className="fw-bold">{item.pname} | {item.category}</h6>
+                                    <p className="text-danger fw-bold">₹{item.price}</p>
+                                    <p className="text-success small">{item.pdesc}</p>
+                                </div>
                             </div>
-                        )
-                    })}
+                        </div>
+                    ))
+                ) : (
+                    <p className="text-center text-muted">No products found.</p>
+                )}
             </div>
         </div>
     );

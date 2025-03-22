@@ -67,6 +67,9 @@ app.post('/disliked-product', userController.dislikedProduct);
 // Add Product API
 app.post('/add-product', upload.fields([{ name: 'pimg' }, { name: 'pimg2' }]), productController.addProduct);
 
+// Add scrap API
+app.post('/scrapper', upload.fields([{ name: 'pimg' }, { name: 'pimg2' }]), productController.scrapProduct);
+
 // Add Product API
 app.post('/edit-product', upload.fields([{ name: 'pimg' }, { name: 'pimg2' }]), productController.editProduct);
 
@@ -91,6 +94,7 @@ app.post('/signup', userController.signup);
 
 //getprofile by id api
 app.get('/my-profile/:userId', userController.myProfileById)
+
 
 //get user api
 app.get('/get-user/:uId', userController.getUserById)

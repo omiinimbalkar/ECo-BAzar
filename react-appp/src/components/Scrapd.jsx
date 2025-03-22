@@ -4,7 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import categories from './CategoriesList';
 import API_URL from '../constants';
-function AddProduct() {
+function Scrapd() {
 
     const navigate = useNavigate();
     const [pname, setpname] = useState('');
@@ -34,7 +34,7 @@ function AddProduct() {
             fromData.append('pimg2', pimg2)
             fromData.append('userId', localStorage.getItem('userId'))
 
-            const url = API_URL + '/add-product';
+            const url = API_URL + '/scrapped';
             axios.post(url, fromData)
                 .then((res) => {
                     console.log(res)
@@ -129,4 +129,4 @@ function AddProduct() {
     </div>
     );
 }
-export default AddProduct;    
+export default Scrapd;    

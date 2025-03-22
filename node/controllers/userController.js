@@ -71,6 +71,7 @@ module.exports.myProfileById = (req, res) => {
         })
 }
 
+
 module.exports.getUserById = async (req, res) => {
     const _userId = req.params.uId;
     Users.findOne({ _id: _userId })
