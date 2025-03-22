@@ -36,3 +36,9 @@
     transform: rotate(360deg);
   }
 }
+@media (max-width: 768px) {
+  .btn {
+    font-size: 14px; /* Make buttons smaller */
+    padding: 6px 10px;
+  }
+}

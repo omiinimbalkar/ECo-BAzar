@@ -1,27 +1,37 @@
 import React, { useState } from "react";
 import './Header.css';
 import { Link, useNavigate } from "react-router-dom";
-import { FaSearch } from "react-icons/fa";
+import { FaBell, FaSun, FaMoon, FaHeart, FaShoppingCart, FaComment, FaSearch } from "react-icons/fa";
+import logo from '../img/logo.jpg';
 
 function Header(props) {
 
   const [loc, setLoc] = useState(null)
   const [showOver, setshowOver] = useState(false)
   const navigate = useNavigate();
+  const [darkMode, setDarkMode] = useState(false);
+
 
   // Define locations outside of handleLogout so it's accessible in JSX
   let locations = [
     {
       'latitude': 19.0760,
       'longitude': 72.8777,
-      'placeName': "Mumbai, Maharashtra"
+      'placeName': "Virar, Maharashtra"
     },
     {
       'latitude': 28.6139,
       'longitude': 77.2099,
-      'placeName': "New Delhi, Delhi"
+      'placeName': "Palghar, Maharashtra"
     },
   ];
+
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+    document.body.classList.toggle("bg-dark");
+    document.body.classList.toggle("text-light");
+  };
+
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -30,33 +40,40 @@ function Header(props) {
   };
 
   return (
-    <div className="header-container d-flex justify-content-between align-items-center px-3 py-2 bg-light shadow">
-      <div className="d-flex align-items-center gap-3">
-        <Link className="links text-dark text-decoration-none fw-bold" to="/home">HOME</Link>
+    <div className="header-container d-flex justify-content-between align-items-center px-3 py-2 ">
+
+      {/* Logo */}
+      <div className="d-flex align-items-center gap-2">
+        <Link to="/" className="text-dark text-decoration-none fw-bold">
+          <img src={logo} alt="Eco-Bazar Logo" style={{ width: "80px", height: "70px" }} />
+        </Link>
 
         {/* Dropdown for selecting a location */}
-        <select className="form-select" value={loc ?? ""} onChange={(e) => {
-          localStorage.setItem('userLoc', e.target.value);
-          setLoc(e.target.value);
-        }} style={{ width: "150px" }}>
-          {locations.map((item, index) => (
-            <option key={index} value={`${item.latitude},${item.longitude}`}>
-              {item.placeName}
-            </option>
-          ))}
-        </select>
+        <div className="d-flex align-items-center ms-auto gap-3 flex-grow-1 mx-3 ">
+          <select className="form-select" value={loc ?? ""} onChange={(e) => {
+            localStorage.setItem('userLoc', e.target.value);
+            setLoc(e.target.value);
+          }} style={{ width: "150px" }}>
+            {locations.map((item, index) => (
+              <option key={index} value={`${item.latitude},${item.longitude}`}>
+                {item.placeName}
+              </option>
+            ))}
+          </select>
 
-        {/* Search bar */}
-        <div className="d-flex">
-          <input className="form-control me-2"
-            type="text"
-            value={props && props.search}
-            onChange={(e) => props.handlesearch && props.handlesearch(e.target.value)}
-            placeholder="Search..."
-          />
-          <button className="btn btn-primary" onClick={() => props.handleClick && props.handleClick()}>
-            <FaSearch />
-          </button>
+          {/* Search bar */}
+          <div className="d-flex">
+            <input className="form-control me-2"
+              type="text"
+              value={props && props.search}
+              onChange={(e) => props.handlesearch && props.handlesearch(e.target.value)}
+              placeholder=" Search..."
+              style={{ minWidth: "400px", maxWidth: "500px" }}  // <-- Set min & max width
+            />
+            <button className="btn btn-info" onClick={() => props.handleClick && props.handleClick()}>
+              <FaSearch />
+            </button>
+          </div>
         </div>
       </div>
 
@@ -64,6 +81,47 @@ function Header(props) {
       <div className="fw-bold text-primary">
         Development Team | Virar, Palghar
       </div>
+
+      {/* Icons: Wishlist, Notifications, Dark Mode */}
+
+      {/* like */}
+      <div className="d-flex align-items-center">
+        <div className="position-relative me-3">
+          <Link to="/liked-products" className="d-block text-white text-decoration-none mb-2">
+            <FaHeart size={22} className="text-danger cursor-pointer" />
+          </Link>
+        </div>
+
+        {/* bell */}
+        <div className="position-relative me-3 gap-3">
+          <FaBell size={22} className="text-secondary cursor-pointer" />
+          <span className="badge bg-danger position-absolute top-0 start-100 translate-middle rounded-pill">3</span>
+        </div>
+
+        {/* add to cart */}
+        <div className="position-relative me-3">
+          <FaShoppingCart size={22} className="text-success cursor-pointer" />
+          <span className="badge bg-warning position-absolute top-0 start-100 translate-middle rounded-pill">2</span>
+        </div>
+
+
+        {/* Chatbot Button */}
+        <button className="btn btn-outline-primary me-3">
+          <FaComment size={18} />
+        </button>
+
+        {/* dark/light button */}
+        <button className="btn btn-light me-3 " onClick={() => {
+          setDarkMode(!darkMode);
+          document.body.classList.toggle("bg-dark");
+          document.body.classList.toggle("text-light");
+        }}>
+          {darkMode ? <FaSun size={20} /> : <FaMoon size={20} />}
+        </button>
+      </div>
+
+
+
 
       {/* Profile and Menu */}
       <div className="position-relative">
@@ -81,8 +139,8 @@ function Header(props) {
                 <Link to="/add-product" className="d-block text-white text-decoration-none mb-2">
                   <button className='btn btn-outline-light w-100'>ADD PRODUCT</button>
                 </Link>
-                <Link to="/liked-products" className="d-block text-white text-decoration-none mb-2">
-                  <button className='btn btn-outline-light w-100'>FAVOURITES</button>
+                <Link to="/my-profile" className="d-block text-white text-decoration-none mb-2">
+                  <button className='btn btn-outline-light w-100'>PROFILE</button>
                 </Link>
                 <Link to="/my-products" className="d-block text-white text-decoration-none mb-2">
                   <button className='btn btn-outline-light w-100'>MY AD</button>
@@ -98,7 +156,13 @@ function Header(props) {
           </div>
         )}
       </div>
-    </div>
+      {/* Trending Offers
+      <marquee className="bg-warning text-dark py-1">
+        🔥 Flash Sale: Get 30% Off on Electronics! 🎉
+      </marquee> */}
+
+
+    </div >
 
   );
 }

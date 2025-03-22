@@ -1,5 +1,5 @@
 
-let Categories = [  'Book' , 'Newspaper' , 'Bottle' , 'Bucket' , 'Clothes' , 'Sale', 'Old  Fans' ]
+let Categories = [  'Book' , 'Newspaper' , 'Bottle' , 'Bucket' , 'Clothes' , 'Other' ]
 
 export default Categories;
 

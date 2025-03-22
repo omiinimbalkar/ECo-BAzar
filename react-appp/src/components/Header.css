@@ -1,4 +1,4 @@
-.header{
+.header {
     /* /* height: 50px; */
     /* height of text */
 
@@ -8,22 +8,38 @@
     /* box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px; */
     /* for side design  */
 }
-.header-container{
+
+.header-container {
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
     padding: 10px 20px;
-    background-color: #002f3400;
-    border-bottom: 3px solid #fff;
+    border-bottom: 3px solid #fef1f169;
+    background-color: #f4fcfa;
+    /* Muted Teal */
+    color: #004D40;
+    /* Deep Teal for contrast */
 }
-.cat-container{
-    box-shadow: 0 1px 4px 0 rgba(0,0,0,.1);
+
+/* 📌 Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    .header-container {
+        padding: 8px 15px;
+        /* Reduce padding on mobile */
+    }
+}
+
+
+.cat-container {
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, .1);
     padding: 8px 20px;
 }
-.mt-3{
+
+.mt-3 {
     /* span walaa part  */
     display: inline-block;
     margin-top: 10px;
 }
-.search{
+
+.search {
     margin-left: 80px;
     outline: none;
     padding-left: 10px;
@@ -32,27 +48,32 @@
     border: 2px solid #002f34;
     border-radius: 5px 0px 0px 5px;
 }
-.search-btn{
+
+.search-btn {
     height: 44px;
     background: #002f34;
     color: #fff;
     border-radius: 0px 5px 5px 0px;
-    outline: none; /*like this none for remove default funda on outline */
-    border: none;  
+    outline: none;
+    /*like this none for remove default funda on outline */
+    border: none;
     padding: 0px 15px;
 }
-.logout-btn{
+
+.logout-btn {
     height: 35px;
     background: #002f34;
     color: #fff;
-    border-radius: 5px ;
-    outline: none; /*like this none for remove default funda on outline */
-    border: none;  
+    border-radius: 5px;
+    outline: none;
+    /*like this none for remove default funda on outline */
+    border: none;
     padding: 1px 16px;
     margin-right: 10px;
     border-radius: 10%;
 }
-.category{
+
+.category {
     color: rgba(0, 47, 12, 1);
     padding: 7px;
     cursor: pointer;

@@ -7,17 +7,16 @@ function Categories(props) {
 
  const navigate = useNavigate();
   return (
-    <div className="cat-container">
-      <div>
-        <span className="p-3"> All Categories </span>
-        {categories && categories.length > 0 &&
-          categories.map((item, index) => {
-            return (
-              <span onClick={() => navigate('/category/' + item)} key={index} className="category"> {item} </span>
-            );
-          })}
-      </div>
-    </div>
+    <div className="cat-container d-flex align-items-center gap-3 flex-wrap">
+  <span className="fw-bold px-3">All Categories:</span>
+
+  {categories?.map((item, index) => (
+    <span key={index} onClick={() => navigate('/category/' + item)} className="text-dark fw-semibold cursor-pointer">
+      {item}
+    </span>
+  ))}
+</div>
+
   );
 }
 export default Categories;
