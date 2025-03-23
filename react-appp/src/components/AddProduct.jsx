@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import categories from './CategoriesList';
 import API_URL from '../constants';
+import Footer from './Footer';
 function AddProduct() {
 
     const navigate = useNavigate();
@@ -126,7 +127,10 @@ function AddProduct() {
                 </div>
             </div>
         </div>
+        <Footer />
     </div>
     );
 }
 export default AddProduct;    
+
+

@@ -1,4 +1,4 @@
-
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
@@ -8,6 +8,7 @@ const http = require('http');
 const { Server } = require ("socket.io");
 const productController = require('./controllers/productController');
 const userController = require('./controllers/userController');
+const feedbackRoutes = require('./routes/feedbackRoutes');  // Import Feedback Routes
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const { type } = require('os');
@@ -15,6 +16,7 @@ const { type } = require('os');
 
 const app = express();
 const port = 4000;
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
 // Middleware
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -54,6 +56,27 @@ const io = new Server(httpServer , {
 app.get('/', (req, res) => {
   res.send('Hello Coder.....🌐');
 });
+
+
+// Chatbot API
+app.post('/chatbot', async (req, res) => {
+  try {
+    const userMessage = req.body.message;
+    const response = await axios.post("https://api.openai.com/v1/chat/completions", {
+      model: "gpt-3.5-turbo",
+      messages: [{ role: "system", content: "You are a helpful assistant for Eco-Bazar." }, { role: "user", content: userMessage }]
+    }, {
+      headers: {
+        "Authorization": `Bearer ${OPENAI_API_KEY}`,
+        "Content-Type": "application/json"
+      }
+    });
+    res.json({ reply: response.data.choices[0].message.content });
+  } catch (error) {
+    res.status(500).json({ error: "Chatbot error" });
+  }
+});
+
 
 //for search
 app.get('/search', productController.search);
@@ -101,6 +124,12 @@ app.get('/get-user/:uId', userController.getUserById)
 
 // Login API
 app.post('/login', userController.login);
+
+
+// Feedback API
+app.use("/api", feedbackRoutes);
+
+
 
 //msg socket
 let messages = [];

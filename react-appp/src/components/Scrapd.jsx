@@ -1,132 +1,67 @@
-import { useEffect, useState } from 'react';
 import Header from './Header';
-import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
-import categories from './CategoriesList';
-import API_URL from '../constants';
-function Scrapd() {
 
-    const navigate = useNavigate();
-    const [pname, setpname] = useState('');
-    const [pdesc, setpdesc] = useState('');
-    const [price, setprize] = useState('');
-    const [category, setcategory] = useState('');
-    const [pimg, setpimg] = useState('');
-    const [pimg2, setpimg2] = useState('');
-
-    useEffect(() => {
-        if (!localStorage.getItem('token')) {
-            navigate('/login')
+function ScrapPrices() {
+    const scrapItems = [
+        {
+            name: "Plastic",
+            description: "Recyclable plastic waste, bottles, and containers.",
+            price: 15,
+            image: "https://www.recyclingtoday.com/fileuploads/image/recycling-plastic.jpg"
+        },
+        {
+            name: "Newspaper",
+            description: "Old newspapers, magazines, and books.",
+            price: 8,
+            image: "https://upload.wikimedia.org/wikipedia/commons/6/67/Newspaper_bundles.jpg"
+        },
+        {
+            name: "Copper",
+            description: "Scrap copper wires and pipes.",
+            price: 700,
+            image: "https://www.scrapmonster.com/images/news/scrap-copper.jpg"
+        },
+        {
+            name: "Aluminum",
+            description: "Used aluminum cans, foil, and scrap parts.",
+            price: 190,
+            image: "https://upload.wikimedia.org/wikipedia/commons/4/4a/Aluminium_cans_scrap.jpg"
+        },
+        {
+            name: "Glass",
+            description: "Glass bottles and other recyclable glass materials.",
+            price: 5,
+            image: "https://upload.wikimedia.org/wikipedia/commons/e/ea/Recycling_Glass.jpg"
+        },
+        {
+            name: "Iron",
+            description: "Rusty iron rods, tools, and sheets.",
+            price: 50,
+            image: "https://upload.wikimedia.org/wikipedia/commons/1/11/Scrap_iron.jpg"
         }
-    }, []);
+    ];
 
-    const handleApi = () => {
-
-        navigator.geolocation.getCurrentPosition((position) => {
-            const fromData = new FormData();
-            fromData.append('plat', position.coords.latitude)
-            fromData.append('plog', position.coords.longitude)
-            fromData.append('pname', pname)
-            fromData.append('pdesc', pdesc)
-            fromData.append('price', price)
-            fromData.append('category', category)
-            fromData.append('pimg', pimg)
-            fromData.append('pimg2', pimg2)
-            fromData.append('userId', localStorage.getItem('userId'))
-
-            const url = API_URL + '/scrapped';
-            axios.post(url, fromData)
-                .then((res) => {
-                    console.log(res)
-                    if (res.data.message) {
-                        alert(res.data.message)
-                        navigate('/')
-                    }
-                })
-                .catch((err) => {
-                    alert('Server Error')
-                })
-        })
-    }
     return (
         <div>
-        <Header />
-        <div className="container mt-4">
-            <div className="row justify-content-center">
-                <div className="col-md-6">
-                    <div className="card shadow-lg p-4">
-                        <h2 className="text-center mb-4">Add Product</h2>
-                        <div className="mb-3">
-                            <label className="form-label">Product Name</label>
-                            <input
-                                className="form-control"
-                                type="text"
-                                value={pname}
-                                onChange={(e) => setpname(e.target.value)}
-                            />
+            <Header />
+            <div className="container mt-4">
+                <h2 className="text-center text-success mb-4">♻️ Scrap Prices</h2>
+                <div className="row">
+                    {scrapItems.map((item, index) => (
+                        <div key={index} className="col-md-4 mb-4">
+                            <div className="card shadow-lg">
+                                <img src={item.image} className="card-img-top" alt={item.name} style={{ height: '200px', objectFit: 'cover' }} />
+                                <div className="card-body text-center">
+                                    <h5 className="card-title text-info fw-bold">{item.name}</h5>
+                                    <p className="card-text text-muted">{item.description}</p>
+                                    <h6 className="text-primary fw-bold">💰 Price: ₹{item.price} per kg</h6>
+                                </div>
+                            </div>
                         </div>
-                        <div className="mb-3">
-                            <label className="form-label">Product Description</label>
-                            <input
-                                className="form-control"
-                                type="text"
-                                value={pdesc}
-                                onChange={(e) => setpdesc(e.target.value)}
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label className="form-label">Product Price</label>
-                            <input
-                                className="form-control"
-                                type="text"
-                                value={price}
-                                onChange={(e) => setprize(e.target.value)}
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label className="form-label">Product Category</label>
-                            <select
-                                className="form-select"
-                                value={category}
-                                onChange={(e) => setcategory(e.target.value)}
-                            >
-                                <option value="">Select Category</option>
-                                <option>Book</option>
-                                <option>Newspaper</option>
-                                <option>Bottle</option>
-                                <option>Bucket</option>
-                                <option>Clothes</option>
-                                {categories.map((item, index) => (
-                                    <option key={index} value={item}>
-                                        {item}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-                        <div className="mb-3">
-                            <label className="form-label">Product Image</label>
-                            <input
-                                className="form-control"
-                                type="file"
-                                onChange={(e) => setpimg(e.target.files[0])}
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label className="form-label">Product Second Image</label>
-                            <input
-                                className="form-control"
-                                type="file"
-                                onChange={(e) => setpimg2(e.target.files[0])}
-                            />
-                        </div>
-                        <button onClick={handleApi} className="btn btn-primary w-100">
-                            Submit
-                        </button>
-                    </div>
+                    ))}
                 </div>
             </div>
         </div>
-    </div>
     );
 }
-export default Scrapd;    
+
+export default ScrapPrices;

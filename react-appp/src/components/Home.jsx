@@ -6,6 +6,7 @@ import axios from 'axios';
 import { FaHeart } from 'react-icons/fa';
 import './Home.css'
 import API_URL from "../constants";
+import Footer from './Footer';
 
 
 function Home() {
@@ -201,7 +202,7 @@ function Home() {
           ))}
         </div>
       </div>
-
+      <Footer />
 
 
     </>

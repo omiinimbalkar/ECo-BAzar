@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Header from './Header';
+import Footer from './Footer';
 import Categories from './Categories';
 import { useNavigate, Link, data } from 'react-router-dom';
 import axios from 'axios';
@@ -155,6 +156,7 @@ function MyProducts() {
                 }
             </div>
         </div>
+        <Footer />
     </div>
     );
 }

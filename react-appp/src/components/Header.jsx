@@ -4,6 +4,8 @@ import './Header.css';
 import { Link, useNavigate } from "react-router-dom";
 import { FaBell, FaSun, FaMoon, FaHeart, FaShoppingCart, FaComment, FaSearch } from "react-icons/fa";
 import logo from '../img/logo.jpg';
+import info  from '../img/info.png';
+import robot from '../img/robot.png';
 
 function Header(props) {
 
@@ -107,9 +109,11 @@ function Header(props) {
 
 
           {/* Chatbot Button */}
+          <Link to="/chatbot">  
           <button className="btn btn-outline-primary me-2">
-            <FaComment size={18} />
+          <img src={robot} alt="" width={20} height={20}/>
           </button>
+          </Link>
 
           {/* dark/light button */}
           <button className="btn btn-light me-2" onClick={() => {
@@ -120,9 +124,11 @@ function Header(props) {
             {darkMode ? <FaSun size={20} /> : <FaMoon size={20} />}
           </button>
 
-          
-            <button className="btn btn-outline-danger me-3">f</button>
-          
+            <Link to="/scrapper">
+             <button className="btn btn-outline-danger me-3"><
+              img src={info} alt="" width={20} height={20}/>
+              </button>
+            </Link>
 
         </div>
 
@@ -136,7 +142,7 @@ function Header(props) {
           <div className="d-flex justify-content-center align-items-center bg-dark text-white rounded-circle"
             style={{ width: '40px', height: '40px', cursor: 'pointer' }}
             onClick={() => setshowOver(!showOver)}>
-            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#75FBFD"><path d="M278.48-616.59V-729h596.87v112.41H278.48Zm0 192.42v-112.42h596.87v112.42H278.48Zm0 192.17v-112.17h596.87V-232H278.48ZM142.46-611.54q-24.39 0-41.1-17.71t-16.71-42.49q0-24.78 16.71-42.28t41.1-17.5q24.87 0 41.76 17.36 16.89 17.36 16.89 43.03 0 24.24-16.89 41.91-16.89 17.68-41.76 17.68Zm0 191.65q-24.39 0-41.1-17.58-16.71-17.57-16.71-42.07 0-25.74 16.71-43.15 16.71-17.42 41.1-17.42 24.87 0 41.76 17.42 16.89 17.41 16.89 43.15 0 24.5-16.89 42.07-16.89 17.58-41.76 17.58Zm0 190.17q-24.39 0-41.1-17.7-16.71-17.71-16.71-42.49 0-24.79 16.71-42.29t41.1-17.5q24.87 0 41.76 17.48 16.89 17.47 16.89 42.41 0 24.74-16.89 42.42-16.89 17.67-41.76 17.67Z" /></svg>
+            <span className="fw-bold">☰</span> 
           </div>
 
           {showOver && (

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Header from "./Header";
+import Footer from "./Footer";
 import axios from "axios";
 import API_URL from "../constants";
 const avatarOptions = [
@@ -82,6 +83,7 @@ function Myprofile() {
                     </div>
                 </div>
             </div>
+            <Footer />
         </div>
     )
 }

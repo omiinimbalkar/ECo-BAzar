@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Header from './Header';
+import Footer from './Footer';
 import Categories from './Categories';
 import { useNavigate, Link, data } from 'react-router-dom';
 import axios from 'axios';
@@ -23,7 +24,7 @@ function LikedProducts() {
     //   }
     // }, [])
     useEffect(() => {
-        const url =  API_URL + "/liked-products";
+        const url = API_URL + "/liked-products";
         let data = { userId: localStorage.getItem('userId') };
         axios.post(url, data)
             .then((res) => {
@@ -61,7 +62,7 @@ function LikedProducts() {
 
     const handleLike = (productId) => {
         let userId = localStorage.getItem('userId');
-        const url =  API_URL + "/liked-product";
+        const url = API_URL + "/liked-product";
         const data = { userId, productId }
         axios.post(url, data)
             .then((res) => {
@@ -90,17 +91,17 @@ function LikedProducts() {
                             <div className="card shadow-sm border-0 rounded">
                                 <div className="position-relative">
                                     {/* Heart Icon */}
-                                    <FaHeart 
-                                        className="position-absolute top-0 end-0 m-2 text-danger cursor-pointer" 
-                                        onClick={() => handleLike(item._id)} 
-                                        style={{ fontSize: "1.5rem" }} 
+                                    <FaHeart
+                                        className="position-absolute top-0 end-0 m-2 text-danger cursor-pointer"
+                                        onClick={() => handleLike(item._id)}
+                                        style={{ fontSize: "1.5rem" }}
                                     />
                                     {/* Product Image */}
-                                    <img 
-                                        src={`${API_URL}/${item.pimg}`} 
+                                    <img
+                                        src={`${API_URL}/${item.pimg}`}
                                         className="card-img-top rounded-top"
-                                        style={{ height: "200px", objectFit: "cover" }} 
-                                        alt="Product" 
+                                        style={{ height: "200px", objectFit: "cover" }}
+                                        alt="Product"
                                     />
                                 </div>
                                 <div className="card-body text-center">
@@ -125,17 +126,17 @@ function LikedProducts() {
                             <div className="card shadow-sm border-0 rounded">
                                 <div className="position-relative">
                                     {/* Heart Icon */}
-                                    <FaHeart 
-                                        className="position-absolute top-0 end-0 m-2 text-danger cursor-pointer" 
-                                        onClick={() => handleLike(item._id)} 
-                                        style={{ fontSize: "1.5rem" }} 
+                                    <FaHeart
+                                        className="position-absolute top-0 end-0 m-2 text-danger cursor-pointer"
+                                        onClick={() => handleLike(item._id)}
+                                        style={{ fontSize: "1.5rem" }}
                                     />
                                     {/* Product Image */}
-                                    <img 
-                                        src={`${API_URL}/${item.pimg}`} 
+                                    <img
+                                        src={`${API_URL}/${item.pimg}`}
                                         className="card-img-top rounded-top"
-                                        style={{ height: "200px", objectFit: "cover" }} 
-                                        alt="Product" 
+                                        style={{ height: "200px", objectFit: "cover" }}
+                                        alt="Product"
                                     />
                                 </div>
                                 <div className="card-body text-center">
@@ -150,6 +151,7 @@ function LikedProducts() {
                     <p className="text-center text-muted">No products found.</p>
                 )}
             </div>
+            <Footer />
         </div>
     );
 }

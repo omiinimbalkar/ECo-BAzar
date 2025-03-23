@@ -19,6 +19,13 @@ import CategoryPage from './components/CategoryPage';
 import MyProducts from './components/MyProducts';
 import MyProfile from './components/Myprofile';
 import EditProduct from './components/EditProduct';
+import About from './components/About';
+import Scrapd from './components/Scrapd';
+import Contact from './components/Contact';
+import Terms from './components/Terms';
+import PrivacyPolicy from './components/Privacy';
+import Feedback from 'react-bootstrap/esm/Feedback';
+import ChatBot from './components/ChatBot';
 
 const router = createBrowserRouter([
 
@@ -31,41 +38,65 @@ const router = createBrowserRouter([
     element: (<CategoryPage />),
   },
   {
-    path: "about",
-    element: <div>About</div>,
+    path: "/about",
+    element: (<About />),
+  },
+  {
+    path: "/contact",
+    element: (<Contact />),
+  },
+  {
+    path: "/terms",
+    element: (<Terms />),
+  },
+  {
+    path: "/privacy",
+    element: (<PrivacyPolicy />),
+  },
+  {
+    path: "/feedback",
+    element: (<Feedback/>),
+  },
+  {
+    path: "/chatbot",
+    element: (<ChatBot/>),
   },
   {
     path: "/login",
     element: (<Login />),
   },
   {
-    path: "/signup",  
-    element: (<Signup />),  
+    path: "/signup",
+    element: (<Signup />),
   },
   {
-    path: "/add-product",  
-    element: (<AddProduct/>),  
+    path: "/add-product",
+    element: (<AddProduct />),
   },
   {
-    path: "/edit-product/:productId", 
-    element: (<EditProduct/>),
+    path: "/scrapper",
+    element: (<Scrapd />),
   },
   {
-   
+    path: "/edit-product/:productId",
+    element: (<EditProduct />),
+  },
+  {
+
     path: "/liked-products",
-    element: (<LikedProducts/>),
+    element: (<LikedProducts />),
   },
   {
     path: "/my-products",
-    element: (<MyProducts/>),
+    element: (<MyProducts />),
   },
   {
     path: "/product/:productId",
-    element: (<ProductDetail/>),
+    element: (<ProductDetail />),
   },
   {
     path: "/my-profile",
-    element: (<MyProfile/>),
+    element: (<MyProfile />),
   },
 ]);
 

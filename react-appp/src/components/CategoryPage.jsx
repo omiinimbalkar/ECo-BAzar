@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Header from './Header';
+import Footer from './Footer';  
 import Categories from './Categories';
 import { useNavigate, Link, data, useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -197,6 +198,7 @@ function CategoryPage() {
           ))}
         </div>
       </div>
+      <Footer />
     </>
 
   );

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Header from './Header';
+import Footer from './Footer';
 import { useNavigate, Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import categories from './CategoriesList';
@@ -129,6 +130,7 @@ function EditProduct() {
                     <button onClick={handleApi} className="btn btn-primary w-100 mt-3">Submit</button>
                 </div>
             </div>
+            <Footer/>
         </>
     );
 }

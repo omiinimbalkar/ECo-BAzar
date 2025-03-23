@@ -133,6 +133,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Header from './Header';
+import Footer from './Footer';
 import API_URL from "../constants";
 import io from 'socket.io-client';
 import { Carousel, Button, Container, Row, Col, Form } from 'react-bootstrap';
@@ -253,6 +254,7 @@ function ProductDetail() {
                     </Row>
                 ) : <p>Loading product details...</p>}
             </Container>
+            <Footer />
         </>
     );
 }
