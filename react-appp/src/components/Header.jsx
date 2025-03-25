@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+// import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import './Header.css';
 import { Link, useNavigate } from "react-router-dom";
-import { FaBell, FaSun, FaMoon, FaHeart, FaShoppingCart, FaComment, FaSearch } from "react-icons/fa";
+import { FaBell, FaSun, FaMoon, FaHeart, FaPhone, FaSearch } from "react-icons/fa";
 import logo from '../img/logo.jpg';
 import info  from '../img/info.png';
 import robot from '../img/robot.png';
@@ -47,7 +47,7 @@ function Header(props) {
       <div className="header-container d-flex flex-wrap justify-content-between align-items-center px-3 py-2">
         {/* Logo */}
         <div className="d-flex align-items-center gap-2">
-          <Link to="/" className="text-dark text-decoration-none fw-bold">
+          <Link to="/home" className="text-dark text-decoration-none fw-bold">
             <img src={logo} alt="Eco-Bazar Logo" style={{ width: "80px", height: "70px" }} />
           </Link>
 
@@ -96,23 +96,18 @@ function Header(props) {
           </div>
 
           {/* bell */}
+          <Link to="/notifaction">
           <div className="position-relative me-3 gap-3">
             <FaBell size={22} className="text-secondary cursor-pointer" />
             <span className="badge bg-danger position-absolute top-0 start-100 translate-middle rounded-pill">3</span>
           </div>
-
-          {/* add to cart */}
-          <div className="position-relative me-3">
-            <FaShoppingCart size={22} className="text-success cursor-pointer" />
-            <span className="badge bg-warning position-absolute top-0 start-100 translate-middle rounded-pill">2</span>
+          </Link>
+          {/* bell */}
+          <Link to="/contact">
+          <div className="position-relative me-3 gap-3">
+            <FaPhone size={22} className="text-secondary cursor-pointer" />
+            <span className="badge bg-danger position-absolute top-0 start-100 translate-middle rounded-pill"></span>
           </div>
-
-
-          {/* Chatbot Button */}
-          <Link to="/chatbot">  
-          <button className="btn btn-outline-primary me-2">
-          <img src={robot} alt="" width={20} height={20}/>
-          </button>
           </Link>
 
           {/* dark/light button */}

@@ -26,12 +26,23 @@ import Terms from './components/Terms';
 import PrivacyPolicy from './components/Privacy';
 import Feedback from 'react-bootstrap/esm/Feedback';
 import ChatBot from './components/ChatBot';
+import SplashScreen from './components/SplashScreen'; 
+import Notifications from './components/Notifications';
 
 const router = createBrowserRouter([
 
   {
     path: "/",
+    element: (<SplashScreen />),
+  },
+  {
+    path: "/home",
     element: (<Home />),
+  },
+  { 
+    path:'/notifaction',
+    element:(<Notifications/>)
+
   },
   {
     path: "/category/:catName",

@@ -1,50 +1,89 @@
-.icons{
-    font-size: 32px;
-    height:32px;
-    width: 32px;
-    color: rgb(245, 240, 240);
-    cursor: pointer;
-}
-.red-icons{
-    font-size: 32px;
-    height:32px;
-    width: 32px;
-    color: rgb(243, 94, 8);
-    cursor: pointer;
-}
-.icons:hover{
-    color: #aaa
+/* Using Bootstrap for Styling */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa; /* Bootstrap light background */
+    color: #343a40; /* Bootstrap dark text color */
   }
-.icons-conatiner{
-    position : absolute;
-    top : 0;
-    right: 0;
-    border-radius: 50%;
-    padding: 7px;
-    background-color: #fff; 
-    margin: 7px
-}
-.links{
-    text-decoration: none;
-    font-size: 24px;
-    color: #002f34;
-    font-weight: bold;
-}
-/* for this give the link clasname as links */
-.price-text{
-    color: #002f34;
-    font-size: larger;
-    font-weight: 700;
-}
-.clear-btn{
-    height: 26px;
-    background: #2a1e1ca8;
-    color: #fff;
-    border-radius: 0px 5px 5px 0px;
-    font-size: 15px;
-    outline: none; /*like this none for remove default funda on outline */
-    border: none;  
-    padding: 0px 15px;
-    margin-top: 10px;
-    margin-left: 10px;
-}
+  
+  /* Container Styling */
+  .container {
+    max-width: 1200px;
+  }
+  
+  /* Button Styling */
+  .btn {
+    font-weight: 600;
+    border-radius: 50px;
+    padding: 10px 20px;
+  }
+  
+  .btn-primary {
+    background-color: var(--bs-success);
+    border: none;
+    transition: all 0.3s;
+  }
+  
+  .btn-primary:hover {
+    background-color: var(--bs-green-700);
+  }
+  
+  .btn-outline-danger {
+    border: 2px solid var(--bs-danger);
+    color: var(--bs-danger);
+    transition: all 0.3s;
+  }
+  
+  .btn-outline-danger:hover {
+    background-color: var(--bs-danger);
+    color: white;
+  }
+  
+  /* Product Card Styling */
+  .card {
+    transition: all 0.3s ease-in-out;
+    border-radius: var(--bs-border-radius-lg);
+    background: var(--bs-white);
+    box-shadow: var(--bs-box-shadow-sm);
+  }
+  
+  .card:hover {
+    transform: scale(1.03);
+    box-shadow: var(--bs-box-shadow-lg);
+  }
+  
+  .card-img-top {
+    border-top-left-radius: var(--bs-border-radius-lg);
+    border-top-right-radius: var(--bs-border-radius-lg);
+    height: 230px;
+    object-fit: cover;
+  }
+  
+  .position-absolute .fs-4 {
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  
+  .text-secondary:hover {
+    color: var(--bs-danger) !important;
+  }
+  
+  /* Search & Category Section */
+  .bg-light {
+    background-color: var(--bs-light) !important;
+    border-radius: var(--bs-border-radius);
+    padding: 15px;
+  }
+  
+  .text-primary {
+    color: var(--bs-success) !important;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .card-img-top {
+      height: 200px !important;
+    }
+    .btn {
+      width: 100%;
+    }
+  }
