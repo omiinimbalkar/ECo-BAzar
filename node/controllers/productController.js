@@ -66,8 +66,11 @@ module.exports.addProduct = async (req, res) => {
     const price = req.body.price;
     const category = req.body.category;
     const address = req.body.address;
-    const pimg = req.files?.pimg?.[0]?.path || '';
-    const pimg2 = req.files?.pimg2?.[0]?.path || '';
+    // const pimg = req.files?.pimg?.[0]?.path || '';
+    // const pimg2 = req.files?.pimg2?.[0]?.path || '';
+    const pimg = req.files?.pimg?.[0] ? `/uploads/${req.files.pimg[0].filename}` : '';
+    const pimg2 = req.files?.pimg2?.[0] ? `/uploads/${req.files.pimg2[0].filename}` : '';
+
     const addedBy = req.body.userId;
 
     const product = new Products({
@@ -84,7 +87,7 @@ module.exports.addProduct = async (req, res) => {
         })
 }
 
-module.exports.scrapProduct= async (req, res) => {
+module.exports.scrapProduct = async (req, res) => {
     console.log(req.files)
     console.log(req.body)
     const plat = req.body.plat;
@@ -236,4 +239,4 @@ module.exports.deleteProducts = async (req, res) => {
 }
 
 
-    
+
