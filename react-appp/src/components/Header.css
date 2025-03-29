@@ -78,3 +78,45 @@
     padding: 7px;
     cursor: pointer;
 }
+.cat-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: nowrap; /* Prevent wrapping */
+    overflow-x: auto; /* Enable horizontal scrolling */
+    white-space: nowrap; /* Prevent text wrapping */
+    padding: 10px;
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: #ccc transparent; /* Firefox */
+  }
+  
+  .cat-container::-webkit-scrollbar {
+    height: 6px;
+  }
+  
+  .cat-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+  
+  .cat-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+  }
+  
+  .cat-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  
+  .cat-container span {
+    padding: 8px 12px;
+    background: #f8f9fa;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .cat-container span:hover {
+    background: #e2e6ea;
+  }
+  

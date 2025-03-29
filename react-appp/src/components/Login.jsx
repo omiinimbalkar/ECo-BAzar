@@ -34,7 +34,7 @@ function Login() {
             localStorage.setItem('token', res.data.token);
             localStorage.setItem('userId', res.data.userId);
             localStorage.setItem('userName', res.data.username);
-            navigate('/');
+            navigate('/home');  
           }
         }
       })

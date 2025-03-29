@@ -1,4 +1,3 @@
-require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
@@ -8,15 +7,13 @@ const http = require('http');
 const { Server } = require ("socket.io");
 const productController = require('./controllers/productController');
 const userController = require('./controllers/userController');
-const feedbackRoutes = require('./routes/feedbackRoutes');  // Import Feedback Routes
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const { type } = require('os');
-
+const Notification = require('./models/Notification'); // Import your model
 
 const app = express();
 const port = 4000;
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
 // Middleware
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -57,26 +54,40 @@ app.get('/', (req, res) => {
   res.send('Hello Coder.....🌐');
 });
 
+//notifaction
 
-// Chatbot API
-app.post('/chatbot', async (req, res) => {
+
+// ✅ Add Notification API
+app.post('/add-notification', async (req, res) => {
   try {
-    const userMessage = req.body.message;
-    const response = await axios.post("https://api.openai.com/v1/chat/completions", {
-      model: "gpt-3.5-turbo",
-      messages: [{ role: "system", content: "You are a helpful assistant for Eco-Bazar." }, { role: "user", content: userMessage }]
-    }, {
-      headers: {
-        "Authorization": `Bearer ${OPENAI_API_KEY}`,
-        "Content-Type": "application/json"
-      }
-    });
-    res.json({ reply: response.data.choices[0].message.content });
+      const { userId, message, productId } = req.body;
+      const newNotification = new Notification({
+          userId,
+          message,
+          productId,
+          timestamp: new Date()
+      });
+
+      await newNotification.save();
+      res.json({ success: true, message: "Notification added successfully" });
   } catch (error) {
-    res.status(500).json({ error: "Chatbot error" });
+      console.error("Error adding notification:", error);
+      res.status(500).json({ success: false, error: "Error adding notification" });
   }
 });
 
+// ✅ Get Notifications API
+app.get('/get-notifications/:userId', async (req, res) => {
+  try {
+      const { userId } = req.params;
+      const notifications = await Notification.find({ userId }).sort({ timestamp: -1 });
+
+      res.json({ notifications });
+  } catch (error) {
+      console.error("Error fetching notifications:", error);
+      res.status(500).json({ error: "Error fetching notifications" });
+  }
+});
 
 //for search
 app.get('/search', productController.search);
@@ -124,12 +135,6 @@ app.get('/get-user/:uId', userController.getUserById)
 
 // Login API
 app.post('/login', userController.login);
-
-
-// Feedback API
-app.use("/api", feedbackRoutes);
-
-
 
 //msg socket
 let messages = [];
