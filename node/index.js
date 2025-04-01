@@ -60,21 +60,32 @@ app.get('/', (req, res) => {
 // ✅ Add Notification API
 app.post('/add-notification', async (req, res) => {
   try {
-      const { userId, message, productId } = req.body;
+      const { userId, message, productId, likedProduct, dislikedProduct } = req.body;
       const newNotification = new Notification({
           userId,
           message,
           productId,
+          likedProduct,
+          dislikedProduct,
           timestamp: new Date()
       });
 
       await newNotification.save();
-      res.json({ success: true, message: "Notification added successfully" });
+      
+      // ✅ Send only ONE response including all required fields
+      return res.json({ 
+          success: true, 
+          message: "Notification added successfully", 
+          likedProduct, 
+          dislikedProduct 
+      });
+
   } catch (error) {
       console.error("Error adding notification:", error);
-      res.status(500).json({ success: false, error: "Error adding notification" });
+      return res.status(500).json({ success: false, error: "Error adding notification" });
   }
 });
+
 
 // ✅ Get Notifications API
 app.get('/get-notifications/:userId', async (req, res) => {
@@ -88,6 +99,7 @@ app.get('/get-notifications/:userId', async (req, res) => {
       res.status(500).json({ error: "Error fetching notifications" });
   }
 });
+
 
 //for search
 app.get('/search', productController.search);

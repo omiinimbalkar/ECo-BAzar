@@ -1,0 +1,120 @@
+/* Signup Page Styling */
+
+.signup-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #0b5d1e, #18a54d);
+  }
+  
+  .signup-box {
+    background: rgba(255, 255, 255, 0.12); /* Glass effect */
+    backdrop-filter: blur(12px);
+    padding: 30px;
+    border-radius: 15px;
+    width: 350px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
+    text-align: center;
+    color: #fff;
+  }
+  
+  .signup-box h2 {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #fff;
+  }
+  
+  .input-group {
+    text-align: left;
+    margin-bottom: 15px;
+  }
+  
+  .input-group label {
+    font-weight: bold;
+    font-size: 14px;
+    color: #fff;
+  }
+  
+  .input-group input {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    outline: none;
+    font-size: 16px;
+  }
+  
+  .input-group input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
+  /* Password field design */
+  .password-field {
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 2px;
+  }
+  
+  .password-field input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 12px;
+    color: #fff;
+  }
+  
+  .password-field button {
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    padding: 10px;
+  }
+  
+  /* Fix button styling */
+  .signup-btn {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(90deg, #0b5d1e, #18a54d);
+    border: none;
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 16px;
+  }
+  
+  .signup-btn:hover {
+    background: linear-gradient(90deg, #18a54d, #0b5d1e);
+    transform: scale(1.02);
+  }
+  
+  /* Fix Login button */
+  .login-link {
+    margin-top: 10px;
+  }
+  
+  .login-btn {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #fff;
+    background: transparent;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 16px;
+  }
+  
+  .login-btn:hover {
+    background: #fff;
+    color: #0b5d1e;
+  }
+  

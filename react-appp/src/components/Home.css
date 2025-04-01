@@ -1,89 +1,86 @@
-/* Using Bootstrap for Styling */
-body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #f8f9fa; /* Bootstrap light background */
-    color: #343a40; /* Bootstrap dark text color */
-  }
-  
-  /* Container Styling */
-  .container {
-    max-width: 1200px;
-  }
-  
-  /* Button Styling */
-  .btn {
-    font-weight: 600;
-    border-radius: 50px;
-    padding: 10px 20px;
-  }
-  
-  .btn-primary {
-    background-color: var(--bs-success);
-    border: none;
-    transition: all 0.3s;
-  }
-  
-  .btn-primary:hover {
-    background-color: var(--bs-green-700);
-  }
-  
-  .btn-outline-danger {
-    border: 2px solid var(--bs-danger);
-    color: var(--bs-danger);
-    transition: all 0.3s;
-  }
-  
-  .btn-outline-danger:hover {
-    background-color: var(--bs-danger);
-    color: white;
-  }
-  
-  /* Product Card Styling */
-  .card {
-    transition: all 0.3s ease-in-out;
-    border-radius: var(--bs-border-radius-lg);
-    background: var(--bs-white);
-    box-shadow: var(--bs-box-shadow-sm);
-  }
-  
-  .card:hover {
-    transform: scale(1.03);
-    box-shadow: var(--bs-box-shadow-lg);
-  }
-  
-  .card-img-top {
-    border-top-left-radius: var(--bs-border-radius-lg);
-    border-top-right-radius: var(--bs-border-radius-lg);
-    height: 230px;
-    object-fit: cover;
-  }
-  
-  .position-absolute .fs-4 {
-    cursor: pointer;
-    transition: color 0.3s;
-  }
-  
-  .text-secondary:hover {
-    color: var(--bs-danger) !important;
-  }
-  
-  /* Search & Category Section */
-  .bg-light {
-    background-color: var(--bs-light) !important;
-    border-radius: var(--bs-border-radius);
-    padding: 15px;
-  }
-  
-  .text-primary {
-    color: var(--bs-success) !important;
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .card-img-top {
-      height: 200px !important;
-    }
-    .btn {
-      width: 100%;
-    }
-  }
+body{
+  background: #a17979;
+}
+/* Home Page - Premium UI */
+.container {
+  max-width: 1200px;
+}
+
+/* Search Results Box */
+.bg-light {
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  padding: 15px;
+}
+.card {
+  background: rgba(255, 255, 255, 0.1); /* Transparent background */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Light border for visibility */
+  backdrop-filter: blur(8px); /* Glass effect */
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+/* .card:hover {
+  transform: scale(1.03);
+} */
+
+.card-body {
+  background: transparent; /* Keep body transparent */
+  text-align: center;
+  padding: 15px;
+}
+
+.description {
+  color: #eee; /* Light text for better visibility */
+}
+
+
+/* Product Image */
+.card-img-top {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-color: #0ad42c;
+}
+
+/* Product Price */
+.text-danger {
+  color: #03df2b !important;
+  font-weight: bold;
+}
+
+/* Category Badge */
+.badge {
+  background: linear-gradient(90deg, #c6e804, #20eb3b);
+  color: rgb(223, 228, 235);
+}
+
+/* Like Button */
+.text-danger, .text-secondary {
+  cursor: pointer;
+  transition: all 0.3s;
+  border-radius: 3%;
+  background: #ffffff;
+}
+
+.text-danger:hover, .text-secondary:hover {
+  transform: scale(1.2);
+}
+
+/* View Details Button */
+.btn-primary {
+  background: linear-gradient(90deg, #258712, #97d809);
+  border: none;
+  padding: 10px 20px;
+  font-weight: bold;
+  color: #000000;
+  box-shadow: 0px 0px 15px rgba(253, 216, 53, 0.6);
+  transition: all 0.3s;
+}
+
+.btn-primary:hover {
+  transform: scale(1);
+  box-shadow: 0px 0px 25px rgba(138, 230, 112, 0.926);
+}

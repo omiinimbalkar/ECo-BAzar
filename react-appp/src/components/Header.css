@@ -1,35 +1,138 @@
-.header {
-    /* /* height: 50px; */
-    /* height of text */
-
-    /* color: blueviolet; */
-    /* color of text */
-
-    /* box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px; */
-    /* for side design  */
-}
-
+/* Header Background - Gradient Green Theme */
 .header-container {
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
-    padding: 10px 20px;
-    border-bottom: 3px solid #fef1f169;
-    background-color: #f4fcfa;
-    /* Muted Teal */
-    color: #004D40;
-    /* Deep Teal for contrast */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(90deg, #b2e63a, #2bff05f1); 
+  padding: 12px 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* 📌 Responsive adjustments for smaller screens */
-@media (max-width: 768px) {
-    .header-container {
-        padding: 8px 15px;
-        /* Reduce padding on mobile */
-    }
+/* Logo */
+.logo {
+  width: 80px;
+  height: 70px;
+  border-radius: 8px;
+}
+
+/* Location Dropdown */
+.location-dropdown {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+  padding: 5px;
+}
+
+/* Search Bar */
+.search-container {
+  display: flex;
+  gap: 8px;
+}
+
+.search-input {
+  width: 350px;
+  padding: 8px;
+  border-radius: 5px;
+  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  backdrop-filter: blur(10px);
+}
+
+.search-btn {
+  background: #20eb3b;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Icons */
+.icons-container {
+  display: flex;
+  gap: 15px;
+}
+
+.icon {
+  font-size: 22px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.icon:hover {
+  transform: scale(1.2);
+}
+
+.heart { color: red; }
+.bell { color: white; }
+.phone { color: white; }
+
+/* Dark Mode Toggle */
+.dark-mode-btn {
+  background: transparent;
+  background: #f2f8ea;
+  border-radius: 20%;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Profile Menu */
+.profile-menu {
+  position: relative;
+}
+
+.profile-icon {
+  font-size: 24px;
+  background: white;
+  color: black;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.menu-dropdown {
+  position: absolute;
+  background: black;
+  color: white;
+  padding: 10px;
+  right: 0;
+  top: 40px;
+  border-radius: 5px;
+}
+
+.menu-btn, .logout-btn {
+  width: 100%;
+  padding: 5px;
+  border: none;
+  background: #145a32;
+  color: white;
+  margin-top: 5px;
+}
+
+.logout-btn {
+  background: rgb(255, 235, 54);
+}
+
+.login-link {
+  text-align: center;
+  display: block;
+  color: white;
+}
+
+/* Dark Mode */
+.dark-mode {
+  background: #ff0000;
+  color: white;
 }
 
 
 .cat-container {
-    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, .1);
+    box-shadow: 0 1px 4px 0 rgba(40, 226, 19, 0.944);
     padding: 8px 20px;
 }
 
@@ -39,7 +142,7 @@
     margin-top: 10px;
 }
 
-.search {
+/* .search {
     margin-left: 80px;
     outline: none;
     padding-left: 10px;
@@ -47,34 +150,34 @@
     height: 44px;
     border: 2px solid #002f34;
     border-radius: 5px 0px 0px 5px;
-}
+} */
 
-.search-btn {
+/* .search-btn {
     height: 44px;
     background: #002f34;
     color: #fff;
     border-radius: 0px 5px 5px 0px;
-    outline: none;
+    outline: none; */
     /*like this none for remove default funda on outline */
-    border: none;
+    /* border: none;
     padding: 0px 15px;
-}
+} */
 
-.logout-btn {
+/* .logout-btn {
     height: 35px;
-    background: #002f34;
+    background: #b7dbdf;
     color: #fff;
     border-radius: 5px;
-    outline: none;
+    outline: none; */
     /*like this none for remove default funda on outline */
-    border: none;
+    /* border: none;
     padding: 1px 16px;
     margin-right: 10px;
     border-radius: 10%;
-}
+} */
 
 .category {
-    color: rgba(0, 47, 12, 1);
+    color: rgb(9, 87, 28);
     padding: 7px;
     cursor: pointer;
 }
@@ -87,7 +190,7 @@
     white-space: nowrap; /* Prevent text wrapping */
     padding: 10px;
     scrollbar-width: thin; /* Firefox */
-    scrollbar-color: #ccc transparent; /* Firefox */
+    scrollbar-color: #008827 transparent; /* Firefox */
   }
   
   .cat-container::-webkit-scrollbar {
