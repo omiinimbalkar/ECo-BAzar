@@ -171,7 +171,7 @@ import Header from './Header';
 import Footer from './Footer';
 import API_URL from "../constants";
 import io from 'socket.io-client';
-import { Carousel, Button, Container, Row, Col, Form, Spinner, Alert } from 'react-bootstrap';
+import { Carousel, Button, Container, Row, Col, Form, Alert } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './SplashScreen.css';
 
@@ -186,9 +186,18 @@ function ProductDetail() {
     const [showContact, setShowContact] = useState(false);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
+    const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('username'));
 
-    // ✅ Check if user is logged in
-    const islogin = !!localStorage.getItem('username');
+    useEffect(() => {
+        const checkLogin = () => {
+            setIsLoggedIn(!!localStorage.getItem('username'));  // ✅ Update state on login change
+        };
+
+        checkLogin();
+
+        window.addEventListener('storage', checkLogin);
+        return () => window.removeEventListener('storage', checkLogin);
+    }, []);
 
     useEffect(() => {
         socket = io(API_URL);
@@ -200,12 +209,15 @@ function ProductDetail() {
     }, []);
 
     useEffect(() => {
-        socket.emit('getMsgs', {});
-        socket.on('getMsg', (data) => {
-            const filteredMsgs = data.filter(msg => msg.productId === productId);
-            setMsgs(filteredMsgs);
-        });
-    }, [productId]);
+        if (isLoggedIn) {
+            socket.emit('getMsgs', {});
+            socket.on('getMsg', (data) => {
+                const filteredMsgs = data.filter(msg => msg.productId === productId);
+                setMsgs(filteredMsgs);
+            });
+        }
+    }, [productId, isLoggedIn]);
+
 
     useEffect(() => {
         setTimeout(() => {
@@ -224,22 +236,26 @@ function ProductDetail() {
         }, 2000);
     }, [productId]);
 
+
     const handleSend = () => {
         if (!msg.trim()) return;
 
-        const username = localStorage.getItem('username'); // ✅ Ensure correct key
+        const username = localStorage.getItem('username');
         if (!username) {
             alert("You must be logged in to send messages.");
             return;
         }
-        const data = { username: localStorage.getItem('username'), msg, productId };
+
+        const data = { username, msg, productId };
         socket.emit('sendMsg', data);
         setMsg('');
 
+        setMsgs(prevMsgs => [...prevMsgs, data]);
+
         axios.post(API_URL + '/add-notification', {
             userId: product.addedBy,
-            message: `${localStorage.getItem('userName')} sent you a message on your product: ${product.pname}`,
-            productId: productId
+            message: `${username} sent you a message on your product: ${product.pname}`,
+            productId
         }).catch(() => alert("Notification error"));
     };
 
@@ -293,25 +309,33 @@ function ProductDetail() {
                             )}
                         </Col>
 
-                        {/* 💬 Chat Section */}
+                        {/* Chat Section */}
                         <Col md={6}>
                             <h5 className="mb-3">Chat</h5>
-
-                            {islogin ? (
+                            
+                            {!isLoggedIn ? (
+                                <Alert variant="warning" className="text-center">
+                                    <p>You must <strong>log in</strong> to view and send messages.</p>
+                                    <Button variant="primary" onClick={() => navigate('/login')}>
+                                        🔑 Login
+                                    </Button>
+                                </Alert>
+                            ) : (
                                 <>
-                                    <div className="border p-3 mb-3 bg-light rounded chat-box">
+                                    <div className="border p-3 mb-3 bg-light rounded chat-box" style={{ height: '300px', overflowY: 'auto' }}>
                                         {msgs.length > 0 ? (
                                             msgs.map((item, index) => (
-                                                <p key={index} className={`p-2 rounded shadow-sm mb-2 ${item.user === localStorage.getItem('username') ? 'bg-info text-white text-end' : 'bg-dark text-white'}`}>
-                                                    <strong>{item.username}:</strong> {item.msg}
-                                                </p>
+                                                <div key={index} className={`mb-2 ${item.username === localStorage.getItem('username') ? 'text-end' : 'text-start'}`}>
+                                                    <div className={`p-2 rounded d-inline-block ${item.username === localStorage.getItem('username') ? 'bg-primary text-white' : 'bg-light border'}`}>
+                                                        <strong>{item.username}:</strong> {item.msg}
+                                                    </div>
+                                                </div>
                                             ))
                                         ) : (
-                                            <p className="text-muted text-center">No messages yet.</p>
+                                            <p className="text-muted text-center">No messages yet. Start the conversation!</p>
                                         )}
                                     </div>
 
-                                    {/* ✍ Message Input */}
                                     <Form className="d-flex" onSubmit={(e) => {
                                         e.preventDefault();
                                         handleSend();
@@ -328,13 +352,6 @@ function ProductDetail() {
                                         </Button>
                                     </Form>
                                 </>
-                            ) : (
-                                <Alert variant="warning" className="text-center">
-                                    <p>You must <strong>log in</strong> to send messages.</p>
-                                    <Button variant="primary" onClick={() => navigate('/login')}>
-                                        🔑 Login
-                                    </Button>
-                                </Alert>
                             )}
                         </Col>
                     </Row>
