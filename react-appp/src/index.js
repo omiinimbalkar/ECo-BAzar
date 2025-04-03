@@ -44,6 +44,7 @@ const router = createBrowserRouter([
     element:(<Notifications/>)
 
   },
+  
   {
     path: "/category/:catName",
     element: (<CategoryPage />),

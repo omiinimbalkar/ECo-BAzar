@@ -11,3 +11,14 @@ const NotificationSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('Notification', NotificationSchema);
+// const mongoose = require('mongoose');
+
+// const notificationSchema = new mongoose.Schema({
+//   userId: { type: String, required: true },
+//   message: { type: String, required: true },
+//   productId: { type: String },
+//   actionType: { type: String, required: true },
+//   createdAt: { type: Date, default: Date.now }  // ✅ Correct timestamp field
+// });
+
+// module.exports = mongoose.model('Notification', notificationSchema);

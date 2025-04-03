@@ -1,4 +1,3 @@
-
 const mongoose = require('mongoose');
 
 let schema = new mongoose.Schema({
@@ -237,6 +236,3 @@ module.exports.deleteProducts = async (req, res) => {
             console.log('seerver err in delete product');
         })
 }
-
-
-
