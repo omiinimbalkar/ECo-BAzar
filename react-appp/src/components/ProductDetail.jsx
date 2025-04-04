@@ -126,7 +126,11 @@ function ProductDetail() {
                             </Carousel>
                             <h5 className="mt-3">{product.pname} | {product.category}</h5>
                             <p className="text-success">{product.pdesc}</p>
-                            <h4 className="text-danger">Rs. {product.price} /-</h4>
+                            <h5 className="text-danger">Rs. {product.price} /-</h5>
+                            <h5 className="text-warning">Date {product.date}</h5>
+                            {/* ✅ 🕒 Show Last Updated Date and Time */}
+                            {/* <p>Posted on: {dayjs(product.createdAt).format("DD MMM YYYY, hh:mm A")}</p>
+                            <p>Last updated: {dayjs(product.updatedAt).fromNow()}</p> */}
                             <p className="text-muted">{product.address}</p>
 
                             {/* 🔹 Seller Contact Details */}
@@ -165,8 +169,8 @@ function ProductDetail() {
                                         <p
                                             key={index}
                                             className={`p-2 rounded mt-1 ${item.username === localStorage.getItem("userName")
-                                                    ? "bg-primary text-white text-end"
-                                                    : "bg-secondary text-white"
+                                                ? "bg-primary text-white text-end"
+                                                : "bg-secondary text-white"
                                                 }`}
                                             style={{ maxWidth: "70%", marginLeft: item.username === localStorage.getItem("userName") ? "auto" : "0" }}
                                         >

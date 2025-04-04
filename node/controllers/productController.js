@@ -6,6 +6,7 @@ let schema = new mongoose.Schema({
     price: String,
     category: String,
     address: String,
+    date: String,
     pimg: String,
     pimg2: String,
     addedBy: mongoose.Schema.Types.ObjectId,
@@ -18,11 +19,23 @@ let schema = new mongoose.Schema({
         coordinates: {
             type: [Number]
         }
-    }
-
+    },
 })
 
 schema.index({ pLoc: '2dsphere' }); // four side area scan
+
+// controllers/productController.js
+
+const Product = require("../models/Product");
+
+exports.getRecentProducts = async (req, res) => {
+    try {
+        const products = await Product.find().sort({ createdAt: -1 }); // -1 = latest first
+        res.json(products);
+    } catch (err) {
+        res.status(500).json({ error: "Something went wrong" });
+    }
+};
 
 const Products = mongoose.model('Products', schema);
 
@@ -65,6 +78,7 @@ module.exports.addProduct = async (req, res) => {
     const price = req.body.price;
     const category = req.body.category;
     const address = req.body.address;
+    const date = req.body.date;
     const pimg = req.files?.pimg?.[0]?.path || '';
     const pimg2 = req.files?.pimg2?.[0]?.path || '';
     // const pimg = req.files?.pimg?.[0] ? `/uploads/${req.files.pimg[0].filename}` : '';
@@ -73,7 +87,7 @@ module.exports.addProduct = async (req, res) => {
     const addedBy = req.body.userId;
 
     const product = new Products({
-        pname, pdesc, price, category, address, pimg, pimg2, addedBy, pLoc: {
+        pname, pdesc, price, category, address,date, pimg, pimg2, addedBy, pLoc: {
             type: 'Point', coordinates: [plat, plog]
         }
     })
@@ -121,6 +135,8 @@ module.exports.editProduct = async (req, res) => {
     const pname = req.body.pname;
     const pdesc = req.body.pdesc;
     const price = req.body.price;
+    const address = req.body.address;
+    const date = req.body.date;
     const category = req.body.category;
     let pimg = '';
     let pimg2 = '';
@@ -159,6 +175,12 @@ module.exports.editProduct = async (req, res) => {
     }
     if (pimg2) {
         editObj.pimg2 = pimg2;
+    }
+    if (address) {
+        editObj.address = address;
+    }   
+    if (date) {
+        editObj.date = date;
     }
 
     Products.updateOne({ _id: pid }, editObj, { new: true })

@@ -15,8 +15,10 @@ function AddProduct() {
     const [pimg, setpimg] = useState('');
     const [pimg2, setpimg2] = useState('');
     const [address, setAddress] = useState('');
+    const [date, setdate] = useState('');
     const [phone, setPhone] = useState('');
     const [condition, setCondition] = useState('');
+
 
     useEffect(() => {
         if (!localStorage.getItem('token')) {
@@ -24,7 +26,7 @@ function AddProduct() {
         }
     }, []);
 
-    const isFormValid = pname && pdesc && category && address && pimg  ;
+    const isFormValid = pname && pdesc && category && address && pimg;
 
     const handleApi = () => {
         if (!isFormValid) {
@@ -42,10 +44,12 @@ function AddProduct() {
             fromData.append('category', category);
             fromData.append('pimg', pimg);
             fromData.append('pimg2', pimg2);
+            fromData.append('date', date);
             fromData.append('address', address);
             fromData.append('phone', phone);
             fromData.append('condition', condition);
             fromData.append('userId', localStorage.getItem('userId'));
+
 
             const url = API_URL + '/add-product';
             axios.post(url, fromData)
@@ -123,6 +127,16 @@ function AddProduct() {
                                 <label className="form-label">Product Second Image (Optional)</label>
                                 <input className="form-control" type="file" onChange={(e) => setpimg2(e.target.files[0])} />
                             </div>
+                            <div className="mb-3">
+                                <label className="form-label">Date & Time</label>
+                                <input
+                                    className="form-control"
+                                    type="datetime-local"
+                                    onChange={(e) => setdate(e.target.value)}
+                                    required
+                                />
+                            </div>
+
                             <button onClick={handleApi} className="btn btn-primary w-100" disabled={!isFormValid}>Submit</button>
                         </div>
                     </div>

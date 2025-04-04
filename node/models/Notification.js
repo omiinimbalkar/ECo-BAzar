@@ -7,7 +7,10 @@ const NotificationSchema = new mongoose.Schema({
     productId: String,
     likedProduct: String,
     dislikedProduct: String,
-    timestamp: { type: Date, default: Date.now }
+    timestamp: {
+        type: Date,
+        default: Date.now,
+    },
 });
 
 module.exports = mongoose.model('Notification', NotificationSchema);

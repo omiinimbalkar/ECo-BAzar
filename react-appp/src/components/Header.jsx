@@ -9,7 +9,11 @@ import cont from '../img/heContact.png';
 import dark from '../img/darkli.png';
 import fav from '../img/favorite.png';
 import noti from '../img/noti.png'
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 
+
+dayjs.extend(relativeTime);
 
 function Header(props) {
 
@@ -89,6 +93,11 @@ function Header(props) {
           Development Team | Virar, Palghar
         </div>
 
+        {/* date and time */}
+        <div className="fw-bold text-dark"> 
+        🗓️ : {dayjs().format('DD/MM/YYYY')}
+        </div>
+
         {/* Icons: Wishlist, Notifications, Dark Mode */}
 
         <div className="d-flex align-items-center">
@@ -128,12 +137,6 @@ function Header(props) {
               img src={info} alt="" width={20} height={20} />
             </button>
           </Link>
-
-
-
-
-
-
 
 
           {/* Profile and Menu */}
