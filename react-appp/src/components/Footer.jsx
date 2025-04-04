@@ -22,7 +22,6 @@ const Footer = () => {
               <h6 className="text-info fw-bold">Quick Links</h6>
               <ul className="list-unstyled small">
                 <li><a href="/about" className="text-light text-decoration-none">📌 About Us</a></li>
-                <li><a href="/contact" className="text-light text-decoration-none">📞 Contact</a></li>
                 <li><a href="/terms" className="text-light text-decoration-none">📜 Terms & Conditions</a></li>
                 <li><a href="/privacy" className="text-light text-decoration-none">🔒 Privacy Policy</a></li>
               </ul>
@@ -31,9 +30,12 @@ const Footer = () => {
             {/* Mission Section */}
             <div className="col-md-4">
               <h6 className="text-warning fw-bold">Why Choose EcoBazar?</h6>
-              <p className="small text-light">♻️ Buy & Sell Preloved Items</p>
-              <p className="small text-light">🌍 Reduce Waste, Save Resources</p>
-              <p className="small text-light">🚀 Join the Eco-Friendly Marketplace</p>
+              <p className="small text-light">
+                ♻️ Buy & Sell Preloved Items
+                <br />
+              🌍 Reduce Waste, Save Resources
+              <br />
+              🚀 Join the Eco-Friendly Marketplace</p>
             </div>
       
           </div>

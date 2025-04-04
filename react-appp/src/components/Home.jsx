@@ -3,10 +3,11 @@ import Header from './Header';
 import Categories from './Categories';
 import { useNavigate, Link, data } from 'react-router-dom';
 import axios from 'axios';
-import { FaHeart } from 'react-icons/fa';
+import { FaFacebook, FaHeart } from 'react-icons/fa';
 import './Home.css'
 import API_URL from "../constants";
 import Footer from './Footer';
+import face from '../img/instagram.png'
 
 
 function Home() {
@@ -148,10 +149,12 @@ function Home() {
       <Header search={search} handlesearch={handlesearch} handleClick={handleClick} />
       <Categories handleCategory={handleCategory} />
 
+
+
       <div className="container mt-4">
         {/* Search Results Section */}
         {issearch && (
-          <div className="d-flex flex-wrap align-items-center justify-content-between bg-light p-3 rounded shadow-sm">
+          <div className="search-results">
             <h5 className="text-primary mb-0">
               🔍 Search Results:
             </h5>
@@ -174,9 +177,11 @@ function Home() {
                 {/* Product Image with Like Button */}
                 <div className="position-relative">
                   <img
-                    src={API_URL + '/' + item.pimg}
-                    className="card-img-top img-fluid"
-                    style={{ height: "230px", objectFit: "cover" }}
+                    src={`${API_URL}/${item.pimg}`} 
+                    className="card-img-top" 
+                    style={{ height: "230px", objectFit: "cover" }} 
+                    alt="Product"
+                   
                   />
                   <div className="position-absolute top-0 end-0 p-2">
                     {likedproducts.find((likedItem) => likedItem._id === item._id) ? (

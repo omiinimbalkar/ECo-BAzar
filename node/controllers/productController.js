@@ -1,4 +1,3 @@
-
 const mongoose = require('mongoose');
 
 let schema = new mongoose.Schema({
@@ -6,6 +5,7 @@ let schema = new mongoose.Schema({
     pdesc: String,
     price: String,
     category: String,
+    address: String,
     pimg: String,
     pimg2: String,
     addedBy: mongoose.Schema.Types.ObjectId,
@@ -64,12 +64,16 @@ module.exports.addProduct = async (req, res) => {
     const pdesc = req.body.pdesc;
     const price = req.body.price;
     const category = req.body.category;
+    const address = req.body.address;
     const pimg = req.files?.pimg?.[0]?.path || '';
     const pimg2 = req.files?.pimg2?.[0]?.path || '';
+    // const pimg = req.files?.pimg?.[0] ? `/uploads/${req.files.pimg[0].filename}` : '';
+    // const pimg2 = req.files?.pimg2?.[0] ? `/uploads/${req.files.pimg2[0].filename}` : '';
+
     const addedBy = req.body.userId;
 
     const product = new Products({
-        pname, pdesc, price, category, pimg, pimg2, addedBy, pLoc: {
+        pname, pdesc, price, category, address, pimg, pimg2, addedBy, pLoc: {
             type: 'Point', coordinates: [plat, plog]
         }
     })
@@ -82,7 +86,7 @@ module.exports.addProduct = async (req, res) => {
         })
 }
 
-module.exports.scrapProduct= async (req, res) => {
+module.exports.scrapProduct = async (req, res) => {
     console.log(req.files)
     console.log(req.body)
     const plat = req.body.plat;
@@ -232,6 +236,3 @@ module.exports.deleteProducts = async (req, res) => {
             console.log('seerver err in delete product');
         })
 }
-
-
-    

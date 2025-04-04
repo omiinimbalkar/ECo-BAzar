@@ -1,50 +1,86 @@
-.icons{
-    font-size: 32px;
-    height:32px;
-    width: 32px;
-    color: rgb(245, 240, 240);
-    cursor: pointer;
+body{
+  background: #a17979;
 }
-.red-icons{
-    font-size: 32px;
-    height:32px;
-    width: 32px;
-    color: rgb(243, 94, 8);
-    cursor: pointer;
+/* Home Page - Premium UI */
+.container {
+  max-width: 1200px;
 }
-.icons:hover{
-    color: #aaa
-  }
-.icons-conatiner{
-    position : absolute;
-    top : 0;
-    right: 0;
-    border-radius: 50%;
-    padding: 7px;
-    background-color: #fff; 
-    margin: 7px
+
+/* Search Results Box */
+.bg-light {
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  padding: 15px;
 }
-.links{
-    text-decoration: none;
-    font-size: 24px;
-    color: #002f34;
-    font-weight: bold;
+.card {
+  background: rgba(255, 255, 255, 0.1); /* Transparent background */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Light border for visibility */
+  backdrop-filter: blur(8px); /* Glass effect */
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
 }
-/* for this give the link clasname as links */
-.price-text{
-    color: #002f34;
-    font-size: larger;
-    font-weight: 700;
+
+/* .card:hover {
+  transform: scale(1.03);
+} */
+
+.card-body {
+  background: transparent; /* Keep body transparent */
+  text-align: center;
+  padding: 15px;
 }
-.clear-btn{
-    height: 26px;
-    background: #2a1e1ca8;
-    color: #fff;
-    border-radius: 0px 5px 5px 0px;
-    font-size: 15px;
-    outline: none; /*like this none for remove default funda on outline */
-    border: none;  
-    padding: 0px 15px;
-    margin-top: 10px;
-    margin-left: 10px;
+
+.description {
+  color: #eee; /* Light text for better visibility */
+}
+
+
+/* Product Image */
+.card-img-top {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-color: #0ad42c;
+}
+
+/* Product Price */
+.text-danger {
+  color: #03df2b !important;
+  font-weight: bold;
+}
+
+/* Category Badge */
+.badge {
+  background: linear-gradient(90deg, #c6e804, #20eb3b);
+  color: rgb(223, 228, 235);
+}
+
+/* Like Button */
+.text-danger, .text-secondary {
+  cursor: pointer;
+  transition: all 0.3s;
+  border-radius: 3%;
+  background: #ffffff;
+}
+
+.text-danger:hover, .text-secondary:hover {
+  transform: scale(1.2);
+}
+
+/* View Details Button */
+.btn-primary {
+  background: linear-gradient(90deg, #258712, #97d809);
+  border: none;
+  padding: 10px 20px;
+  font-weight: bold;
+  color: #000000;
+  box-shadow: 0px 0px 15px rgba(253, 216, 53, 0.6);
+  transition: all 0.3s;
+}
+
+.btn-primary:hover {
+  transform: scale(1);
+  box-shadow: 0px 0px 25px rgba(138, 230, 112, 0.926);
 }

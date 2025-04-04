@@ -5391,6 +5391,211 @@ after chnage in this cod u need to seee all product the smae msg but we don't wa
 noqw chnages in handle send in productdetail and just for sneding msg not show in other produuct dtaabase show in application in localstorage etccc
 
 
+so some chage we try to make but now in errro in msg and notifaction edit and css work required so fro that we see futher subh ratri!! and product not show wal funda!!
+
+
+
+ater working on css we are in produc detail todAY SO TMR IF CHANCE WE WORK ON MSG OKHH!!
+
+
+
+d 2/4/25
+
+trying to fix the msg part chnage in bacend and frontend to make goo view and cheeck some tring wjoqskq
+const express = require('express');
+const path = require('path');
+const cors = require('cors');
+const jwt = require('jsonwebtoken');
+const multer = require('multer');
+const http = require('http'); 
+const { Server } = require ("socket.io");
+const productController = require('./controllers/productController');
+const userController = require('./controllers/userController');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const { type } = require('os');
+const Notification = require('./models/Notification'); // Import your model
+const Chat = require('./models/Chat');  // Import Chat model
+
+
+const app = express();
+const port = 4000;
+
+// Middleware
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors());
+
+// Database Connection
+mongoose.connect('mongodb+srv://omssn21:om212006@cluster0.vr8ns.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
+  .then(() => {
+    console.log('MongoDB Connected');
+  })
+  .catch(err => {
+    console.error('MongoDB connection error:', err);
+  });
+
+// Storage Configuration for File Upload
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads');
+  },
+  filename: function (req, file, cb) {
+    const fileExtension = file.originalname.split('.').pop();
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, file.fieldname + '-' + uniqueSuffix + '.' + fileExtension);
+  },
+});
+const upload = multer({ storage: storage });
+const httpServer = http.createServer(app);  
+const io = new Server(httpServer , {
+  cors : {
+    origin : '*'
+  }
+})
+
+// API Routes
+app.get('/', (req, res) => {
+  res.send('Hello Coder.....🌐');
+});
+
+//notifaction
+
+
+// ✅ Add Notification API
+app.post('/add-notification', async (req, res) => {
+  try {
+      const { userId, message, productId, likedProduct, dislikedProduct } = req.body;
+      const newNotification = new Notification({
+          userId,
+          message,
+          productId,
+          likedProduct,
+          dislikedProduct,
+          timestamp: new Date()
+      });
+
+      await newNotification.save();
+      
+      // ✅ Send only ONE response including all required fields
+      return res.json({ 
+          success: true, 
+          message: "Notification added successfully", 
+          likedProduct, 
+          dislikedProduct 
+      });
+
+  } catch (error) {
+      console.error("Error adding notification:", error);
+      return res.status(500).json({ success: false, error: "Error adding notification" });
+  }
+});
+
+
+// ✅ Get Notifications API
+app.get('/get-notifications/:userId', async (req, res) => {
+  try {
+      const { userId } = req.params;
+      const notifications = await Notification.find({ userId }).sort({ timestamp: -1 });
+
+      res.json({ notifications });
+  } catch (error) {
+      console.error("Error fetching notifications:", error);
+      res.status(500).json({ error: "Error fetching notifications" });
+  }
+});
+
+
+//for search
+app.get('/search', productController.search);
+
+// Liked Products API
+app.post('/liked-product', userController.likedProduct);
+
+// DisLiked Products API
+app.post('/disliked-product', userController.dislikedProduct);
+
+// Add Product API
+app.post('/add-product', upload.fields([{ name: 'pimg' }, { name: 'pimg2' }]), productController.addProduct);
+
+// Add scrap API
+app.post('/scrapper', upload.fields([{ name: 'pimg' }, { name: 'pimg2' }]), productController.scrapProduct);
+
+// Add Product API
+app.post('/edit-product', upload.fields([{ name: 'pimg' }, { name: 'pimg2' }]), productController.editProduct);
+
+// Get All Products API
+app.get('/get-products', productController.getProducts);
+
+// Delete Product API
+app.post('/delete-product', productController.deleteProducts);
+
+
+// Get Product by ID
+app.get('/get-product/:pId', productController.getProductsById);
+
+// Get Liked Products API
+app.post('/liked-products', userController.likedProducts);
+
+//my ads
+app.post('/my-products', productController.myProducts);
+
+// Signup API
+app.post('/signup', userController.signup);
+
+//getprofile by id api
+app.get('/my-profile/:userId', userController.myProfileById)
+
+
+//get user api
+app.get('/get-user/:uId', userController.getUserById)
+
+// Login API
+app.post('/login', userController.login);
+
+//msg socket
+let messages = [];
+
+// io.on('connection', (socket) => {
+//   console.log('Socket Connected ',socket.id)
+
+//   socket.on('sendMsg' , (data) => {
+//     messages.push(data);
+//     io.emit('getMsg',messages)  
+//   })
+//   io.emit('getMsg',messages)
+
+// })
+
+
+// Socket.io for Chat System
+io.on('connection', (socket) => {
+  console.log('Socket Connected:', socket.id);
+
+  // Fetch Messages from MongoDB
+  socket.on('getMsgs', async ({ productId }) => {
+      const messages = await Chat.find({ productId }).sort({ timestamp: 1 });
+      socket.emit('getMsg', messages);
+  });
+
+  // Store Message in MongoDB
+  socket.on('sendMsg', async (data) => {
+      const newMsg = new Chat(data);
+      await newMsg.save();
+      const messages = await Chat.find({ productId: data.productId }).sort({ timestamp: 1 });
+      io.emit('getMsg', messages);
+  });
+
+  socket.on('disconnect', () => {
+      console.log('Socket Disconnected:', socket.id);
+  });
+});
+
+// Start Server
+httpServer.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
 
 
 
@@ -5399,6 +5604,567 @@ noqw chnages in handle send in productdetail and just for sneding msg not show i
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const express = require('express')
+// const path = require('path');
+// const cors = require('cors')
+// const jwt = require('jsonwebtoken');
+// const multer = require('multer');
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, 'uploads')
+//   },
+//   filename: function (req, file, cb) {
+//     const fileExtension = file.originalname.split('.').pop(); // Get file extension
+//     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+//     cb(null, file.fieldname + '-' + uniqueSuffix + '.' + fileExtension);
+//   },
+// })
+
+// const upload = multer({ storage: storage })
+
+// const bodyParser = require('body-parser')
+
+// const app = express()
+
+// app.use('/uploads', express.static(path.join(__dirname, 'uploads')));app.use(bodyParser.json())
+// app.use(bodyParser.urlencoded({ extended: false }))
+// app.use(cors())
+
+// const port = 4000
+// const mongoose = require('mongoose');
+
+// mongoose.connect('mongodb+srv://omssn21:om212006@cluster0.vr8ns.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
+
+
+
+// const Users = mongoose.model('Users',
+//   { username: String,
+//     password: String,
+//     likedProducts : [{type : mongoose.Schema.Types.ObjectId,ref:'Products'}]
+//   });  // we are creating a model
+// const Products = mongoose.model('Products', { pname: String, pdesc:String, price:String, category:String, pimg:String});  // we are creating a model for product
+
+// // app.get('/ap', (req, res) => {
+// app.get('/', (req, res) => {
+//   res.send('Hello Coder.....🌐 ')
+// })
+
+// app.post('/liked-product', (req ,res) =>{
+//     let productId = req.body.productId;
+//     let userId = req.body.userId;
+
+
+//     //update user model
+//     Users.updateOne({_id: ( userId )} ,{$addToSet : { likedProducts : productId }})
+//     .then(() => {
+//       res.send({message : 'Liked successfully'})
+//     })
+//     .catch(() => {
+//     res.send({message: 'Server Error'});
+//     });
+// })
+// //we get data frm frotend fro add product
+// app.post('/add-product',upload.single('pimg'),(req,res)=>{
+//     const pname  = req.body.pname;
+//     const pdesc  = req.body.pdesc;
+//     const price  = req.body.price;
+//     const category  = req.body.category;
+//     const pimg  = req.file.path;
+
+//     const product = new Products({ pname, pdesc, price, category, pimg});
+//     product.save()
+//     .then(() => {
+//       res.send({message : 'Product is Saved'})
+//     })
+//     .catch(() => {
+//     res.send({message: 'Server Error'});
+//     });
+// })
+// //For main products
+// app.get('/get-products',(req,res)=>{
+//   Products.find()//findall
+//   .then((result)=>{
+//     res.send({message:"succesfully saved.." , products : result})
+//   })
+//   .catch((err)=>{
+//     res.send({message:"server err"})
+//   })
+// })
+
+// //for product detail
+// app.get('/get-product/:pId',(req,res)=>{
+//   console.log(req.params)
+//   Products.findOne({ _id : req.params.pId}) //id match get result
+//   .then((result)=>{
+//     res.send({message:"succesfully saved.." , products : result})
+//   })
+//   .catch((_err)=>{
+//     res.send({message:"server err"})
+//   })
+// })
+
+// //liked product
+// app.post('/liked-products', (req, res) => {
+//   Users.findOne({_id: req.body.userId}).populate('likedProducts')
+//     .then((result) => {
+//       res.send({ message: "succesfully saved..", products: result.likedProducts})
+//     })
+//     .catch((err) => {
+//       res.send({ message: "server err" })
+//     })
+// })
+
+// // we get data frm frontend so we give name as signup
+
+// app.post ('/signup', (req, res) => {
+//   const username  = req.body.username;
+//   const password = req.body.password;
+//   const user = new Users({ username: username, password: password });
+
+//   user.save()
+//   .then(() => {
+//     res.send({message : 'User created'})
+//   })
+//   .catch(() => {
+//   res.send({message: 'Server Error'});
+//   });
+// })
+
+// // we get data frm frontend so we give name as login
+
+// app.post ('/login', (req, res) => {
+//   const username  = req.body.username;
+//   const password = req.body.password;
+
+//   Users.findOne({username: username})
+
+//   .then((result) => {
+//     if(!result){
+//       res.send({message : 'User not found'}) //user dta not found
+//     }
+//     else{
+//       if(result.password === password){
+//         const token = jwt.sign({
+//           data:  result
+//         }, 'MYKEY', { expiresIn: '1h'});
+//         res.send({message : 'User found',token:token , userId : result._id}) //user data found
+//       }
+//       if(result.password !== password){
+//         res.send({message : 'Password not matched'}) //password not matched
+//       }
+//     }
+//   })
+
+//   // if api not runs the it return thissss
+//   .catch(() => {
+//   res.send({message: 'Server Error'});
+//   });
+// })
+
+// app.listen(port, () => {
+//   console.log(`Example app listening on port ${port}`)
+// })
+<!-- backennnnnnnnnnddddd -->
+
+
+// import { useParams } from "react-router-dom";
+// import { useEffect, useState } from "react";
+// import axios from "axios";
+// import Header from './Header';
+// import Footer from './Footer';
+// import API_URL from "../constants";
+// import io from 'socket.io-client';
+// import { Carousel, Button, Container, Row, Col, Form } from 'react-bootstrap';
+// import 'bootstrap/dist/css/bootstrap.min.css';
+
+// let socket;
+
+// function ProductDetail() {
+//     const [product, setProduct] = useState(null);
+//     const [msg, setMsg] = useState('');
+//     const [msgs, setMsgs] = useState([]);
+//     const [user, setUser] = useState(null);
+//     const { productId } = useParams();
+//     const [showContact, setShowContact] = useState(false);
+
+//     useEffect(() => {
+//         socket = io(API_URL);
+//         socket.on('connect', () => console.log('Connected to socket'));
+//     }, []);
+
+//     useEffect(() => {
+//         socket.emit('getMsgs', {});
+//         socket.on('getMsg', (data) => {
+//             const filteredMsgs = data.filter(msg => msg.productId === productId);
+//             setMsgs(filteredMsgs);
+//         });
+//     }, [productId]);
+
+//     useEffect(() => {
+//         axios.get(`${API_URL}/get-product/${productId}`)
+//             .then(res => {
+//                 if (res.data.product) {
+//                     setProduct(res.data.product);
+//                     localStorage.setItem('productId', res.data.product._id);
+//                 }
+//             })
+//             .catch(() => alert("Server error"));
+//     }, [productId]);
+
+//     const handleSend = () => {
+//         const data = { username: localStorage.getItem('userName'), msg, productId };
+//         socket.emit('sendMsg', data);
+//         setMsg('');
+
+//         // 📌 Send a notification when a user sends a message
+//         axios.post(API_URL + '/add-notification', {
+//             userId: product.addedBy,  // The owner of the product
+//             message: `${localStorage.getItem('userName')} sent you a message on your product: ${product.pname}`,
+//             productId: productId
+//         });
+//     };
+
+//     const handleContact = (addedBy) => {
+//         if (!showContact) {  // Fetch data only if not already visible
+//             axios.get(`${API_URL}/get-user/${addedBy}`)
+//                 .then(res => {
+//                     if (res.data.user) setUser(res.data.user);
+//                 })
+//                 .catch(() => alert("Server error"));
+//         }
+//         setShowContact(!showContact); // Toggle visibility
+//     };
+
+
+//     return (
+//         <>
+//             <Header />
+//             <Container className="mt-4">
+//                 {product ? (
+//                     <Row>
+//                         <Col md={6}>
+//                             <Carousel>
+//                                 <Carousel.Item>
+//                                     <img className="d-block w-100" src={`${API_URL}/${product.pimg}`} alt="Product" />
+//                                 </Carousel.Item>
+//                                 {product.pimg2 && (
+//                                     <Carousel.Item>
+//                                         <img className="d-block w-100" src={`${API_URL}/${product.pimg2}`} alt="Product" />
+//                                     </Carousel.Item>
+//                                 )}
+//                             </Carousel>
+//                             <h5 className="mt-3">{product.pname} | {product.category}</h5>
+//                             <p className="text-success">{product.pdesc}</p>
+//                             <h4 className="text-danger">Rs. {product.price} /-</h4>
+//                             <p className="text-success">{product.address}</p>
+
+
+//                             {/* conntact */}
+//                             {product.addedBy && (
+//                                 <>
+//                                     <Button
+//                                         className="mt-2 btn btn-primary"
+//                                         onClick={() => handleContact(product.addedBy)}
+//                                     >
+//                                         {showContact ? "Hide Contact Details" : "📞 Show Contact Details"}
+//                                     </Button>
+
+//                                     {showContact && user && ( // Show details only if user data is fetched
+//                                         <div className="mt-3 p-3 border rounded bg-light shadow-sm">
+//                                             <h5 className="text-primary">Seller: {user.username || "Not Available"}</h5>
+//                                             <p><strong>Email :</strong> {user.email || "Not Available"}</p>
+//                                             <p><strong>Mobile :</strong> {user.mobile || "Not Available"}</p>
+//                                             <p><strong>Address : </strong> {product.address || "Not Available"}</p>
+//                                         </div>
+//                                     )}
+//                                 </>
+//                             )}
+
+//                         </Col>
+//                         <Col md={6}>
+//                             <h5>Chat</h5>
+//                             <div className="border p-3 mb-3" style={{ height: "300px", overflowY: "scroll", borderRadius: "5px" }}>
+//                                 {msgs.map((item, index) => (
+//                                     <p
+//                                         key={index}
+//                                         className={`p-2 rounded ${item.username === localStorage.getItem('userName') ? 'bg-info text-white' : 'bg-dark text-white'}`}
+//                                     >
+//                                         {item.username}: {item.msg}
+//                                     </p>
+//                                 ))}
+//                             </div>
+//                             <Form
+//                                 className="d-flex"
+//                                 onSubmit={(e) => {
+//                                     e.preventDefault(); // Prevent form default submission
+//                                     if (msg.trim()) handleSend();
+//                                 }}
+//                             >
+//                                 <Form.Control
+//                                     value={msg}
+//                                     onChange={(e) => setMsg(e.target.value)}
+//                                     type="text"
+//                                     placeholder="Type a message..."
+//                                     onKeyDown={(e) => {
+//                                         if (e.key === "Enter" && msg.trim()) {
+//                                             e.preventDefault(); // Prevent new line
+//                                             handleSend();
+//                                         }
+//                                     }}
+//                                 />
+//                                 <Button
+//                                     onClick={() => msg.trim() && handleSend()}
+//                                     variant="success"
+//                                     className="ms-2"
+//                                 >
+//                                     Send
+//                                 </Button>
+//                             </Form>
+//                         </Col>
+
+//                     </Row>
+//                 ) : <p>Loading product details...</p>}
+//             </Container>
+//             <Footer />
+//         </>
+//     );
+// }
+
+// export default ProductDetail;
+
+
+import { useParams, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import Header from './Header';
+import Footer from './Footer';
+import API_URL from "../constants";
+import io from 'socket.io-client';
+import { Carousel, Button, Container, Row, Col, Form, Alert } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './SplashScreen.css';
+
+let socket;
+
+function ProductDetail() {
+    const [product, setProduct] = useState(null);
+    const [msg, setMsg] = useState('');
+    const [msgs, setMsgs] = useState([]);
+    const [user, setUser] = useState(null);
+    const { productId } = useParams();
+    const [showContact, setShowContact] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
+    const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('username'));
+
+    useEffect(() => {
+        const checkLogin = () => {
+            const user = localStorage.getItem('username');
+            setIsLoggedIn(!!user);
+        };
+
+        checkLogin();
+
+        window.addEventListener('storage', checkLogin);
+
+        return () => window.removeEventListener('storage', checkLogin);
+    }, []);
+
+    useEffect(() => {
+        socket = io(API_URL);
+        socket.on('connect', () => console.log('Connected to socket'));
+
+        return () => {
+            socket.disconnect();
+        };
+    }, []);
+
+    useEffect(() => {
+        if (!isLoggedIn) return; // Wait for login state to be true
+
+        socket.emit('getMsgs', {});
+        socket.on('getMsg', (data) => {
+            const filteredMsgs = data.filter(msg => msg.productId === productId);
+            setMsgs(filteredMsgs);
+        });
+
+        return () => socket.off('getMsg');
+    }, [productId, isLoggedIn]);
+
+
+    useEffect(() => {
+        setTimeout(() => {
+            axios.get(`${API_URL}/get-product/${productId}`)
+                .then(res => {
+                    if (res.data.product) {
+                        setProduct(res.data.product);
+                        localStorage.setItem('productId', res.data.product._id);
+                        setLoading(false);
+                    }
+                })
+                .catch(() => {
+                    alert("Server error");
+                    setLoading(false);
+                });
+        }, 2000);
+    }, [productId]);
+
+
+    const handleSend = () => {
+        if (!msg.trim()) return;
+
+        const username = localStorage.getItem('username');
+        if (!username) {
+            alert("You must be logged in to send messages.");
+            return;
+        }
+
+        const data = { username, msg, productId };
+        socket.emit('sendMsg', data);
+        setMsg('');
+
+        setMsgs(prevMsgs => [...prevMsgs, data]);
+
+        axios.post(API_URL + '/add-notification', {
+            userId: product.addedBy,
+            message: `${username} sent you a message on your product: ${product.pname}`,
+            productId
+        }).catch(() => alert("Notification error"));
+    };
+
+    const handleContact = () => {
+        if (!showContact) {
+            axios.get(`${API_URL}/get-user/${product.addedBy}`)
+                .then(res => setUser(res.data.user || {}))
+                .catch(() => alert("Server error"));
+        }
+        setShowContact(!showContact);
+    };
+
+    return (
+        <>
+            <Header />
+            <Container className="mt-4 fade-in">
+                {product ? (
+                    <Row>
+                        {/* 🛒 Product Section */}
+                        <Col md={6}>
+                            <Carousel className="shadow rounded">
+                                <Carousel.Item>
+                                    <img className="d-block w-100" src={`${API_URL}/${product.pimg}`} alt="Product" />
+                                </Carousel.Item>
+                                {product.pimg2 && (
+                                    <Carousel.Item>
+                                        <img className="d-block w-100" src={`${API_URL}/${product.pimg2}`} alt="Product" />
+                                    </Carousel.Item>
+                                )}
+                            </Carousel>
+                            <h4 className="mt-3">{product.pname} | {product.category}</h4>
+                            <p className="text-muted">{product.pdesc}</p>
+                            <h4 className="text-danger">Rs. {product.price} /-</h4>
+                            <p className="text-success">{product.address}</p>
+
+                            {/* 📞 Contact Seller */}
+                            {product.addedBy && (
+                                <>
+                                    <Button variant="primary" className="mt-3 w-100" onClick={handleContact}>
+                                        {showContact ? "Hide Contact Details" : "📞 Show Contact Details"}
+                                    </Button>
+                                    {showContact && user && (
+                                        <div className="mt-3 p-3 border rounded bg-light shadow-sm">
+                                            <h5 className="text-primary">Seller: {user.username || "N/A"}</h5>
+                                            <p><strong>Email:</strong> {user.email || "N/A"}</p>
+                                            <p><strong>Mobile:</strong> {user.mobile || "N/A"}</p>
+                                            <p><strong>Address:</strong> {product.address || "N/A"}</p>
+                                        </div>
+                                    )}
+                                </>
+                            )}
+                        </Col>
+
+                        {/* Chat Section */}
+                        <Col md={6}>
+                            <h5 className="mb-3">Chat</h5>
+
+                            {isLoggedIn ? (
+                                <>
+                                    <div className="border p-3 mb-3 bg-light rounded chat-box" style={{ height: '300px', overflowY: 'auto' }}>
+                                        {msgs.length > 0 ? (
+                                            msgs.map((item, index) => (
+                                                <div key={index} className={`mb-2 ${item.username === localStorage.getItem('username') ? 'text-end' : 'text-start'}`}>
+                                                    <div className={`p-2 rounded d-inline-block ${item.username === localStorage.getItem('username') ? 'bg-primary text-white' : 'bg-light border'}`}>
+                                                        <strong>{item.username}:</strong> {item.msg}
+                                                    </div>
+                                                </div>
+                                            ))
+                                        ) : (
+                                            <p className="text-muted text-center">No messages yet. Start the conversation!</p>
+                                        )}
+                                    </div>
+
+                                    <Form className="d-flex" onSubmit={(e) => e.preventDefault()}>
+                                        <Form.Control
+                                            value={msg}
+                                            onChange={(e) => setMsg(e.target.value)}
+                                            type="text"
+                                            placeholder="Type a message..."
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    e.preventDefault();
+                                                    handleSend();
+                                                }
+                                            }}
+                                        />
+                                        <Button variant="success" className="ms-2" onClick={handleSend}>
+                                            Send
+                                        </Button>
+                                    </Form>
+                                </>
+                            ) : (
+                                <Alert variant="warning" className="text-center">
+                                    <p>You must <strong>log in</strong> to chat.</p>
+                                    <Button variant="primary" onClick={() => navigate('/login')}>
+                                        🔑 Login
+                                    </Button>
+                                </Alert>
+                            )}
+                        </Col>
+
+
+                    </Row>
+                ) : (
+                    <p className="text-danger text-center">Loading please Wait....</p>
+                )}
+            </Container>
+            <Footer />
+        </>
+    );
+}
+
+export default ProductDetail;
+<!-- frontednnndddd -->
+
+
+
+
+
+
+<!-- aabove all cod is dust i copy paste cod fom my file aand add some css styling on the prodcut etail and use of mind and i use handle like funda ns suse dinside the product detail on sne d -->
 
 
 ["😂", "❤️", "🤣", "👍", "😭", "🙏", "😍", "🥰", "😊", "🤔", 
