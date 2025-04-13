@@ -128,9 +128,6 @@ function ProductDetail() {
                             <p className="text-success">{product.pdesc}</p>
                             <h5 className="text-danger">Rs. {product.price} /-</h5>
                             <h5 className="text-warning">Date {product.date}</h5>
-                            {/* ✅ 🕒 Show Last Updated Date and Time */}
-                            {/* <p>Posted on: {dayjs(product.createdAt).format("DD MMM YYYY, hh:mm A")}</p>
-                            <p>Last updated: {dayjs(product.updatedAt).fromNow()}</p> */}
                             <p className="text-muted">{product.address}</p>
 
                             {/* 🔹 Seller Contact Details */}

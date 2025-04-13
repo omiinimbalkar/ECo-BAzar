@@ -105,20 +105,6 @@ function AddProduct() {
                                 <label className="form-label">Address</label>
                                 <input className="form-control" type="text" value={address} onChange={(e) => setAddress(e.target.value)} required />
                             </div>
-                            {/* <div className="mb-3">
-                                <label className="form-label">Phone Number</label>
-                                <input className="form-control" type="text" value={phone} onChange={(e) => setPhone(e.target.value)} required />
-                            </div> */}
-                            {/* <div className="mb-3">
-                                <label className="form-label">Condition</label>
-                                <select className="form-select" value={condition} onChange={(e) => setCondition(e.target.value)} required>
-                                    <option value="">Select Condition</option>
-                                    <option>New</option>
-                                    <option>Used - Like New</option>
-                                    <option>Used - Good</option>
-                                    <option>Used - Acceptable</option>
-                                </select>
-                            </div> */}
                             <div className="mb-3">
                                 <label className="form-label">Product Image</label>
                                 <input className="form-control" type="file" onChange={(e) => setpimg(e.target.files[0])} />
@@ -131,7 +117,7 @@ function AddProduct() {
                                 <label className="form-label">Date & Time</label>
                                 <input
                                     className="form-control"
-                                    type="datetime-local"
+                                    // type="datetime-local"
                                     onChange={(e) => setdate(e.target.value)}
                                     required
                                 />
