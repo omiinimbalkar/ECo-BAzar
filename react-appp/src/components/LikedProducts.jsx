@@ -2,15 +2,14 @@ import { useEffect, useState } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import Categories from './Categories';
-import { useNavigate, Link, data } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { FaHeart } from 'react-icons/fa';
 import './Home.css'
 import API_URL from "../constants";
 
 function LikedProducts() {
 
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
 
     //creating stae for products
     const [products, setproducts] = useState([]);
@@ -53,7 +52,7 @@ function LikedProducts() {
 
     const handleCategory = (value) => {
         let filteredProducts = products.filter((item, index) => {
-            if (item.category == value) {
+            if (item.category = value) {
                 return item;
             }
         })
@@ -81,75 +80,77 @@ function LikedProducts() {
             {/* Header & Categories */}
             <Header search={search} handlesearch={handlesearch} handleClick={handleClick} />
             <Categories handleCategory={handleCategory} />
-
-            {/* Search Results */}
-            <h5 className="text-center mt-4 mb-4">🔍 Search Results</h5>
-            <div className="row justify-content-center">
-                {cproducts && products.length > 0 ? (
-                    cproducts.map((item) => (
-                        <div key={item._id} className="col-md-4 col-sm-6 mb-4">
-                            <div className="card shadow-sm border-0 rounded">
-                                <div className="position-relative">
-                                    {/* Heart Icon */}
+            <div className="container mt-4">
+                <h1 className="text-center text-success mb-4"> 💌 Favorite </h1>
+                {/* Search Results */}
+                <h5 className="text-center mt-4 mb-4">🔍 Search Results</h5>
+                <div className="row justify-content-center">
+                    {cproducts && products.length > 0 ? (
+                        cproducts.map((item) => (
+                            <div key={item._id} className="col-md-4 mb-4">
+                                <div className="card shadow-lg">
+                                    <div className="position-relative">
+                                        {/* Heart Icon
                                     <FaHeart
+                                    className="position-absolute top-0 end-0 m-2 text-danger cursor-pointer"
+                                        onClick={() => handleLike(item._id)}
+                                        style={{ fontSize: "1.5rem" }}
+                                    /> */}
+                                        {/* Product Image */}
+                                        <img
+                                            src={`${API_URL}/${item.pimg}`}
+                                            className="card-img-top rounded-top"
+                                            style={{ height: "200px", objectFit: "fixed" }}
+                                            alt="Product"
+                                        />
+                                    </div>
+                                    <div className="card-body text-center">
+                                        <h6 className="fw-bold">{item.pname} | {item.category}</h6>
+                                        <p className="text-danger fw-bold">₹{item.price}</p>
+                                        <p className="text-success small">{item.pdesc}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        ))
+                    ) : (
+                        <p className="text-center text-muted">No products found.</p>
+                    )}
+                </div>
+
+                {/* All Products */}
+                <h5 className="text-center mt-4 mb-3">📦 All Products</h5>
+                <div className="row justify-content-center">
+                    {products && products.length > 0 ? (
+                        products.map((item) => (
+                            <div key={item._id} className="col-md-4 mb-4">
+                                <div className="card shadow-lg">
+                                    <div className="position-relative">
+                                        {/* Heart Icon */}
+                                        {/* <FaHeart
                                         className="position-absolute top-0 end-0 m-2 text-danger cursor-pointer"
                                         onClick={() => handleLike(item._id)}
                                         style={{ fontSize: "1.5rem" }}
-                                    />
-                                    {/* Product Image */}
-                                    <img
-                                        src={`${API_URL}/${item.pimg}`}
-                                        className="card-img-top rounded-top"
-                                        style={{ height: "200px", objectFit: "cover" }}
-                                        alt="Product"
-                                    />
-                                </div>
-                                <div className="card-body text-center">
-                                    <h6 className="fw-bold">{item.pname} | {item.category}</h6>
-                                    <p className="text-danger fw-bold">₹{item.price}</p>
-                                    <p className="text-success small">{item.pdesc}</p>
-                                </div>
-                            </div>
-                        </div>
-                    ))
-                ) : (
-                    <p className="text-center text-muted">No products found.</p>
-                )}
-            </div>
-
-            {/* All Products */}
-            <h5 className="text-center mt-4 mb-3">📦 All Products</h5>
-            <div className="row justify-content-center">
-                {products && products.length > 0 ? (
-                    products.map((item) => (
-                        <div key={item._id} className="col-md-4 col-sm-6 mb-4">
-                            <div className="card shadow-sm border-0 rounded">
-                                <div className="position-relative">
-                                    {/* Heart Icon */}
-                                    <FaHeart
-                                        className="position-absolute top-0 end-0 m-2 text-danger cursor-pointer"
-                                        onClick={() => handleLike(item._id)}
-                                        style={{ fontSize: "1.5rem" }}
-                                    />
-                                    {/* Product Image */}
-                                    <img
-                                        src={`${API_URL}/${item.pimg}`}
-                                        className="card-img-top rounded-top"
-                                        style={{ height: "200px", objectFit: "cover" }}
-                                        alt="Product"
-                                    />
-                                </div>
-                                <div className="card-body text-center">
-                                    <h6 className="fw-bold">{item.pname} | {item.category}</h6>
-                                    <p className="text-danger fw-bold">₹{item.price}</p>
-                                    <p className="text-success small">{item.pdesc}</p>
+                                        /> */}
+                                        {/* Product Image */}
+                                        <img
+                                            src={`${API_URL}/${item.pimg}`}
+                                            className="card-img-top rounded-top"
+                                            style={{ height: "200px", objectFit: "fixed" }}
+                                            alt="Product"
+                                        />
+                                    </div>
+                                    <div className="card-body text-center">
+                                        <h6 className="fw-bold">{item.pname} | {item.category}</h6>
+                                        <p className="text-danger fw-bold">₹{item.price}</p>
+                                        <p className="text-success small">{item.pdesc}</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    ))
-                ) : (
-                    <p className="text-center text-muted">No products found.</p>
-                )}
+                        ))
+                    ) : (
+                        <p className="text-center text-muted">No products found.</p>
+                    )}
+                </div>
             </div>
             <Footer />
         </div>

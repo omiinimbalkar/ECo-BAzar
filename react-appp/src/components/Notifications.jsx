@@ -69,7 +69,7 @@ function Notifications() {
             <Header />
             <div className="container mt-4">
                 <div className="card shadow p-4">
-                    <h2 className="text-center mb-3 text-success">Notifications</h2>
+                    <h2 className="text-center mb-3 text-success"> 🔔 Notifications</h2>
                     
                     {loading ? (
                         <div className="text-center">

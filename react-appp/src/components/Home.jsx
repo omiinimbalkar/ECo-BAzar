@@ -179,7 +179,7 @@ function Home() {
                   <img
                     src={`${API_URL}/${item.pimg}`} 
                     className="card-img-top" 
-                    style={{ height: "230px", objectFit: "cover" }} 
+                    style={{ height: "230px", objectFit: "fixed" }} 
                     alt="Product"
                    
                   />

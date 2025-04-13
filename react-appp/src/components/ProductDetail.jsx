@@ -192,12 +192,7 @@ function ProductDetail() {
                                     onChange={(e) => setMsg(e.target.value)}
                                     type="text"
                                     placeholder="Type a message..."
-                                    onKeyDown={(e) => {
-                                        if (e.key === "Enter" && msg.trim()) {
-                                            e.preventDefault();
-                                            handleSend();
-                                        }
-                                    }}
+                                    
                                 />
                                 <Button
                                     onClick={(e) => msg.trim() && handleSend(e)}

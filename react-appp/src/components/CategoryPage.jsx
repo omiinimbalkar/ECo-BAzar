@@ -171,7 +171,7 @@ function CategoryPage() {
 
                 {/* Image & Heart Icon */}
                 <div className="position-relative">
-                  <img src={`${API_URL}/${item.pimg}`} className="card-img-top img-fluid rounded-3" style={{ height: "220px", objectFit: "cover" }} />
+                  <img src={`${API_URL}/${item.pimg}`} className="card-img-top img-fluid rounded-3" style={{ height: "220px", objectFit: "fixed" }} />
                   <div className="position-absolute top-0 end-0 p-2">
                     {likedproducts.find((likedItem) => likedItem._id === item._id) ? (
                       <FaHeart onClick={(e) => handleDisLike(item._id, e)} className="text-danger fs-4" />

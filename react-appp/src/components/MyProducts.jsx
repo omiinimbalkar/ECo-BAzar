@@ -102,62 +102,65 @@ function MyProducts() {
     }
     return (
         <div>
-        <Header search={search} handlesearch={handlesearch} handleClick={handleClick} />
-        <Categories handleCategory={handleCategory} />
+            <Header search={search} handlesearch={handlesearch} handleClick={handleClick} />
+            <Categories handleCategory={handleCategory} />
 
-        {/* Filtered Products */}
-        <div className="container mt-4">
-            <h4 className="mb-3 text-primary">  Filtered Products 🛍️  </h4>
-            <div className="row justify-content-center">
-                {cproducts && products.length > 0 &&
-                    cproducts.map((item) => (
-                        <div key={item._id} className="col-md-4 mb-4">
-                            <div className="card shadow-sm border-0 position-relative h-100 d-flex flex-column">
-                                <div className="position-absolute top-0 end-0 m-2 p-2 bg-light rounded-circle" onClick={() => handleLike(item._id)}>
-                                    <FaHeart className="text-danger" />
-                                </div>
-                                <img className="card-img-top" src={API_URL + item.pimg } alt={item.pname} style={{ height: "200px" }} />
-                                <div className="card-body text-center d-flex flex-column flex-grow-1">
-                                    <h5 className="card-title">{item.pname} | {item.category}</h5>
-                                    <p className="text-danger fw-bold">${item.price}</p>
-                                    <p className="text-muted">{item.pdesc}</p>
-                                </div>
-                            </div>
-                        </div>
-                    ))
-                }
-            </div>
-        </div>
+            <div align="center" className="mb-4">
+                {/* Filtered Products */}
+                <div className="container mt-4 ">
 
-        {/* All Products */}
-        <div className="container mt-4">
-            <h4 className=" text-success">All Products 📦  </h4>
-            <div className="row justify-content-center">
-                {products && products.length > 0 &&
-                    products.map((item) => (
-                        <div key={item._id} className="col-md-4 mb-4">
-                            <div className="card shadow-sm border-0 position-relative h-100 d-flex flex-column">
-                                <div className="position-absolute top-0 end-0 m-2 p-2 bg-light rounded-circle" onClick={() => handleLike(item._id)}>
-                                    <FaHeart className="text-danger" />
-                                </div>
-                                <img className=" card-img-top" src={API_URL + "/" + item.pimg} alt={item.pname} style={{ height: "200px"}} />
-                                <div className="card-body text-center d-flex flex-column flex-grow-1">
-                                    <h5 className="card-title">{item.pname} | {item.category}</h5>
-                                    <p className="text-danger fw-bold">${item.price}</p>
-                                    <p className="text-muted">{item.pdesc}</p>
-                                    <div className="mt-auto d-flex justify-content-between">
-                                        <Link to={`/edit-product/${item._id}`} className="btn btn-warning" >Edit 📝 </Link>
-                                        <button onClick={() => handleDel(item._id)} className="btn btn-danger">Delete 🗑️ </button>
+                    <h4 className="mb-3 text-primary">  Filtered Products 🛍️  </h4>
+                    <div className="row justify-content-center">
+                        {cproducts && products.length > 0 &&
+                            cproducts.map((item) => (
+                                <div key={item._id} className="col-md-4 mb-4">
+                                    <div className="card shadow-sm border-0 position-relative h-100 d-flex flex-column">
+                                        <div className="position-absolute top-0 end-0 m-2 p-2 bg-light rounded-circle" onClick={() => handleLike(item._id)}>
+                                            <FaHeart className="text-danger" />
+                                        </div>
+                                        <img className="card-img-top" src={API_URL + item.pimg} alt={item.pname} style={{ height: "200px" }} />
+                                        <div className="card-body text-center d-flex flex-column flex-grow-1">
+                                            <h5 className="card-title">{item.pname} | {item.category}</h5>
+                                            <p className="text-danger fw-bold">${item.price}</p>
+                                            <p className="text-muted">{item.pdesc}</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    ))
-                }
+                            ))
+                        }
+                    </div>
+                </div>
+
+                {/* All Products */}
+                <div className="container mt-4">
+                    <h4 className=" text-success">All Products 📦  </h4>
+                    <div className="row justify-content-center">
+                        {products && products.length > 0 &&
+                            products.map((item) => (
+                                <div key={item._id} className="col-md-4 mb-4">
+                                    <div className="card shadow-sm border-0 position-relative h-100 d-flex flex-column">
+                                        <div className="position-absolute top-0 end-0 m-2 p-2 bg-light rounded-circle" onClick={() => handleLike(item._id)}>
+                                            <FaHeart className="text-danger" />
+                                        </div>
+                                        <img className=" card-img-top" src={API_URL + "/" + item.pimg} alt={item.pname} style={{ height: "200px" }} />
+                                        <div className="card-body text-center d-flex flex-column flex-grow-1">
+                                            <h5 className="card-title">{item.pname} | {item.category}</h5>
+                                            <p className="text-danger fw-bold">${item.price}</p>
+                                            <p className="text-muted">{item.pdesc}</p>
+                                            <div className="mt-auto d-flex justify-content-between">
+                                                <Link to={`/edit-product/${item._id}`} className="btn btn-warning" >Edit 📝 </Link>
+                                                <button onClick={() => handleDel(item._id)} className="btn btn-danger">Delete 🗑️ </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
+                        }
+                    </div>
+                </div>
             </div>
+            <Footer />
         </div>
-        <Footer />
-    </div>
     );
 }
 export default MyProducts;    

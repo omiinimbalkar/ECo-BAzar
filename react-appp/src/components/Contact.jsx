@@ -8,16 +8,15 @@ const Contact = () => {
             <Header />
 
             <div className="container mt-5">
-                <h1 className="text-center text-success mb-4">Contact Us</h1>
+                <h1 className="text-center text-success mb-4"> 📞 Contact Page </h1>
                 <p className="text-center text-muted">
                     Connect with near Bhagarwalas
                 </p>
 
-                <div className="row">
-
+                <div align="center" className="mb-4">
                     {/* Scrap Collector Details */}
-                    <div className="col-md-6">
-                        <div className="card shadow-sm p-4 bg-light">
+                    <div className="col-md-6 ">
+                        <div className="card shadow-sm p-4 bg-light ">
                             <h4 className="text-success">Scrap Collector Information</h4>
                             <h5>Name:</h5>
                             <p>Rahul Sharma,
@@ -38,8 +37,6 @@ const Contact = () => {
                             <h5>Service Areas:</h5>
                             <p>Virar,Palghar</p>
 
-                            {/* <h5>Request a Pickup:</h5>
-            <a href="#" className="btn btn-success btn-sm">Schedule Pickup</a> */}
                         </div>
                     </div>
                 </div>
