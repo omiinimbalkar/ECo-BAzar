@@ -5,6 +5,7 @@ import Header from './components/Header';
 import Home from './components/Home';
 import Footer from './components/Footer';
 import SplashScreen from './components/SplashScreen';
+import './i18n'; // 👈 important
 
 function App() {
   const [showSplash, setShowSplash] = useState(true);
@@ -27,7 +28,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
             </Routes>
-            <Footer />
+            <Footer  className="bg-dark text-light py-3 mt-auto"/>
           </>
         )}
       </div>
@@ -35,4 +36,4 @@ function App() {
   );
 }
 
-export default App;
+export default App; 

@@ -28,6 +28,9 @@ import Feedback from 'react-bootstrap/esm/Feedback';
 import ChatBot from './components/ChatBot';
 import SplashScreen from './components/SplashScreen'; 
 import Notifications from './components/Notifications';
+import AppWork from './components/AppWork';
+import './i18n'; // 👈 Make sure this line is present
+
 
 const router = createBrowserRouter([
 
@@ -52,6 +55,10 @@ const router = createBrowserRouter([
   {
     path: "/about",
     element: (<About />),
+  },
+  {
+    path: "/appwork", 
+    element: (<AppWork />),
   },
   {
     path: "/contact",
